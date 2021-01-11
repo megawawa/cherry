@@ -1,0 +1,43 @@
+.main {
+    padding: 5rem 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    margin: 0;
+    line-height: 1.15;
+    font-size: 2rem;
+}
+
+.panel {
+    padding: 1rem;
+    width: 50rem;
+    margin: 1rem;
+}
+
+.buttonImg {
+    width: 1rem;
+}
+
+.step {
+    margin: 0 1rem;
+}
+
+.stepContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.expandButton {
+    border-radius: 1rem;
+}
+
+.expandButton:focus {
+    outline: 0 !important;
+}

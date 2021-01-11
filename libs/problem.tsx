@@ -1,4 +1,4 @@
-import { getSolutionById } from './mockDb'
+import { getSolutionById, getProblemStatementById } from './mockDb'
 
 export class SolutionStep {
     id: number
@@ -23,24 +23,28 @@ export type Solution = {
 }
 
 export function getExpandedSteps(solution: Solution, stepId: number)
-    : Array<SolutionStep> {
-    return solution.stepsTree[stepId].map((index) => solution.steps[index]);
-}
-
-function getVisibleStepsFromRoot(solution: Solution): Array<SolutionStep> {
+    : ExpandList {
     if (!solution?.stepsTree) {
         return [];
     }
-    return getVisibleSteps(
-        solution, solution.stepsTree[solution.stepsTree.length - 1]);
+    return solution.stepsTree[stepId];
+}
+
+// sanitize expandList. If it is empty, set to default expansion
+// (of root) from solution
+export function sanitize(solution: Solution, expandList: ExpandList): ExpandList {
+    if (!solution?.stepsTree) {
+        return expandList;
+    }
+    if (expandList.length == 0) {
+        return solution.stepsTree[solution.stepsTree.length - 1];
+    }
+    return expandList;
 }
 
 export function getVisibleSteps(solution: Solution, expandList: ExpandList)
     : Array<SolutionStep> {
-    if (expandList.length == 0) {
-        return getVisibleStepsFromRoot(solution);
-    }
-    return expandList.map((index) => solution.steps[index]);
+    return solution?.steps?.filter((_, index) => expandList.includes(index)) ?? [];
 }
 
 export type Problem = {
@@ -49,9 +53,10 @@ export type Problem = {
 }
 
 export async function getProblemById(id: number): Promise<Problem> {
+    let problemStatement = await getProblemStatementById(id);
     let [steps, stepsTree] = await getSolutionById(id);
     return {
-        problemStatement: "sample problem: " + id,
+        problemStatement: problemStatement,
         solution: { steps, stepsTree }
     };
 }

@@ -8,3 +8,7 @@ export async function getSolutionById(id: number): Promise<[Steps, StepsTree]> {
 
     return [steps, stepsTree];
 }
+
+export async function getProblemStatementById(id: number): Promise<string> {
+    return "1/2 + 1/6 + 1/12 + ... + 1/(40*41) = ?"
+}

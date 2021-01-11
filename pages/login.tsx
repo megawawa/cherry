@@ -1,5 +1,5 @@
-import { Component, useState } from 'react';
-import { LoginContext, LoginContextType, useLoginContext } from '../components/login'
+import { useState } from 'react';
+import { LoginContext } from '../components/login'
 import { useRouter } from 'next/router'
 
 type NameFormType = {
