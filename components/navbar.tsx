@@ -4,7 +4,6 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
-import Link from 'next/Link'
 import { useLoginContext } from './login'
 
 export default function MainNavbar() {
