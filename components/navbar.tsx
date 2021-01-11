@@ -5,24 +5,31 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import { useLoginContext } from './login'
+import Link from 'next/link'
 
 export default function MainNavbar() {
     let state = useLoginContext();
 
     let loginButton =
-        state.name ? 
+        state.name ?
             <div> Welcome, {state.name}</div> :
             <Button variant="outline-success" href="/login">
                 Log in
             </Button>;
     return (
         <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="/">Seeking Quiz</Navbar.Brand>
+            <Link href="/" passHref>
+                <Navbar.Brand >Seeking Quiz</Navbar.Brand>
+            </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/tutor">Tutor</Nav.Link>
-                    <Nav.Link href="/problems/0">Problems</Nav.Link>
+                    <Link href="/tutor" passHref>
+                        <Nav.Link >Tutor</Nav.Link>
+                    </Link>
+                    <Link href="/problems/0" passHref>
+                        <Nav.Link>Problems</Nav.Link>
+                    </Link>
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
