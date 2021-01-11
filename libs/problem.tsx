@@ -28,6 +28,9 @@ export function getExpandedSteps(solution: Solution, stepId: number)
 }
 
 function getVisibleStepsFromRoot(solution: Solution): Array<SolutionStep> {
+    if (!solution?.stepsTree) {
+        return [];
+    }
     return getVisibleSteps(
         solution, solution.stepsTree[solution.stepsTree.length - 1]);
 }

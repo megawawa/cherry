@@ -6,7 +6,7 @@ export default function ProblemPanel({ problemData }: { problemData: Problem }) 
         <div>
             <div>Problem: </div>
             <div>{problemData?.problemStatement ?? ''}</div>
-            <SolutionPanel solution={problemData?.solution}/>
+            <SolutionPanel solution={problemData?.solution} />
         </div>);
 }
 
