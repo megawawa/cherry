@@ -1,15 +1,17 @@
 import { Problem, getProblemById } from '../../libs/problem'
+import { SolutionPanel } from '../../components/solution'
 
 export default function ProblemPanel({ problemData }: { problemData: Problem }) {
     return (
         <div>
             <div>Problem: </div>
-            <div>{problemData?.body ?? ''}</div>
+            <div>{problemData?.problemStatement ?? ''}</div>
+            <SolutionPanel solution={problemData?.solution}/>
         </div>);
 }
 
 export async function getStaticProps({ params }) {
-    const problemData = getProblemById(params.id)
+    const problemData = await getProblemById(params.id)
     return {
         props: {
             problemData
