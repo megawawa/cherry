@@ -2,6 +2,7 @@ import { Problem, getProblemById } from '../../libs/problem'
 import { SolutionPanel } from '../../components/solution'
 import Card from 'react-bootstrap/Card'
 import styles from '../../styles/Problem.module.css'
+import ProblemSummaryCard from '../../components/problemSummary';
 
 export default function ProblemPanel({ problemData }: { problemData: Problem }) {
     return (
@@ -12,6 +13,7 @@ export default function ProblemPanel({ problemData }: { problemData: Problem }) 
                     <Card.Text>{problemData?.problemStatement ?? ''}</Card.Text>
                 </Card.Body>
             </Card>
+            <ProblemSummaryCard />
             <Card className={styles.panel}>
                 <Card.Header className={styles.title}>Solution </Card.Header>
                 <Card.Body>
