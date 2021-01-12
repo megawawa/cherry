@@ -25,6 +25,17 @@
 
 .step {
     margin: 0 1rem;
+    border-left: 0.5rem solid rgb(89, 89, 255);
+    background-color: rgb(221, 239, 252);
+    animation-name: example;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.alwaysVisibleStep {
+    animation: none !important;
 }
 
 .stepContainer {
@@ -35,18 +46,30 @@
     margin: 0rem 0 1rem;
 }
 
+@keyframes example {
+    from {
+        background-color: rgb(89, 89, 255);
+    }
+    to {
+        background-color: rgb(221, 239, 252);
+    }
+}
+
 .expandButton {
     border-radius: 50%;
     border-color: black;
     padding: 0 0.3rem;
-    /* width: 1.5rem;
-    height: 1.5rem; */
+}
+
+.expandButtonPlaceholder {
+    width: 1.6rem;
+    height: 1.5rem;
 }
 
 .expandButton:active {
-  background-color: lightgray;
-  box-shadow: 0 5px #666;
-  transform: translateX(0.125rem);
+    background-color: lightgray;
+    box-shadow: 0 5px #666;
+    transform: translateX(0.125rem);
 }
 
 .expandButton:focus {

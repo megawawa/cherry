@@ -1,12 +1,26 @@
-import { Steps, StepsTree } from './problem'
+import { Steps, StepsTree, computeStepLevel } from './problem'
 
 export async function getSolutionById(id: number): Promise<[Steps, StepsTree]> {
-    let step0 = { id: 0, text: 'step0' };
-    let step1 = { id: 1, text: 'step1' };
-    let steps = [step0, step1];
-    let stepsTree = [[], [0], [1]];
+    let steps = [
+        '= 1/(1*2) + 1/(2*3) + 1/(3*4) + ... + 1/(40*41)',
+        '= (1 - 1/2) + (1/2 - 1/3) + (1/3 - 1/4) + ... + (1/40 - 1/41)',
+        '= 1 - 1/2 + 1/2 - 1/3 + 1/3 - 1/4 + ... + 1/40 - 1/41',
+        '= 1 - 1/41',
+        '= 40/41'];
+    let stepsTree = [[], [0], [], [2], [3], [1, 4]];
+    let results = [];
+    steps.forEach((elem, index) => {
+        results.push({
+            id: index,
+            text: elem,
+            hasChild: false,
+            alwaysVisible: false
+        })
+    });
 
-    return [steps, stepsTree];
+    computeStepLevel(results, stepsTree);
+
+    return [results, stepsTree];
 }
 
 export async function getProblemStatementById(id: number): Promise<string> {

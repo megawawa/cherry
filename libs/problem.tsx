@@ -3,11 +3,15 @@ import { getSolutionById, getProblemStatementById } from './mockDb'
 export class SolutionStep {
     id: number
     text?: string
+    level?: number
+    hasChild: boolean
+    alwaysVisible: boolean
 }
 
 export type ExpandList = Array<number>;
 export type StepsTree = Array<Array<number>>;
 export type Steps = Array<SolutionStep>
+export type StepsLevel = Array<number>;
 
 /*
  * "Solution" uses a tree structure underneath
@@ -50,6 +54,28 @@ export function getVisibleSteps(solution: Solution, expandList: ExpandList)
 export type Problem = {
     problemStatement?: string
     solution?: Solution
+}
+
+export function computeStepLevel(steps, stepsTree) {
+    // init
+    const ROOT = stepsTree.length - 1;
+    let bfs = stepsTree[ROOT].concat([]);
+    stepsTree[ROOT].forEach((index) => {
+        steps[index].level = 0;
+        steps[index].hasChild = false;
+        steps[index].alwaysVisible = true;
+    })
+
+    while (bfs.length != 0) {
+        let stepToExpand = bfs.shift();
+        steps[stepToExpand].hasChild = stepsTree[stepToExpand].length != 0;
+        stepsTree[stepToExpand].forEach((index) => {
+            bfs.push(index);
+            steps[index].level = steps[stepToExpand].level + 1;
+            steps[index].hasChild = false;
+            steps[index].alwaysVisible = false;
+        });
+    }
 }
 
 export async function getProblemById(id: number): Promise<Problem> {
