@@ -20,7 +20,7 @@
 }
 
 .buttonImg {
-    width: 1rem;
+    width: 0.75rem;
 }
 
 .step {
@@ -32,10 +32,21 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    margin: 0rem 0 1rem;
 }
 
 .expandButton {
-    border-radius: 1rem;
+    border-radius: 50%;
+    border-color: black;
+    padding: 0 0.3rem;
+    /* width: 1.5rem;
+    height: 1.5rem; */
+}
+
+.expandButton:active {
+  background-color: lightgray;
+  box-shadow: 0 5px #666;
+  transform: translateX(0.125rem);
 }
 
 .expandButton:focus {
