@@ -1,0 +1,13 @@
+.progressDot {
+    height: 1rem;
+    width: 1rem;
+    background-color: black;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.progressTab {
+    align-items: center;
+    display: flex;
+}
