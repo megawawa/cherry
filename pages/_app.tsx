@@ -4,7 +4,6 @@ import MainNavbar from '../components/navbar'
 import { AppProps } from 'next/app'
 import { ContextProvider } from '../components/login'
 
-
 function MyApp({ Component, pageProps }: AppProps) {
 
   return (
