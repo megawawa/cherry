@@ -18,7 +18,7 @@ export default function Home() {
               <Card.Text>
                 Want to <span className={styles.highlightCardText}>
                   gain more</span><span> knowledge</span>?
-                Create your profile to browse quizzes, tests, ask questions
+                Create your profile to browse quizzes & tests, ask questions
                 online or find a tutor
           </Card.Text>
               <div className={styles.cardFooter}>
@@ -35,7 +35,7 @@ export default function Home() {
               <Card.Text>
                 Want to <span className={styles.highlightCardText}>
                   reach more</span><span> students</span>?
-                  Build up your profile by answering students questions,
+                  Build up your profile by answering students' questions,
                   creating your own problem sets, and contributing
                   quizzes.
               </Card.Text>
@@ -53,7 +53,7 @@ export default function Home() {
                 No worries! <span className={styles.highlightCardText}>Explore</span>
                 <span> </span>
                  quizzes, tests and tutors. Sign up when
-                you want more features!
+                you need more features!
           </Card.Text>
           <div className={styles.cardFooter}>
                 <Button variant="primary">Start exploring</Button>

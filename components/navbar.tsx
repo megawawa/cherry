@@ -17,7 +17,12 @@ export default function MainNavbar() {
                 Log in
             </Button>;
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" style={{
+            position: "fixed", /* Set the navbar to fixed position */
+            top: 0, /* Position the navbar at the top of the page */
+            width: "100%",
+            zIndex: 999,
+        }}>
             <Link href="/" passHref>
                 <Navbar.Brand >Seeking Quiz</Navbar.Brand>
             </Link>
@@ -41,11 +46,11 @@ export default function MainNavbar() {
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
-                <Form inline>
+                <Form inline className="mt-1 mr-2">
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                     <Button variant="outline-success">Search</Button>
                 </Form>
-                <Form inline className="ml-2">
+                <Form inline className="mt-1">
                     {loginButton}
                 </Form>
             </Navbar.Collapse>
