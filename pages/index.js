@@ -22,7 +22,7 @@ export default function Home() {
                 online or find a tutor
           </Card.Text>
               <div className={styles.cardFooter}>
-                <Button variant="primary">Start Learning</Button>
+                <Button variant="primary" href="/login">Start Learning</Button>
                 <div className={styles.priceTag}>Free </div>
               </div>
 
@@ -40,7 +40,7 @@ export default function Home() {
                   quizzes.
               </Card.Text>
               <div className={styles.cardFooter}>
-                <Button variant="primary">Start Tutoring</Button>
+                <Button variant="primary" href="/login">Start Tutoring</Button>
                 <div className={styles.priceTag}>Free </div>
               </div>
             </Card.Body>

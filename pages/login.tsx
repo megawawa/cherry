@@ -1,36 +1,68 @@
-import { useState } from 'react';
-import { LoginContext } from '../components/login'
-import { useRouter } from 'next/router'
+import { Card, Button } from 'react-bootstrap';
+import styles from '../styles/Home.module.css'
+import loginStyles from '../styles/Login.module.css'
+import LoginForm from '../components/loginForm'
 
-type NameFormType = {
-    name?: string
-}
+export default function LoginPage() {
+    return <main className={styles.main + ' ' + loginStyles.background}>
+        <div className={loginStyles.grid}>
+            <Card className={styles.card + ' p-3'}>
+                <LoginForm />
+            </Card>
 
-export default function NameForm() {
-    const [state, setState] = useState<NameFormType>({});
-    const router = useRouter();
-    const handleChange = (event) => {
-        setState({ name: event.target.value });
-    }
+            <div className={loginStyles.featuresGrid}>
+                <Card className={styles.card}>
+                    <Card.Body>
+                        <Card.Title>Student Features</Card.Title>
+                        <Card.Text>
+                            You can enable student features at any time
+                    </Card.Text>
+                        <Card.Text>
+                            - browse quizzes & tests,
+                    </Card.Text>
+                        <Card.Text>
+                            - ask questions
+                    </Card.Text>
+                        <Card.Text>
+                            - have access to all registered tutors
+                    </Card.Text>
+                        <div className={styles.cardFooter}>
+                            <Button variant="primary" href="/login">Enable Student Features</Button>
+                            <div className={styles.priceTag}>Free </div>
+                        </div>
 
-    const handleSubmit = (update, event) => {
-        alert('A name was submitted: ' + state.name);
-        console.log(update);
-        update(state.name);
-        router.push('/');
-        event.preventDefault();
-    }
+                    </Card.Body>
+                </Card>
 
-    return (<LoginContext.Consumer>
-        {({ name, update }) => (
-            <form onSubmit={handleSubmit.bind(this, update)}>
-                <label>
-                    Name:
-                <input type="text" value={state.name ?? name ?? ''}
-                        onChange={handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        )}
-    </LoginContext.Consumer>);
+                <Card className={styles.card}>
+                    <Card.Body>
+                        <Card.Title>Tutor Features</Card.Title>
+                        <Card.Text>
+                            You can enable tutor features at any time
+                    </Card.Text>
+                        <Card.Text>
+                            - answer questions
+                    </Card.Text>
+                        <Card.Text>
+                            - create problem sets & quizzes
+                    </Card.Text>
+                        <Card.Text>
+                            - your profile would be visible to all the students
+                    </Card.Text>
+                        <div className={styles.cardFooter}>
+                            <Button variant="primary" href="/login">Enable Tutor Features</Button>
+                            <div className={styles.priceTag}>Free </div>
+                        </div>
+
+                    </Card.Body>
+                </Card>
+            </div>
+        </div>
+
+        <div className={styles.textContainer}>
+            <div>
+                Welcome, have you quizzed today?
+            </div>
+        </div>
+    </main>;
 }

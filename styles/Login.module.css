@@ -1,0 +1,23 @@
+.background {
+    background-color: #eaeaea;
+}
+
+.grid {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    align-self: flex-start;
+}
+
+.featuresGrid {
+    align-self: flex-start;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        width: 100%;
+        flex-direction: column;
+    }
+}

@@ -30,13 +30,16 @@ export default function MainNavbar() {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Link href="/tutor" passHref>
-                        <Nav.Link >Tutor</Nav.Link>
+                        <Nav.Link >Tutor [locked if not student] </Nav.Link>
                     </Link>
                     <Link href="/problems/0" passHref>
                         <Nav.Link>Problems</Nav.Link>
                     </Link>
                     <Link href="/history" passHref>
                         <Nav.Link>History</Nav.Link>
+                    </Link>
+                    <Link href="/studentHome" passHref>
+                        <Nav.Link>Student Home [need to merge with home]</Nav.Link>
                     </Link>
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
