@@ -55,7 +55,7 @@ export default function Home() {
                  quizzes, tests and tutors. Sign up when
                 you need more features!
           </Card.Text>
-          <div className={styles.cardFooter}>
+              <div className={styles.cardFooter}>
                 <Button variant="primary">Start exploring</Button>
                 <div className={styles.priceTag}> Free</div>
               </div>
@@ -65,8 +65,23 @@ export default function Home() {
 
         <div className={styles.textContainer}>
           <div>
-            Welcome, have you quizzed today?
-        </div>
+            <span>Welcome, </span>
+            <span>have you quizzed today?</span>
+          </div>
+          <div className={styles.infoContainer}>
+            <div className={styles.infoCard}>
+              <span className={styles.infoNumber}>10k+ </span>
+              <span className={styles.infoItem}>Problems</span>
+            </div>
+            <div className={styles.infoCard}>
+              <span className={styles.infoNumber}>100+ </span>
+              <span className={styles.infoItem}>Tutors</span>
+            </div>
+            <div className={styles.infoCard}>
+              <span className={styles.infoNumber}>1k+ </span>
+              <span className={styles.infoItem}>Students</span>
+            </div>
+          </div>
         </div>
       </main>
     </>

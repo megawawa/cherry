@@ -50,9 +50,9 @@
 
 .textContainer {
   margin: 0;
-  color: yellow;
+  color: white;
   line-height: 1.15;
-  font-size: 3rem;
+  font-size: 4rem;
   mix-blend-mode: difference;
   min-width: 30vh;
 }
@@ -128,6 +128,30 @@
   color: purple;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.infoContainer {
+  font-size: 3rem;
+  flex-direction: row;
+  border-top: 1px solid #eaeaea;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.infoCard {
+  flex-wrap: wrap;
+  display: inline-block;
+  margin: 1rem 1rem 1rem 0rem;
+  min-width: 30%;
+}
+
+.infoNumber {
+  font-size: 3rem;
+  font: bold;
+}
+
+.infoItem {
+  font-size: 2rem;
 }
 
 @media (max-width: 600px) {
