@@ -7,7 +7,17 @@ import FormControl from 'react-bootstrap/FormControl'
 import { useLoginContext } from './login'
 import Link from 'next/link'
 
-export default function MainNavbar() {
+export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
+    function NavbarLink({ href, text, registeredHref }: {
+        href: string, text: string, registeredHref?: string
+    }) {
+        return (
+            <Link href={href} passHref>
+                <Nav.Link active={currentUrl == (registeredHref ?? href)}>{text}</Nav.Link>
+            </Link>
+        );
+    }
+
     let state = useLoginContext();
 
     let loginButton =
@@ -29,18 +39,12 @@ export default function MainNavbar() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Link href="/tutor" passHref>
-                        <Nav.Link >Tutor [locked if not student] </Nav.Link>
-                    </Link>
-                    <Link href="/problems/0" passHref>
-                        <Nav.Link>Problems</Nav.Link>
-                    </Link>
-                    <Link href="/history" passHref>
-                        <Nav.Link>History</Nav.Link>
-                    </Link>
-                    <Link href="/studentHome" passHref>
-                        <Nav.Link>Student Home [need to merge with home]</Nav.Link>
-                    </Link>
+                    <NavbarLink href='/tutor' text='Tutor [locked if not student]' />
+                    <NavbarLink href='/problems/0' text='Problems'
+                        registeredHref='/problems/[id]' />
+                    <NavbarLink href='/history' text='History' />
+                    <NavbarLink href='/tempHome'
+                        text='Home [need to merge with home]' />
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
