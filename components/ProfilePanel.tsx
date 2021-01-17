@@ -70,7 +70,9 @@ export default function ProfilePanel() {
                     onChange={handleChange} />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <div>Your information would be visible to registered users.</div>
+
+            <Button variant="primary" type="submit" className="mt-2">
                 Save
             </Button>
         </Form>
