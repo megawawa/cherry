@@ -1,0 +1,36 @@
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 100vh;
+    min-width: 100vh;
+}
+
+.profileContainer {
+    min-width: 100vw;
+}
+
+.column {
+    border-right: 1px solid black;
+    min-height: 100vh;
+    max-width: 40vw;
+}
+
+.profileLeftMenu {
+    padding-top: 5rem;
+}
+
+.profileLeftItem {
+    padding: 1;
+}
+
+.profileRightItem {
+    padding-top: 5rem;
+    margin-left: 3rem;
+}
+
+.profilePanel {
+    max-width: 60vw;
+}
