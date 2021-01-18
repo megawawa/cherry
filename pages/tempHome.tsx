@@ -7,6 +7,8 @@ import InterestPanel from '../components/interestPanel';
 import React, { useState } from 'react';
 import ProfilePanel from '../components/ProfilePanel';
 import FeaturesPanel from '../components/featuresPanel';
+import AnsweredQuizPanel from '../components/answeredQuizPanel';
+import BrowseQuizPanel from '../components/browseQuizPanel';
 
 function LockTab({ locked, text }: { locked: boolean, text: string }) {
     return <div className={styles.profileLeftItem}>
@@ -91,23 +93,45 @@ export default function LoginPage() {
                                     <LockTab locked={false} text="Interest" />
                                 </Nav.Link>
                             </Nav.Item>
-                            <div className={styles.profileLeftSectionHeader}>
-                                Public profile
-                               </div>
                             <Nav.Item>
                                 <Nav.Link eventKey="second">
                                     <LockTab locked={false} text="Contact Info" />
                                 </Nav.Link>
                             </Nav.Item>
                             <div className={styles.profileLeftSectionHeader}>
+                                Public profile
+                               </div>
+                            <Nav.Item>
+                                <Nav.Link eventKey="browseQuiz">
+                                    <LockTab locked={false} text="Browse Quiz" />
+                                </Nav.Link>
+                                <Nav.Link eventKey="browseTest">
+                                    <LockTab locked={false} text="Browse Test" />
+                                </Nav.Link>
+                            </Nav.Item>
+                            <div className={styles.profileLeftSectionHeader}>
                                 Tutor
                             </div>
                             <Nav.Item>
-                                <Nav.Link eventKey="answeredQuiz">
-                                    <LockTab locked={false} text="Answered Quiz" />
+                                <Nav.Link eventKey="answeredQuizHistory">
+                                    <LockTab locked={false} text="History" />
                                 </Nav.Link>
-                                <Nav.Link eventKey="browseQuiz">
-                                    <LockTab locked={false} text="Browse Quiz" />
+                                <Nav.Link eventKey="answerQuiz">
+                                    <LockTab locked={false} text="Answer Quiz" />
+                                </Nav.Link>
+                                <Nav.Link eventKey="createQuiz">
+                                    <LockTab locked={false} text="Create Quiz" />
+                                </Nav.Link>
+                                <Nav.Link eventKey="createProblemSet">
+                                    <LockTab locked={false} text="Create Problem Set" />
+                                </Nav.Link>
+                            </Nav.Item>
+                            <div className={styles.profileLeftSectionHeader}>
+                                Student
+                            </div>
+                            <Nav.Item>
+                                <Nav.Link eventKey="takenQuizHistory">
+                                    <LockTab locked={false} text="History" />
                                 </Nav.Link>
                                 <Nav.Link eventKey="createQuiz">
                                     <LockTab locked={false} text="Create Quiz" />
@@ -135,6 +159,16 @@ export default function LoginPage() {
                             <Tab.Pane eventKey="manageFeatures">
                                 <LockItem locked={false}>
                                     <FeaturesPanel />
+                                </LockItem>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="answeredQuizHistory">
+                                <LockItem locked={false}>
+                                    <AnsweredQuizPanel />
+                                </LockItem>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="browseQuiz">
+                                <LockItem locked={false}>
+                                    <BrowseQuizPanel tags={['third grade', 'math']} />
                                 </LockItem>
                             </Tab.Pane>
                         </Tab.Content>

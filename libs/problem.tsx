@@ -52,6 +52,7 @@ export function getVisibleSteps(solution: Solution, expandList: ExpandList)
 }
 
 export type Problem = {
+    id: number;
     problemStatement?: string
     solution?: Solution
 }
@@ -83,6 +84,7 @@ export async function getProblemById(id: number): Promise<Problem> {
     let [steps, stepsTree] = await getSolutionById(id);
     return {
         problemStatement: problemStatement,
-        solution: { steps, stepsTree }
+        solution: { steps, stepsTree },
+        id: id,
     };
 }
