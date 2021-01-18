@@ -1,7 +1,7 @@
 import { Card, Button } from 'react-bootstrap';
 import styles from '../styles/Home.module.css'
 import loginStyles from '../styles/Login.module.css'
-import SignUpForm from '../components/signUpForm'
+import SignUpForm from '../components/profile/signUpForm'
 import React from 'react';
 import FeaturesPanel from '../components/featuresPanel';
 

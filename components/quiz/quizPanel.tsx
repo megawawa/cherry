@@ -1,5 +1,5 @@
-import { getProblemFromTags, ProblemPreviewType } from "../libs/mockDb";
-import { Problem } from "../libs/problem";
+import { getProblemFromTags, ProblemPreviewType } from "../../libs/mockDb";
+import { Problem } from "../../libs/problem";
 
 function QuizPanel({ quiz }: { quiz: ProblemPreviewType }) {
     return <div></div>;

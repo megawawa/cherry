@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Solution, ExpandList, getVisibleSteps, getExpandedSteps, sanitize } from '../libs/problem'
-import styles from '../styles/Problem.module.css'
+import { Solution, ExpandList, getVisibleSteps, getExpandedSteps, sanitize } from '../../libs/problem'
+import styles from '../../styles/Problem.module.css'
 
 function SolutionStep({
     value, onClick, indent,

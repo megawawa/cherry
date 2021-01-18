@@ -1,4 +1,4 @@
-import styles from '../styles/Problem.module.css'
+import styles from '../../styles/Problem.module.css'
 import Card from 'react-bootstrap/Card'
 
 export default function ProblemSummaryCard() {

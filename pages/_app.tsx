@@ -1,8 +1,8 @@
 import '../styles/globals.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import MainNavbar from '../components/navbar'
+import MainNavbar from '../components/layout/navbar'
 import { AppProps } from 'next/app'
-import { ContextProvider } from '../components/login'
+import { ContextProvider } from '../components/layout/login'
 import { useRouter } from 'next/router'
 
 function MyApp({ Component, pageProps }: AppProps) {

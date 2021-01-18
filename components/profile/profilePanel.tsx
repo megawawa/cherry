@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import styles from '../styles/Profile.module.css'
+import styles from '../../styles/Profile.module.css'
 
 type ProfileFormType = {
     contact?: string,

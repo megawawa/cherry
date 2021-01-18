@@ -1,11 +1,11 @@
 import { Card, Button, Tab, Row, Col, Nav, Modal } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css'
 import loginStyles from '../styles/Login.module.css'
-import LoginForm from '../components/loginForm'
+import LoginForm from '../components/profile/loginForm'
 import Image from 'next/image'
-import InterestPanel from '../components/interestPanel';
+import InterestPanel from '../components/profile/interestPanel';
 import React, { useState } from 'react';
-import ProfilePanel from '../components/ProfilePanel';
+import ProfilePanel from '../components/profile/profilePanel';
 import FeaturesPanel from '../components/featuresPanel';
 import AnsweredQuizPanel from '../components/answeredQuizPanel';
 import BrowseQuizPanel from '../components/browseQuizPanel';

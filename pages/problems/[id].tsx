@@ -1,8 +1,8 @@
 import { Problem, getProblemById } from '../../libs/problem'
-import { SolutionPanel } from '../../components/solution'
+import { SolutionPanel } from '../../components/quiz/solution'
 import Card from 'react-bootstrap/Card'
 import styles from '../../styles/Problem.module.css'
-import ProblemSummaryCard from '../../components/problemSummary';
+import ProblemSummaryCard from '../../components/quiz/problemSummary';
 
 export default function ProblemPanel({ problemData }: { problemData: Problem }) {
     return (
