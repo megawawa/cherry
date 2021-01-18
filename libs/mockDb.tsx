@@ -32,7 +32,7 @@ export async function getProblemStatementById(id: number): Promise<string> {
 export type ProblemPreviewType = {
     problemStatement?: string;
 }
-export function getProblemFromTags(tags: Array<string>):
-    Array<ProblemPreviewType> {
+export async function getProblemFromTags(tags: Array<string>):
+    Promise<Array<ProblemPreviewType>> {
     return [];
 }

@@ -10,6 +10,7 @@ import FeaturesPanel from '../featuresPanel';
 import AnsweredQuizPanel from '../answeredQuizPanel';
 import BrowseQuizPanel from '../browseQuizPanel';
 import Link from 'next/link';
+import { AccountContextProvider } from './accountContext';
 
 function LockTab({ locked, text }: { locked: boolean, text: string }) {
     return <div className={styles.profileLeftItem}>
@@ -68,7 +69,6 @@ function LockItem({ locked, children }: { locked: boolean, children: React.React
 }
 
 export default function MainAccountView({ activeKey }: { activeKey: string }) {
-
     return <main className={styles.main + ' ' + loginStyles.background}>
         <div className={styles.profileContainer}>
             <Tab.Container id="left-tabs-example" defaultActiveKey={activeKey}>
@@ -172,7 +172,7 @@ export default function MainAccountView({ activeKey }: { activeKey: string }) {
                             </Tab.Pane>
                             <Tab.Pane eventKey="browseQuiz">
                                 <LockItem locked={false}>
-                                    <BrowseQuizPanel tags={['third grade', 'math']} />
+                                    <BrowseQuizPanel />
                                 </LockItem>
                             </Tab.Pane>
                         </Tab.Content>

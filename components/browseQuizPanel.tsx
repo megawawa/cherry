@@ -1,10 +1,13 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { ProblemPreviewType } from "../libs/mockDb";
+import { useAccountContext } from "./layout/accountContext";
 import QuizzesPanel from "./quiz/quizPanel";
 
-export default function BrowseQuizPanel({ tags }:
-    { tags: Array<string> }) {
-    const buttons = tags.map((tag) =>
+export default function BrowseQuizPanel() {
+    let state = useAccountContext();
+    
+    const buttons = state.tags?.map((tag) =>
         <Button variant="secondary" className="ml-2"
             key={tag}>{tag}</Button>);
 
@@ -13,6 +16,6 @@ export default function BrowseQuizPanel({ tags }:
             Hot topics
             {buttons}
         </div>
-        <QuizzesPanel tags={tags}/>
+        <QuizzesPanel quizzes={state.quizzes} />
     </div>;
 }

@@ -5,10 +5,9 @@ function QuizPanel({ quiz }: { quiz: ProblemPreviewType }) {
     return <div></div>;
 }
 
-export default function QuizzesPanel({ tags }:
-    { tags: Array<string> }) {
-    const quizzes = getProblemFromTags(tags);
-    const quizPanels = quizzes.map((quiz) =>
+export default function QuizzesPanel({ quizzes }:
+    { quizzes: Array<ProblemPreviewType> }) {
+    const quizPanels = quizzes?.map((quiz) =>
         <QuizPanel quiz={quiz} />);
 
     return <div>{quizPanels}</div>;
