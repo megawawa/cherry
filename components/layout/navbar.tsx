@@ -43,6 +43,7 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
                     <NavbarLink href='/problems/0' text='Problems'
                         registeredHref='/problems/[id]' />
                     <NavbarLink href='/history' text='History' />
+                    <NavbarLink href='/quizzes' text='Quizzes' />
                     <NavbarLink href='/tempHome'
                         text='Home [need to merge with home]' />
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
