@@ -13,6 +13,8 @@ function QuizPanel({ quiz }: { quiz: ProblemPreviewType }) {
                     <Link href={`/problems/${quiz.id}`}>
                         {quiz.problemStatement}
                     </Link>
+                    <div>
+                        Submitted by user: {quiz.submitUserId}</div>
                 </Card.Text>
             </Card.Body>
         </Card>

@@ -32,13 +32,14 @@ export async function getProblemStatementById(id: number): Promise<string> {
 export type ProblemPreviewType = {
     problemStatement?: string;
     id: number;
+    submitUserId: number;
 }
 export async function getProblemFromTags(tags: Array<string>):
     Promise<Array<ProblemPreviewType>> {
     return [
-        { problemStatement: "1*4 + 2*9 + 3*14 + ... + 10*49 = ?", id: 1 },
-        { problemStatement: "1/(1*3) + 1/(3*5) + ... + 1/(43*45) = ?", id: 2 },
-        { problemStatement: "(1 - 1/2^2) * (1 - 1/3^2) * ... * (1 - 1/10^2) = ?", id: 3 },
+        { problemStatement: "1*4 + 2*9 + 3*14 + ... + 10*49 = ?", id: 1, submitUserId: 1 },
+        { problemStatement: "1/(1*3) + 1/(3*5) + ... + 1/(43*45) = ?", id: 2, submitUserId: 2 },
+        { problemStatement: "(1 - 1/2^2) * (1 - 1/3^2) * ... * (1 - 1/10^2) = ?", id: 3, submitUserId: 3 },
     ];
 }
 

@@ -11,6 +11,7 @@ import AnsweredQuizPanel from '../answeredQuizPanel';
 import BrowseQuizPanel from '../browseQuizPanel';
 import Link from 'next/link';
 import { AccountContextProvider } from './accountContext';
+import CreateQuizPanel from '../quiz/createQuizPanel';
 
 function LockTab({ locked, text }: { locked: boolean, text: string }) {
     return <div className={styles.profileLeftItem}>
@@ -137,9 +138,11 @@ export default function MainAccountView({ activeKey }: { activeKey: string }) {
                                 <Nav.Link eventKey="takenQuizHistory">
                                     <LockTab locked={false} text="History" />
                                 </Nav.Link>
-                                <Nav.Link eventKey="createQuiz">
-                                    <LockTab locked={false} text="Create Quiz" />
-                                </Nav.Link>
+                                <Link href="/createQuiz" passHref>
+                                    <Nav.Link eventKey="askQuiz">
+                                        <LockTab locked={false} text="Help me on Quiz!!!" />
+                                    </Nav.Link>
+                                </Link>
                             </Nav.Item>
                         </Nav>
                     </Col>
@@ -173,6 +176,11 @@ export default function MainAccountView({ activeKey }: { activeKey: string }) {
                             <Tab.Pane eventKey="browseQuiz">
                                 <LockItem locked={false}>
                                     <BrowseQuizPanel />
+                                </LockItem>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="askQuiz">
+                                <LockItem locked={false}>
+                                    <CreateQuizPanel />
                                 </LockItem>
                             </Tab.Pane>
                         </Tab.Content>
