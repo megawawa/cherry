@@ -1,8 +1,16 @@
 import Head from 'next/head'
 import { Card, Button } from 'react-bootstrap'
 import styles from '../styles/Home.module.css'
+import { useSession } from 'next-auth/client'
+import MainAccountView from "../components/layout/mainAccountView";
 
 export default function Home() {
+  const [session] = useSession();
+
+  if (session?.user?.name) {
+    return <MainAccountView activeKey={'sampleLocked'} />;
+  }
+
   return (
     <>
       <Head>

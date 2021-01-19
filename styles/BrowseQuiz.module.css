@@ -1,0 +1,16 @@
+.card {
+    border-radius: 1rem;
+    border: 0.5rem solid #eaeaea;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    min-width: 400px;
+    max-width: 70vw;
+  }
+  
+  .card:hover, .card:focus, .card:active {
+    border-color: #0070f3;
+  }
+
+  .quizPreviewList {
+      margin-top: 2rem;
+  }
+
