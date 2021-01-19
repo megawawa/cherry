@@ -4,7 +4,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
-import { useLoginContext } from './login'
+import { useSession, signIn, signOut } from 'next-auth/client'
 import Link from 'next/link'
 
 export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
@@ -18,12 +18,14 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
         );
     }
 
-    let state = useLoginContext();
+    const [session] = useSession();
 
     let loginButton =
-        state.name ?
-            <div> Welcome, {state.name}</div> :
-            <Button variant="outline-success" href="/login">
+        session ?
+            (<NavDropdown title={`Welcome, ${session.user.name}`} id="basic-nav-dropdown" >
+                <NavDropdown.Item onClick={signOut}>Log Out</NavDropdown.Item>
+            </NavDropdown >) :
+            <Button variant="outline-success" onClick={signIn}>
                 Log in
             </Button>;
     return (

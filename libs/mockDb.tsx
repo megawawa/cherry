@@ -36,3 +36,11 @@ export async function getProblemFromTags(tags: Array<string>):
     Promise<Array<ProblemPreviewType>> {
     return [];
 }
+
+export async function getUserFromCredential(credentials) {
+    const user = {
+        id: 1, name: 'J. Smith',
+        email: credentials.email
+    }
+    return user;
+}
