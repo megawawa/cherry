@@ -115,15 +115,6 @@
   height: 1em;
 }
 
-.background {
-  background-image: url('../public/background.jpg');
-  height: 600px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
-}
-
 .highlightCardText {
   color: purple;
   font-size: 1.5rem;
