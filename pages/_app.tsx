@@ -12,8 +12,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider session={pageProps.session}>
+      <MainNavbar {...pageProps} currentUrl={router.pathname} />
       <AccountContextProvider>
-        <MainNavbar {...pageProps} currentUrl={router.pathname} />
         <Component {...pageProps} />
       </AccountContextProvider>
     </Provider>

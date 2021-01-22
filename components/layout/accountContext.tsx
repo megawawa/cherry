@@ -1,10 +1,11 @@
 import { Component, createContext, useContext } from 'react';
 import { ProblemPreviewType } from '../../libs/mockDb';
+import { Problem } from '../../libs/problem';
 
 export type AccountContextType = {
-    name?: string,
     tags?: Array<string>,
     quizzes?: Array<ProblemPreviewType>,
+    problemData?: Problem,
     update: (AccountContextType) => void
 }
 

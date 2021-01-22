@@ -26,7 +26,7 @@ export type Solution = {
     steps: Steps;
 }
 
-export function getExpandedSteps(solution: Solution, stepId: number)
+export function getStepsToExpandFromId(solution: Solution, stepId: number)
     : ExpandList {
     if (!solution?.stepsTree) {
         return [];
