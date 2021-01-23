@@ -1,13 +1,6 @@
 import { Steps, StepsTree, computeStepLevel } from './problem'
 
-export async function getSolutionById(id: number): Promise<[Steps, StepsTree]> {
-    let steps = [
-        '= 1/(1*2) + 1/(2*3) + 1/(3*4) + ... + 1/(40*41)',
-        '= (1 - 1/2) + (1/2 - 1/3) + (1/3 - 1/4) + ... + (1/40 - 1/41)',
-        '= 1 - 1/2 + 1/2 - 1/3 + 1/3 - 1/4 + ... + 1/40 - 1/41',
-        '= 1 - 1/41',
-        '= 40/41'];
-    let stepsTree = [[], [0], [], [2], [3], [1, 4]];
+function getProcessedStepsAndStepTrees(steps, stepsTree): [Steps, StepsTree] {
     let results = [];
     steps.forEach((elem, index) => {
         results.push({
@@ -19,8 +12,24 @@ export async function getSolutionById(id: number): Promise<[Steps, StepsTree]> {
     });
 
     computeStepLevel(results, stepsTree);
-
     return [results, stepsTree];
+}
+
+// helper function for testing.
+export function getDefaultSolutionFromText(text: string):  [Steps, StepsTree] {
+    return getProcessedStepsAndStepTrees([text], [[], [0]]);
+}
+
+export function getDefaultSolutionById(id: number): [Steps, StepsTree] {
+    let steps = [
+        '= 1/(1*2) + 1/(2*3) + 1/(3*4) + ... + 1/(40*41)',
+        '= (1 - 1/2) + (1/2 - 1/3) + (1/3 - 1/4) + ... + (1/40 - 1/41)',
+        '= 1 - 1/2 + 1/2 - 1/3 + 1/3 - 1/4 + ... + 1/40 - 1/41',
+        '= 1 - 1/41',
+        '= 40/41'];
+    let stepsTree = [[], [0], [], [2], [3], [1, 4]];
+
+    return getProcessedStepsAndStepTrees(steps, stepsTree);
 }
 
 export async function getProblemStatementById(id: number): Promise<string> {

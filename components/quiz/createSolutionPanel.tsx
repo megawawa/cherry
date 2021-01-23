@@ -1,13 +1,21 @@
 import React, { useState } from "react";
-import { getProblemById, Problem, Solution } from "../../libs/problem";
+import { getProblemById, parseTextToSolution, Problem, Solution } from "../../libs/problem";
 import { useAccountContext } from "../layout/accountContext";
 import { SolutionPanel } from "./solution";
+import styles from '../../styles/Problem.module.css'
 
 export default function CreateSolutionPanel() {
     const context = useAccountContext();
 
     let [solution, updateSolution] = useState<Solution>(
         context?.problemData?.solution);
+
+    let [solutionText, updateSolutionText] = useState<string>();
+
+    const onSolutionTextUpdate = (event) => {
+        updateSolutionText(event.target.value);
+        updateSolution(parseTextToSolution(event.target.value));
+    }
 
     const updateSolutionStep = (id: number, text: string) => {
         const ret = solution.steps.slice(0);
@@ -18,6 +26,25 @@ export default function CreateSolutionPanel() {
         });
     }
 
-    return <SolutionPanel solution={solution}
-        updateSolutionStep={updateSolutionStep} />;
+    return (
+        <div className={styles.parseSolutionContainer}>
+            <div className={styles.parseSolutionContainerItem}>
+                <div>
+                    Input your solution here:
+                </div>
+                <textarea
+                    style={{ width: "100%" }}
+                    value={solutionText}
+                    onChange={onSolutionTextUpdate} />
+            </div>
+            <div className={styles.parseSolutionContainerItem}>
+                <div>
+                    Preview:
+                </div>
+                <SolutionPanel solution={solution}
+                    updateSolutionStep={updateSolutionStep} />
+            </div>
+
+        </div>
+    );
 }

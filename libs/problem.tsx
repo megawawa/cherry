@@ -1,4 +1,6 @@
-import { getSolutionById, getProblemStatementById } from './mockDb'
+import { setPriority } from 'os'
+import ProblemSummaryCard from '../components/quiz/problemSummary'
+import { getDefaultSolutionById, getDefaultSolutionFromText, getProblemStatementById } from './mockDb'
 
 export class SolutionStep {
     id: number
@@ -81,10 +83,20 @@ export function computeStepLevel(steps, stepsTree) {
 
 export async function getProblemById(id: number): Promise<Problem> {
     let problemStatement = await getProblemStatementById(id);
-    let [steps, stepsTree] = await getSolutionById(id);
+    let [steps, stepsTree] = getDefaultSolutionById(id);
     return {
         problemStatement: problemStatement,
         solution: { steps, stepsTree },
         id: id,
+    };
+}
+
+export function parseTextToSolution(text: string): Solution {
+    let stepsTree = [];
+    let steps = [];
+    [steps, stepsTree] = getDefaultSolutionFromText(text);
+    return {
+        stepsTree: stepsTree,
+        steps: steps,
     };
 }

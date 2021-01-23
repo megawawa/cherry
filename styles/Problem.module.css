@@ -37,6 +37,22 @@
     animation: none !important;
 }
 
+.createQuizFormInput {
+    max-width: 70vw;
+}
+
+.parseSolutionContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.parseSolutionContainerItem {
+    width: 48%;
+    min-width: 350px;
+}
+
 .stepContainer {
     display: flex;
     flex-direction: row;
@@ -49,6 +65,10 @@
     background: transparent;
     border: none;
     padding: 0.5rem;
+}
+
+.stepInputText {
+    width: 100%;
 }
 
 .stepInputText:focus {

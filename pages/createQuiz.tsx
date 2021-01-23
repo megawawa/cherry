@@ -13,20 +13,11 @@ export default function CreateQuizPage({ problemData }: { problemData: Problem }
     return <MainAccountView activeKey={'askQuiz'} />;
 }
 
-export async function getStaticProps({ params }) {
+export async function getInitialProps({ params }) {
     const problemData = await getProblemById(1 /* dummy value */)
     return {
         props: {
             problemData
         }
     }
-}
-
-export async function getStaticPaths() {
-    return {
-        paths: [
-            { params: { } }
-        ],
-        fallback: true,
-    };
 }

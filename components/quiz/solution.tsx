@@ -26,11 +26,9 @@ function SolutionStep({
             (alwaysVisible ? (' ' + styles.alwaysVisibleStep) : '')}>
             {onEditStep ?
                 <div className={styles.stepInput}>
-                    <span className={styles.stepInputText}
-                        role="textbox"
-                        contentEditable onChange={() => { }}>
-                        {value}
-                    </span>
+                    <textarea className={styles.stepInputText}
+                        onChange={() => { }} value={value}>
+                    </textarea>
                 </div> :
                 <div className={styles.stepText}>
                     {value}
@@ -85,6 +83,7 @@ export function SolutionPanel({ solution, expandList = [], updateSolutionStep }
                 (elem) => !getStepsToExpandFromId(solution, id).includes(elem)
             ))));
     }
+
     var solutionItems = solutionSteps.map(
         (solutionStep) =>
             <SolutionStep
