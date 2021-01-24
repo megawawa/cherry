@@ -36,12 +36,7 @@ export default function CreateSolutionPanel() {
                 <TextareaAutosize
                     style={{ width: "100%" }}
                     value={solutionText}
-                    placeholder="
-                    Try the following example:
-                    step 1
-                    --step 2
-                    ---step 3
-                    --step 4"
+                    placeholder={"Try the following example:\nstep 1\n--step 2\n---step 3\n--step 4"}
                     rows={13}
                     onChange={onSolutionTextUpdate} />
             </div>
