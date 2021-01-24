@@ -118,3 +118,12 @@
 .expandButton:focus {
     outline: 0 !important;
 }
+
+.commentButton {
+    border: none;
+    background: transparent;
+}
+
+.commentImg {
+    width: 1.5rem;
+}

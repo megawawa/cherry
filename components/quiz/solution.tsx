@@ -1,7 +1,40 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Solution, ExpandList, getVisibleSteps, getStepsToExpandFromId, sanitize } from '../../libs/problem'
 import styles from '../../styles/Problem.module.css'
 import TextareaAutosize from 'react-autosize-textarea';
+import { FormControl, InputGroup, OverlayTrigger, Popover, PopoverProps } from 'react-bootstrap';
+
+const UpdatingPopover = React.forwardRef<HTMLButtonElement, PopoverProps>(
+    ({ popper, children, show: _, ...props }, ref) => {
+        useEffect(() => {
+            console.log('updating!');
+            popper.scheduleUpdate();
+        }, [children, popper]);
+
+        return (
+            <Popover ref={ref} content {...props}>
+                {children}
+            </Popover>
+        );
+    },
+);
+
+function CommentPanel() {
+    return (
+        <>
+            <Popover.Title as="h3">Comment here</Popover.Title>
+            <Popover.Content>
+                Can someone <strong>help</strong> me? I got stuck here
+                <InputGroup size="sm" className="mb-3">
+                    <TextareaAutosize />
+                    <InputGroup.Append>
+                        <InputGroup.Text id="inputGroup-sizing-sm">Send</InputGroup.Text>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Popover.Content>
+        </>
+    );
+}
 
 // alwaysVisible element skips initial rendering effect
 function SolutionStep({
@@ -36,6 +69,19 @@ function SolutionStep({
                 </div>
             }
         </div>
+        <OverlayTrigger trigger="click" placement="right" rootClose overlay={
+            <UpdatingPopover id="popover-basic" style={{ minWidth: "400px" }}>
+                <CommentPanel />
+            </UpdatingPopover>}>
+            <div style={{ marginLeft: "auto" }}>
+                <button className={styles.commentButton} onClick={() => { }}
+                    type="button">
+                    <img className={styles.commentImg}
+                        src={"/comment.svg"}
+                        alt="my image" />
+                </button>
+            </div>
+        </OverlayTrigger >
     </div >;
 }
 
