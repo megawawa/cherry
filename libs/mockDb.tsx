@@ -1,6 +1,6 @@
 import { Steps, StepsTree, computeStepLevel } from './problem'
 
-function getProcessedStepsAndStepTrees(steps, stepsTree): [Steps, StepsTree] {
+export function getProcessedStepsAndStepTrees(steps, stepsTree): [Steps, StepsTree] {
     let results = [];
     steps.forEach((elem, index) => {
         results.push({
@@ -12,12 +12,8 @@ function getProcessedStepsAndStepTrees(steps, stepsTree): [Steps, StepsTree] {
     });
 
     computeStepLevel(results, stepsTree);
-    return [results, stepsTree];
-}
 
-// helper function for testing.
-export function getDefaultSolutionFromText(text: string):  [Steps, StepsTree] {
-    return getProcessedStepsAndStepTrees([text], [[], [0]]);
+    return [results, stepsTree];
 }
 
 export function getDefaultSolutionById(id: number): [Steps, StepsTree] {

@@ -1,6 +1,6 @@
 import { setPriority } from 'os'
 import ProblemSummaryCard from '../components/quiz/problemSummary'
-import { getDefaultSolutionById, getDefaultSolutionFromText, getProblemStatementById } from './mockDb'
+import { getDefaultSolutionById, getProblemStatementById, getProcessedStepsAndStepTrees } from './mockDb'
 
 export class SolutionStep {
     id: number
@@ -69,8 +69,14 @@ export function computeStepLevel(steps, stepsTree) {
         steps[index].alwaysVisible = true;
     })
 
+    let visited = {};
+
     while (bfs.length != 0) {
         let stepToExpand = bfs.shift();
+        if (visited[stepToExpand]) {
+            throw Error;
+        }
+        visited[stepToExpand] = true;
         steps[stepToExpand].hasChild = stepsTree[stepToExpand].length != 0;
         stepsTree[stepToExpand].forEach((index) => {
             bfs.push(index);
@@ -91,12 +97,62 @@ export async function getProblemById(id: number): Promise<Problem> {
     };
 }
 
+function computeChild(
+    stepsLevel: StepsLevel,
+    currentIndex: number,
+    parentLevel: number) {
+    let currentKidLevel = -1;
+    let children = [];
+    // find children
+    for (let j = currentIndex - 1; j >= 0; --j) {
+        if (stepsLevel[j] <= parentLevel) {
+            break;
+        }
+        // if stepsLevel[j] > currentKidLevel
+        // j is the kid of the step with 
+        // step level of "currentKidLevel"
+        if (stepsLevel[j] <= currentKidLevel
+            || currentKidLevel == -1) {
+            children.push(j);
+            currentKidLevel = stepsLevel[j];
+        }
+    }
+    return children;
+}
+
 export function parseTextToSolution(text: string): Solution {
+    let steps = text.split('\n--');
+    let stepsLevel = [];
     let stepsTree = [];
-    let steps = [];
-    [steps, stepsTree] = getDefaultSolutionFromText(text);
+
+    for (let i = 0; i < steps.length; ++i) {
+        const regMatch = RegExp('[^-]', 'g');
+        regMatch.exec(steps[i]);
+        if (regMatch.lastIndex == 0) {
+            // empty string. set level to 0
+            stepsLevel.push(0);
+        } else {
+            stepsLevel.push(regMatch.lastIndex - 1);
+        }
+        steps[i] = steps[i].substr(stepsLevel[i]);
+    }
+
+    // process indentation to create stepsTree
+    for (let i = 0; i < steps.length; ++i) {
+        stepsTree.push(
+            computeChild(stepsLevel, i, stepsLevel[i]));
+    }
+
+    stepsTree.push(
+        computeChild(stepsLevel, steps.length, -1));
+
+    console.log(steps, stepsTree, stepsLevel);
+
+    let solutionSteps = [];
+    [solutionSteps, stepsTree] =
+        getProcessedStepsAndStepTrees(steps, stepsTree);
     return {
         stepsTree: stepsTree,
-        steps: steps,
+        steps: solutionSteps,
     };
 }

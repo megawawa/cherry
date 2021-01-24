@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getProblemById, parseTextToSolution, Problem, Solution } from "../../libs/problem";
 import { useAccountContext } from "../layout/accountContext";
 import { SolutionPanel } from "./solution";
+import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Problem.module.css'
 
 export default function CreateSolutionPanel() {
@@ -32,9 +33,10 @@ export default function CreateSolutionPanel() {
                 <div>
                     Input your solution here:
                 </div>
-                <textarea
+                <TextareaAutosize
                     style={{ width: "100%" }}
                     value={solutionText}
+                    rows={13}
                     onChange={onSolutionTextUpdate} />
             </div>
             <div className={styles.parseSolutionContainerItem}>

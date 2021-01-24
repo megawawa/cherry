@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Solution, ExpandList, getVisibleSteps, getStepsToExpandFromId, sanitize } from '../../libs/problem'
 import styles from '../../styles/Problem.module.css'
+import TextareaAutosize from 'react-autosize-textarea';
 
 // alwaysVisible element skips initial rendering effect
 function SolutionStep({
@@ -26,9 +27,9 @@ function SolutionStep({
             (alwaysVisible ? (' ' + styles.alwaysVisibleStep) : '')}>
             {onEditStep ?
                 <div className={styles.stepInput}>
-                    <textarea className={styles.stepInputText}
+                    <TextareaAutosize className={styles.stepInputText}
                         onChange={() => { }} value={value}>
-                    </textarea>
+                    </TextareaAutosize>
                 </div> :
                 <div className={styles.stepText}>
                     {value}
