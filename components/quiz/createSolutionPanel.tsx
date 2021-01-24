@@ -36,6 +36,12 @@ export default function CreateSolutionPanel() {
                 <TextareaAutosize
                     style={{ width: "100%" }}
                     value={solutionText}
+                    placeholder="
+                    Try the following example:
+                    step 1
+                    --step 2
+                    ---step 3
+                    --step 4"
                     rows={13}
                     onChange={onSolutionTextUpdate} />
             </div>
