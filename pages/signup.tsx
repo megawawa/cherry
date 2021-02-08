@@ -5,12 +5,14 @@ import SignUpForm from '../components/profile/signUpForm'
 import React from 'react';
 import FeaturesPanel from '../components/featuresPanel';
 import { csrfToken } from 'next-auth/client'
+import { useRouter } from 'next/router'
 
 export default function SignUpPage({ csrfToken }) {
+    const router = useRouter();
     return <main className={styles.main + ' ' + loginStyles.background}>
         <div className={loginStyles.grid}>
             <Card className={styles.card + ' p-3'}>
-                <SignUpForm csrfToken={csrfToken}/>
+                <SignUpForm csrfToken={csrfToken} error={router.query}/>
             </Card>
 
             <div className={loginStyles.featuresGrid}>

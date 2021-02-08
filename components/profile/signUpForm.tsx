@@ -9,7 +9,7 @@ type SignUpFormType = {
     email?: string,
 }
 
-export default function SignUpForm({ csrfToken }) {
+export default function SignUpForm({ csrfToken, error }) {
     const [state, setState] = useState<SignUpFormType>({});
     const router = useRouter();
     const handleChange = (event) => {
@@ -24,6 +24,7 @@ export default function SignUpForm({ csrfToken }) {
     return (
         <Form method='post' action='/api/auth/callback/credentials'>
             <input name='csrfToken' type='hidden' defaultValue={csrfToken}></input>
+            <input name='isNewUser' type='hidden' defaultValue={1}></input>
             <Form.Group controlId="formBasicName">
                 <Form.Label>Display name</Form.Label>
                 <Form.Control
@@ -59,6 +60,13 @@ export default function SignUpForm({ csrfToken }) {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
+            { error?.signUpError &&
+                (
+                    <Form.Group controlId="errorPrompt">
+                        <Form.Text style={{ color: "red" }}>
+                            User name already exists
+                        </Form.Text>
+                    </Form.Group>)}
             <Button variant="primary" type="submit">
                 Create account
                 </Button>

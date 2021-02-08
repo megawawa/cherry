@@ -47,11 +47,3 @@ export async function getProblemFromTags(tags: Array<string>):
         { problemStatement: "(1 - 1/2^2) * (1 - 1/3^2) * ... * (1 - 1/10^2) = ?", id: 3, submitUserId: 3 },
     ];
 }
-
-export async function getUserFromCredential(credentials) {
-    const user = {
-        id: 1, name: 'J. Smith',
-        email: credentials.email
-    }
-    return user;
-}

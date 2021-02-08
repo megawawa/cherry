@@ -8,7 +8,7 @@ type LoginFormType = {
     email?: string,
 }
 
-export default function LoginForm({ csrfToken }) {
+export default function LoginForm({ csrfToken, error }) {
     const [state, setState] = useState<LoginFormType>({});
     const router = useRouter();
     const handleChange = (event) => {
@@ -41,6 +41,13 @@ export default function LoginForm({ csrfToken }) {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
+            { error?.loginError &&
+                (
+                    <Form.Group controlId="errorPrompt">
+                        <Form.Text style={{ color: "red" }}>
+                            Invalid email or password
+                        </Form.Text>
+                    </Form.Group>)}
             <Button variant="primary" type="submit">
                 Sign in
                 </Button>

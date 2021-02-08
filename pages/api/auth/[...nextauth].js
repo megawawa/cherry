@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import { getUserFromCredential } from '../../../libs/mockDb'
+import { getUserFromCredential, genUserFromCredential } from '../../../libs/mongoDb'
 
 const options = {
   // Configure one or more authentication providers
@@ -15,20 +15,25 @@ const options = {
       // The credentials is used to generate a suitable form on the sign in page.
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
-      credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" }
-      },
       authorize: async (credentials) => {
+        if (credentials.isNewUser) {
+          const user = await genUserFromCredential(credentials);
+
+          if (user) {
+            return Promise.resolve(user);
+          } else {
+            return Promise.reject('/signup?signUpError=1');
+          }
+        }
         // Add logic here to look up the user from the credentials supplied
         const user = await getUserFromCredential(credentials);
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
-          return Promise.resolve(user)
+          return Promise.resolve(user);
         } else {
           // If you return null or false then the credentials will be rejected
-          return Promise.resolve(null)
+          return Promise.reject('/login?loginError=1');
           // You can also Reject this callback with an Error or with a URL:
           // return Promise.reject(new Error('error message')) // Redirect to error page
           // return Promise.reject('/path/to/redirect')        // Redirect to a URL
