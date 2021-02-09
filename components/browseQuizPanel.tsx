@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import { ProblemPreviewType } from "../libs/mockDb";
 import { useAccountContext } from "./layout/accountContext";
 import QuizzesPanel from "./quiz/quizPanel";
 

@@ -113,3 +113,19 @@ export async function genUserFromCredential(credentials) {
     return result;
 }
 
+export type ProblemPreviewType = {
+    problemStatement?: string;
+    id: number;
+    submitUserId: number;
+    tags: Array<string>;
+}
+export async function getProblemFromTags(tags: Array<string>):
+    Promise<Array<ProblemPreviewType>> {
+    const { db } = await connectToDatabase();
+    return await db
+        .collection("problems")
+        .find({ tags: { $eq: tags } }, { projection: { _id: 0 } })
+        .limit(10)
+        .toArray();
+}
+

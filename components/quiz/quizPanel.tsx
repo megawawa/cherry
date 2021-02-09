@@ -1,4 +1,4 @@
-import { getProblemFromTags, ProblemPreviewType } from "../../libs/mockDb";
+import { ProblemPreviewType } from "../../libs/mongoDb";
 import styles from '../../styles/BrowseQuiz.module.css'
 import { Problem } from "../../libs/problem";
 import React from "react";
