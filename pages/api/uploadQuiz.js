@@ -27,6 +27,10 @@ export default async function handler(req, res) {
         problemStatement: req.body?.problemStatement ?? "",
         submitUserName: session.user.name,
         tags: ["third grade", "math"],
+        solution: req.body?.solution ?? "",
+        summary: {
+            pastAttempts: 0, successfulAttempts: 0
+        }
     }
 
     uploadQuiz(quiz);

@@ -53,8 +53,14 @@ export function getVisibleSteps(solution: Solution, expandList: ExpandList)
     return solution?.steps?.filter((_, index) => expandList.includes(index)) ?? [];
 }
 
+export type Summary = {
+    pastAttempts?: number,
+    successfulAttempts?: number;
+}
+
 export type Problem = {
     id: number;
+    summary: Summary;
     problemStatement?: string
     solution?: Solution
 }
@@ -94,6 +100,7 @@ export async function getProblemById(id: number): Promise<Problem> {
         problemStatement: problemStatement,
         solution: { steps, stepsTree },
         id: id,
+        summary: {},
     };
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useAccountContext } from "../components/layout/accountContext";
 import MainAccountView from "../components/layout/mainAccountView";
-import { getProblemFromTags, ProblemPreviewType } from "../libs/mongoDb";
+import { getProblemPreviewFromTags, ProblemPreviewType } from "../libs/mongoDb";
 
 export default function QuizzesPage({ tags, quizzes }: {
     tags: Array<string>,
@@ -19,7 +19,7 @@ export default function QuizzesPage({ tags, quizzes }: {
 
 export async function getStaticProps(context) {
     const tags = ['third grade', 'math'];
-    const quizzes = await getProblemFromTags(tags);
+    const quizzes = await getProblemPreviewFromTags(tags);
     return {
         props: {
             tags: tags,

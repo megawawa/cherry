@@ -1,8 +1,9 @@
-import { Problem, getProblemById } from '../../libs/problem'
+import { Problem, getProblemById, parseTextToSolution } from '../../libs/problem'
 import { SolutionPanel } from '../../components/quiz/solution'
 import Card from 'react-bootstrap/Card'
 import styles from '../../styles/Problem.module.css'
 import ProblemSummaryCard from '../../components/quiz/problemSummary';
+import { getProblemDetailViewFromId } from '../../libs/mongoDb';
 
 export default function ProblemPanel({ problemData }: { problemData: Problem }) {
     return (
@@ -24,10 +25,15 @@ export default function ProblemPanel({ problemData }: { problemData: Problem }) 
 }
 
 export async function getStaticProps({ params }) {
-    const problemData = await getProblemById(params.id)
+    const problemData = await getProblemDetailViewFromId(params.id);
     return {
         props: {
-            problemData
+            problemData: {
+                problemStatement: problemData?.problemStatement ?? "",
+                solution: parseTextToSolution(problemData?.solution ?? ""),
+                summary: problemData.summary,
+                id: 0,
+            }
         }
     }
 }
@@ -35,8 +41,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
     return {
         paths: [
-            { params: { id: '1' } },
-            { params: { id: '2' } }
+            { params: { id: '60225e6b98a1d61be8ba7f7c' } },
         ],
         fallback: true,
     };

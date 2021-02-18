@@ -1,6 +1,8 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient, ObjectId } from 'mongodb'
 import { resourceLimits } from 'worker_threads';
 import { validPassword, generateHash } from './auth'
+import { Summary } from './problem'
+
 
 const { MONGODB_URI, MONGODB_DB } = process.env
 const globalAny: any = global;
@@ -120,7 +122,7 @@ export type ProblemPreviewType = {
     submitUserName: string;
     tags: Array<string>;
 }
-export async function getProblemFromTags(tags: Array<string>):
+export async function getProblemPreviewFromTags(tags: Array<string>):
     Promise<Array<ProblemPreviewType>> {
     const { db } = await connectToDatabase();
     const result = await db
@@ -135,7 +137,31 @@ export async function getProblemFromTags(tags: Array<string>):
     });
 }
 
-export async function uploadQuiz(quiz: ProblemPreviewType) {
+
+export type ProblemDetailViewType = {
+    problemStatement?: string;
+    summary: Summary;
+    solution: string;
+}
+
+export async function getProblemDetailViewFromId(id: string):
+    Promise<ProblemDetailViewType> {
+    const { db } = await connectToDatabase();
+    const result = await db
+        .collection("problems")
+        .findOne({ _id: { $eq: ObjectId(id) } });
+    return {
+        problemStatement: result?.problemStatement ?? "",
+        summary: result.summary ?? {},
+        solution: result.solution ?? "",
+    }
+}
+
+export type ProblemType = ProblemPreviewType & {
+    solution: string;
+}
+
+export async function uploadQuiz(quiz: ProblemType) {
     const { db } = await connectToDatabase();
 
     return await db

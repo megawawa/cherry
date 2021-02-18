@@ -42,8 +42,9 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <NavbarLink href='/tutor' text='Tutor [locked if not student]' />
-                    <NavbarLink href='/problems/0' text='Problems'
-                        registeredHref='/problems/[id]' />
+                    {/* TODO: @megawawa(02/18/2021) load last viewed quiz
+                        <NavbarLink href='/problems/0' text='Problems'
+                        registeredHref='/problems/[id]' /> */}
                     <NavbarLink href='/history' text='History' />
                     <NavbarLink href='/quizzes' text='Quizzes' />
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">

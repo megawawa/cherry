@@ -10,6 +10,7 @@ type QuizCreateFormType = {
     phone?: string,
     otherContact?: string,
     partialSolution?: string,
+    solution?: string,
 }
 
 export default function CreateQuizPanel({ }) {
@@ -21,6 +22,13 @@ export default function CreateQuizPanel({ }) {
         setQuiz({
             ...quiz,
             [event.target.name]: event.target.value
+        });
+    };
+
+    const updateSolution = (event) => {
+        setQuiz({
+            ...quiz,
+            solution: event.target.value
         });
     };
 
@@ -51,7 +59,7 @@ export default function CreateQuizPanel({ }) {
                 onChange={handleChange} />
         </div>;
     } else if (state.index == 2) {
-        solutionInput = <CreateSolutionPanel />;
+        solutionInput = <CreateSolutionPanel onTextUpdate={updateSolution} />;
     }
 
     const handleSubmit = async (event) => {

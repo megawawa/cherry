@@ -5,7 +5,7 @@ import { SolutionPanel } from "./solution";
 import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Problem.module.css'
 
-export default function CreateSolutionPanel() {
+export default function CreateSolutionPanel({onTextUpdate}) {
     const context = useAccountContext();
 
     let [solution, updateSolution] = useState<Solution>(
@@ -16,6 +16,7 @@ export default function CreateSolutionPanel() {
     const onSolutionTextUpdate = (event) => {
         updateSolutionText(event.target.value);
         updateSolution(parseTextToSolution(event.target.value));
+        onTextUpdate(event);
     }
 
     const updateSolutionStep = (id: number, text: string) => {
