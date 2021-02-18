@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb'
+import { resourceLimits } from 'worker_threads';
 import { validPassword, generateHash } from './auth'
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -115,17 +116,46 @@ export async function genUserFromCredential(credentials) {
 
 export type ProblemPreviewType = {
     problemStatement?: string;
-    id: number;
-    submitUserId: number;
+    id?: string;
+    submitUserName: string;
     tags: Array<string>;
 }
 export async function getProblemFromTags(tags: Array<string>):
     Promise<Array<ProblemPreviewType>> {
     const { db } = await connectToDatabase();
-    return await db
+    const result = await db
         .collection("problems")
-        .find({ tags: { $eq: tags } }, { projection: { _id: 0 } })
+        .find({ tags: { $eq: tags } })
         .limit(10)
         .toArray();
+    return result.map((obj) => {
+        obj.id = obj._id.valueOf().toString();
+        delete obj._id;
+        return obj;
+    });
+}
+
+export async function uploadQuiz(quiz: ProblemPreviewType) {
+    const { db } = await connectToDatabase();
+
+    return await db
+        .collection("problems")
+        .updateOne({
+            problemStatement
+                : quiz.problemStatement
+        }, {
+            "$setOnInsert":
+                quiz
+        }, { upsert: true, returnNewDocument: false })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`Identical problem statement already exists.`);
+                    return;
+                }
+                console.log("adding new quiz");
+                return quiz;
+            }
+        );
 }
 

@@ -12,7 +12,7 @@ type QuizCreateFormType = {
     partialSolution?: string,
 }
 
-export default function CreateQuizPanel() {
+export default function CreateQuizPanel({ }) {
     let [state, setState] = useState({ text: "Select reason", index: -1 });
 
     let [quiz, setQuiz] = useState<QuizCreateFormType>();
@@ -54,9 +54,28 @@ export default function CreateQuizPanel() {
         solutionInput = <CreateSolutionPanel />;
     }
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const res = await fetch(
+            '/api/uploadQuiz',
+            {
+                body: JSON.stringify(
+                    quiz
+                ),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            }
+        )
+
+        const result = await res.json();
+        console.log("quiz update: ", result);
+    };
+
     return <div>
-        <Form onSubmit={() => { }}>
-            <Form.Group controlId="phone">
+        <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="problemStatement">
                 <Form.Label>Problem</Form.Label>
                 <Form.Control as="textarea" rows={3} className={styles.createQuizFormInput}
                     placeholder="problem statement. eg: 1/2 + 1/6 + ... + 1/(40*41) = ?"
@@ -65,7 +84,7 @@ export default function CreateQuizPanel() {
                     onChange={handleChange} />
             </Form.Group>
 
-            <Form.Group controlId="solutionFormat">
+            <Form.Group controlId="formattedSolution">
                 <div style={{ display: "inline-block" }}>I need help because:</div>
                 <Dropdown className="ml-2" style={{ display: "inline-block" }}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">

@@ -14,7 +14,7 @@ function QuizPanel({ quiz }: { quiz: ProblemPreviewType }) {
                         {quiz.problemStatement}
                     </Link>
                     <div>
-                        Submitted by user: {quiz.submitUserId}</div>
+                        Submitted by user: {quiz.submitUserName}</div>
                 </Card.Text>
             </Card.Body>
         </Card>

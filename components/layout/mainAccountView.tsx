@@ -69,7 +69,9 @@ function LockItem({ locked, children }: { locked: boolean, children: React.React
     </div>;
 }
 
-export default function MainAccountView({ activeKey }: { activeKey: string }) {
+export default function MainAccountView({ activeKey }: {
+    activeKey: string
+}) {
     return <main className={styles.main + ' ' + loginStyles.background}>
         <div className={styles.profileContainer}>
             <Tab.Container id="left-tabs-example" defaultActiveKey={activeKey}>
