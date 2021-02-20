@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useRouter } from 'next/router';
+import { useState } from "react";
 import { Button, Dropdown, Form } from "react-bootstrap";
 import CreateSolutionPanel from "./createSolutionPanel";
-import styles from '../../styles/Problem.module.css'
+import styles from '../../styles/Problem.module.css';
 
 type QuizCreateFormType = {
     problemStatement?: string,
@@ -15,6 +16,7 @@ type QuizCreateFormType = {
 
 export default function CreateQuizPanel({ }) {
     let [state, setState] = useState({ text: "Select reason", index: -1 });
+    const router = useRouter();
 
     let [quiz, setQuiz] = useState<QuizCreateFormType>();
 
@@ -79,6 +81,7 @@ export default function CreateQuizPanel({ }) {
 
         const result = await res.json();
         console.log("quiz update: ", result);
+        router.push('/profileHistory');
     };
 
     return <div>
@@ -109,7 +112,7 @@ export default function CreateQuizPanel({ }) {
             </Form.Group>
 
             <Button variant="primary" type="submit" className="mt-2">
-                Save
+                Submit
             </Button>
         </Form>
 

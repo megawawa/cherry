@@ -5,11 +5,12 @@
     justify-content: flex-start;
     align-items: flex-start;
     min-height: 100vh;
-    min-width: 100vh;
+    min-width: 100vw;
 }
 
 .profileContainer {
-    min-width: 100vw;
+    min-width: 95vw;
+    max-width: 95vw;
 }
 
 .column {

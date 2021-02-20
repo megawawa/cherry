@@ -138,6 +138,22 @@ export async function getProblemPreviewFromTags(tags: Array<string>):
 }
 
 
+export async function getProblemPreviewFromUser(user: string):
+    Promise<Array<ProblemPreviewType>> {
+    const { db } = await connectToDatabase();
+    const result = await db
+        .collection("problems")
+        .find({ submitUserName: { $eq: user } })
+        .limit(10)
+        .toArray();
+    return result.map((obj) => {
+        obj.id = obj._id.valueOf().toString();
+        delete obj._id;
+        return obj;
+    });
+}
+
+
 export type ProblemDetailViewType = {
     problemStatement?: string;
     summary: Summary;

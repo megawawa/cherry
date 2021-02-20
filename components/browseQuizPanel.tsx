@@ -15,6 +15,6 @@ export default function BrowseQuizPanel() {
             Hot topics
             {buttons}
         </div>
-        <QuizzesPanel quizzes={state.quizzes} />
+        <QuizzesPanel quizzes={state.quizzes} displayUser={true}/>
     </div>;
 }

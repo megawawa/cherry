@@ -120,7 +120,7 @@ export default function MainAccountView({ activeKey }: {
                                 Tutor
                             </div>
                             <Nav.Item>
-                                <Nav.Link eventKey="answeredQuizHistory">
+                                <Nav.Link href="/profileHistory" eventKey="answeredQuizHistory">
                                     <LockTab locked={false} text="History" />
                                 </Nav.Link>
                                 <Nav.Link eventKey="answerQuiz">

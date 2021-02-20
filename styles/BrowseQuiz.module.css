@@ -4,6 +4,7 @@
     transition: color 0.15s ease, border-color 0.15s ease;
     min-width: 400px;
     max-width: 70vw;
+    margin: 0.5rem 0
   }
   
   .card:hover, .card:focus, .card:active {
@@ -13,4 +14,3 @@
   .quizPreviewList {
       margin-top: 2rem;
   }
-
