@@ -10,7 +10,7 @@ import FeaturesPanel from '../featuresPanel';
 import AnsweredQuizPanel from '../answeredQuizPanel';
 import BrowseQuizPanel from '../browseQuizPanel';
 import Link from 'next/link';
-import { AccountContextProvider } from './accountContext';
+import { AccountContextProvider, useAccountContext } from './accountContext';
 import CreateQuizPanel from '../quiz/createQuizPanel';
 
 function LockTab({ locked, text }: { locked: boolean, text: string }) {
@@ -72,6 +72,7 @@ function LockItem({ locked, children }: { locked: boolean, children: React.React
 export default function MainAccountView({ activeKey }: {
     activeKey: string
 }) {
+    const context = useAccountContext();
     return <main className={styles.main + ' ' + loginStyles.background}>
         <div className={styles.profileContainer}>
             <Tab.Container id="left-tabs-example" defaultActiveKey={activeKey}>
@@ -107,7 +108,7 @@ export default function MainAccountView({ activeKey }: {
                                 Public profile
                                </div>
                             <Nav.Item>
-                                <Link href="/quizzes" passHref>
+                                <Link href={`/quizzes/${context.quizzesIndex ?? 1}`} passHref>
                                     <Nav.Link eventKey="browseQuiz">
                                         <LockTab locked={false} text="Browse Quiz" />
                                     </Nav.Link>

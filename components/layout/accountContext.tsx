@@ -5,6 +5,7 @@ import { Problem } from '../../libs/problem';
 export type AccountContextType = {
     tags?: Array<string>,
     quizzes?: Array<ProblemPreviewType>,
+    quizzesIndex?: number;
     problemData?: Problem,
     update: (AccountContextType) => void
 }

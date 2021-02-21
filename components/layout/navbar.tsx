@@ -46,7 +46,7 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
                         <NavbarLink href='/problems/0' text='Problems'
                         registeredHref='/problems/[id]' /> */}
                     <NavbarLink href='/history' text='History' />
-                    <NavbarLink href='/quizzes' text='Quizzes' />
+                    <NavbarLink href={`/quizzes/1`} text='Quizzes' />
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

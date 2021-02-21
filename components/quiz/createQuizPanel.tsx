@@ -59,7 +59,7 @@ export default function CreateQuizPanel({ }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const res = await fetch(
-            '/api/editQuiz',
+            '/api/uploadQuiz',
             {
                 body: JSON.stringify(
                     quiz

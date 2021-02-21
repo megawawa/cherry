@@ -119,12 +119,13 @@ export async function genUserFromCredential(credentials) {
     return result;
 }
 
-export async function getProblemPreviewFromTags(tags: Array<string>):
+export async function getProblemPreviewFromTags(tags: Array<string>, pageIndex: number):
     Promise<Array<ProblemPreviewType>> {
     const { db } = await connectToDatabase();
     const result = await db
         .collection("problems")
         .find({ tags: { $eq: tags } })
+        .skip((pageIndex - 1) * 10)
         .limit(10)
         .toArray();
     return result.map((obj) => {
