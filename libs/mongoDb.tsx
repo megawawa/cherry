@@ -1,7 +1,10 @@
 import { MongoClient, ObjectId } from 'mongodb'
 import { resourceLimits } from 'worker_threads';
 import { validPassword, generateHash } from './auth'
-import { Summary } from './problem'
+import {
+    DbProblemCreateType, DBProblemEditType,
+    ProblemDetailViewType, ProblemPreviewType
+} from './quiz'
 
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -116,12 +119,6 @@ export async function genUserFromCredential(credentials) {
     return result;
 }
 
-export type ProblemPreviewType = {
-    problemStatement?: string;
-    id?: string;
-    submitUserName: string;
-    tags: Array<string>;
-}
 export async function getProblemPreviewFromTags(tags: Array<string>):
     Promise<Array<ProblemPreviewType>> {
     const { db } = await connectToDatabase();
@@ -153,14 +150,6 @@ export async function getProblemPreviewFromUser(user: string):
     });
 }
 
-
-export type ProblemDetailViewType = {
-    problemStatement?: string;
-    summary: Summary;
-    solution: string;
-    submitUserName: string;
-}
-
 export async function getProblemDetailViewFromId(id: string):
     Promise<ProblemDetailViewType> {
     const { db } = await connectToDatabase();
@@ -175,11 +164,7 @@ export async function getProblemDetailViewFromId(id: string):
     }
 }
 
-export type ProblemType = ProblemPreviewType & {
-    solution: string;
-}
-
-export async function uploadQuiz(quiz: ProblemType) {
+export async function uploadQuiz(quiz: DbProblemCreateType) {
     const { db } = await connectToDatabase();
 
     return await db
@@ -198,6 +183,32 @@ export async function uploadQuiz(quiz: ProblemType) {
                     return;
                 }
                 console.log("adding new quiz");
+                return quiz;
+            }
+        );
+}
+
+export async function editQuiz(quiz: DBProblemEditType) {
+    const { db } = await connectToDatabase();
+
+    return await db
+        .collection("problems")
+        .updateOne({
+            _id: { $eq: ObjectId(quiz.id) }, submitUserName: { $eq: quiz.submitUserName }
+        }, {
+            "$set":
+                ((obj) => {
+                    delete obj.id;
+                    return obj;
+                })(quiz)
+        }, { upsert: false, returnNewDocument: false })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`matching quiz found. edited`);
+                    return;
+                }
+                console.log("no matching quiz to edit");
                 return quiz;
             }
         );

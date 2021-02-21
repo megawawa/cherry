@@ -1,7 +1,8 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useAccountContext } from "../components/layout/accountContext";
 import MainAccountView from "../components/layout/mainAccountView";
-import { getProblemPreviewFromTags, ProblemPreviewType } from "../libs/mongoDb";
+import { getProblemPreviewFromTags } from "../libs/mongoDb";
+import { ProblemPreviewType } from "../libs/quiz";
 
 export default function QuizzesPage({ tags, quizzes }: {
     tags: Array<string>,

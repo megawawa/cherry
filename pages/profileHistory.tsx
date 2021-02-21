@@ -1,7 +1,8 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useAccountContext } from "../components/layout/accountContext";
 import MainAccountView from "../components/layout/mainAccountView";
-import { getProblemPreviewFromUser, ProblemPreviewType } from "../libs/mongoDb";
+import { getProblemPreviewFromUser } from "../libs/mongoDb";
+import { ProblemPreviewType } from '../libs/quiz';
 import { getSession } from 'next-auth/client'
 
 export default function QuizzesPage({ quizzes }: {

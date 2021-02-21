@@ -41,8 +41,24 @@ export default function ProblemPanel({ problemData, submitUserName }:
     }
 
     /* commit checkpoint */
-    const handleSave = () => {
+    const handleSave = async () => {
         setCachedQuiz(quiz);
+        const res = await fetch(
+            '/api/editQuiz',
+            {
+                body: JSON.stringify(
+                    {
+                        ...quiz,
+                        "id": problemData.id,
+                        "submitUserName": session?.user?.name,
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            }
+        )
     }
 
     const updateSolution = (event) => {
@@ -72,7 +88,7 @@ export default function ProblemPanel({ problemData, submitUserName }:
                             }
                             onCancel={handleCancel}
                             onSave={handleSave}
-                            editable={true} />
+                            editable={editable} />
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -89,7 +105,7 @@ export default function ProblemPanel({ problemData, submitUserName }:
                         }
                         onCancel={handleCancel}
                         onSave={handleSave}
-                        editable={true} />
+                        editable={editable} />
                 </Card.Body>
             </Card>
         </div>);
@@ -103,7 +119,7 @@ export async function getStaticProps({ params }) {
                 problemStatement: problemData?.problemStatement ?? "",
                 solution: problemData?.solution ?? "",
                 summary: problemData.summary,
-                id: 0,
+                id: params.id,
             },
             submitUserName: problemData.submitUserName,
         }

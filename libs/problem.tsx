@@ -65,7 +65,7 @@ export type Summary = {
 }
 
 export type Problem = {
-    id: number;
+    id: string;
     summary: Summary;
     problemStatement?: string
     solution?: string

@@ -1,5 +1,5 @@
 import { Component, createContext, useContext } from 'react';
-import { ProblemPreviewType } from '../../libs/mongoDb';
+import { ProblemPreviewType } from '../../libs/quiz';
 import { Problem } from '../../libs/problem';
 
 export type AccountContextType = {

@@ -1,4 +1,4 @@
-import { ProblemPreviewType } from "../../libs/mongoDb";
+import { ProblemPreviewType } from "../../libs/quiz";
 import styles from '../../styles/BrowseQuiz.module.css'
 import { Problem } from "../../libs/problem";
 import React from "react";
