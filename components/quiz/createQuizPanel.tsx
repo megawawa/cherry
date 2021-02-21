@@ -3,16 +3,8 @@ import { useState } from "react";
 import { Button, Dropdown, Form } from "react-bootstrap";
 import CreateSolutionPanel from "./createSolutionPanel";
 import styles from '../../styles/Problem.module.css';
+import { QuizCreateFormType } from '../../libs/quiz';
 
-type QuizCreateFormType = {
-    problemStatement?: string,
-    intro?: string,
-    email?: string,
-    phone?: string,
-    otherContact?: string,
-    partialSolution?: string,
-    solution?: string,
-}
 
 export default function CreateQuizPanel({ }) {
     let [state, setState] = useState({ text: "Select reason", index: -1 });

@@ -158,6 +158,7 @@ export type ProblemDetailViewType = {
     problemStatement?: string;
     summary: Summary;
     solution: string;
+    submitUserName: string;
 }
 
 export async function getProblemDetailViewFromId(id: string):
@@ -170,6 +171,7 @@ export async function getProblemDetailViewFromId(id: string):
         problemStatement: result?.problemStatement ?? "",
         summary: result.summary ?? {},
         solution: result.solution ?? "",
+        submitUserName: result.submitUserName ?? "",
     }
 }
 

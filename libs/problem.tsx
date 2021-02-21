@@ -2,6 +2,12 @@ import { setPriority } from 'os'
 import ProblemSummaryCard from '../components/quiz/problemSummary'
 import { getDefaultSolutionById, getProblemStatementById, getProcessedStepsAndStepTrees } from './mockDb'
 
+/* 
+ * This file is for abstracting "problem" from backend point of view.
+ * For derived entities to interact with problem, see "quiz".
+ * A "problem" consists of problem statement and solution.
+ */
+
 export class SolutionStep {
     id: number
     text?: string
@@ -62,7 +68,7 @@ export type Problem = {
     id: number;
     summary: Summary;
     problemStatement?: string
-    solution?: Solution
+    solution?: string
 }
 
 export function computeStepLevel(steps, stepsTree) {
@@ -91,17 +97,6 @@ export function computeStepLevel(steps, stepsTree) {
             steps[index].alwaysVisible = false;
         });
     }
-}
-
-export async function getProblemById(id: number): Promise<Problem> {
-    let problemStatement = await getProblemStatementById(id);
-    let [steps, stepsTree] = getDefaultSolutionById(id);
-    return {
-        problemStatement: problemStatement,
-        solution: { steps, stepsTree },
-        id: id,
-        summary: {},
-    };
 }
 
 function computeChild(

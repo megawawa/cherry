@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { getProblemById, parseTextToSolution, Problem, Solution } from "../../libs/problem";
+import { parseTextToSolution, Problem, Solution } from "../../libs/problem";
 import { useAccountContext } from "../layout/accountContext";
 import { SolutionPanel } from "./solution";
 import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Problem.module.css'
 
-export default function CreateSolutionPanel({onTextUpdate}) {
+export default function CreateSolutionPanel({ onTextUpdate, value }: {
+    onTextUpdate: (event: Event) => void, value?: string
+}) {
     const context = useAccountContext();
 
     let [solution, updateSolution] = useState<Solution>(
-        context?.problemData?.solution);
+        parseTextToSolution(value ?? context?.problemData?.solution ?? ""));
 
-    let [solutionText, updateSolutionText] = useState<string>();
+    let [solutionText, updateSolutionText] = useState<string>(
+        value ?? context?.problemData?.solution ?? "");
 
     const onSolutionTextUpdate = (event) => {
         updateSolutionText(event.target.value);
