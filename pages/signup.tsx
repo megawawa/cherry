@@ -2,21 +2,54 @@ import { Card, Button } from 'react-bootstrap';
 import styles from '../styles/Home.module.css'
 import loginStyles from '../styles/Login.module.css'
 import SignUpForm from '../components/profile/signUpForm'
-import React from 'react';
+import React, { useDebugValue, useState } from 'react';
 import FeaturesPanel from '../components/featuresPanel';
 import { csrfToken } from 'next-auth/client'
 import { useRouter } from 'next/router'
 
+export type SignUpFormType = {
+    name?: string,
+    password?: string,
+    email?: string,
+    isStudent: boolean,
+    isTutor: boolean,
+}
+
 export default function SignUpPage({ csrfToken }) {
     const router = useRouter();
+    const [state, setState] = useState<SignUpFormType>({
+        isStudent: false, isTutor: false
+    });
+    const handleChange = (event) => {
+        setState({
+            ...state,
+            [event.target.name]: event.target.value
+        });
+    };
+
+    const handleCheckMark = (name) => {
+        if (name == 'student') {
+            setState({
+                ...state,
+                isStudent: !state.isStudent,
+            })
+        } else {
+            setState({
+                ...state,
+                isTutor: !state.isTutor,
+            })
+        }
+    }
+
     return <main className={styles.main + ' ' + loginStyles.background}>
         <div className={loginStyles.grid}>
             <Card className={styles.card + ' p-3'}>
-                <SignUpForm csrfToken={csrfToken} error={router.query}/>
+                <SignUpForm csrfToken={csrfToken} error={router.query}
+                    handleChange={handleChange} state={state} />
             </Card>
 
             <div className={loginStyles.featuresGrid}>
-                <FeaturesPanel />
+                <FeaturesPanel handleChange={handleCheckMark} state={state} />
             </div>
         </div>
 

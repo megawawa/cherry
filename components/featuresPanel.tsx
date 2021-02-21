@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import styles from '../styles/Home.module.css'
 
-export default function FeaturesPanel() {
+export default function FeaturesPanel({ handleChange, state }) {
     return (
         <>
             <Card className={styles.card}>
@@ -21,7 +21,12 @@ export default function FeaturesPanel() {
                         - have access to all registered tutors
             </Card.Text>
                     <div className={styles.cardFooter}>
-                        <Button variant="primary" href="/login">Enable Student Features</Button>
+                        <Button variant={state?.isStudent ? "success" : "primary"}
+                            onClick={() => {
+                                handleChange('student');
+                            }}>
+                            {state?.isStudent ? "Student Features Enabled"
+                                : "Enable Student Features"}</Button>
                         <div className={styles.priceTag}>Free </div>
                     </div>
 
@@ -44,7 +49,12 @@ export default function FeaturesPanel() {
                         - your profile would be visible to all the students
             </Card.Text>
                     <div className={styles.cardFooter}>
-                        <Button variant="primary" href="/login">Enable Tutor Features</Button>
+                        <Button variant={state?.isTutor ? "success" : "primary"}
+                            onClick={() => {
+                                handleChange('tutor');
+                            }}>
+                            {state?.isTutor ? "Tutor Features Enabled"
+                                : "Enable Tutor Features"}</Button>
                         <div className={styles.priceTag}>Free </div>
                     </div>
 

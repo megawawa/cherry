@@ -4,8 +4,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
-import { useSession, signIn, signOut } from 'next-auth/client'
+import { useSession, signIn, signOut, getSession } from 'next-auth/client'
 import Link from 'next/link'
+import { Dropdown, NavItem, NavLink, DropdownButton } from 'react-bootstrap'
+import { useAccountContext } from './accountContext'
 
 export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
     function NavbarLink({ href, text, registeredHref }: {
@@ -18,16 +20,28 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
         );
     }
 
-    const [session] = useSession();
+    let [session] = useSession();
 
     let loginButton =
-        session ?
-            (<NavDropdown title={`Welcome, ${session.user.name}`} id="basic-nav-dropdown" >
-                <NavDropdown.Item onClick={signOut}>Log Out</NavDropdown.Item>
-            </NavDropdown >) :
+        session ? (
+            <DropdownButton variant="success"
+                title={`Welcome, ${session.user.name}`} menuAlign="right">
+                <Dropdown.Item onClick={signOut}>Log Out</Dropdown.Item>
+                {
+                    session.user.isStudent &&
+                    (<Dropdown.Item href="/login?profile=student">View as Student
+                    </Dropdown.Item>)
+                }
+                {
+                    session.user.isTutor &&
+                    (<Dropdown.Item href="/login?profile=tutor">View as Tutor
+                    </Dropdown.Item>)
+                }
+            </DropdownButton >) :
             <Button variant="outline-success" onClick={signIn}>
                 Log in
             </Button>;
+
     return (
         <Navbar bg="light" expand="lg" style={{
             position: "fixed", /* Set the navbar to fixed position */

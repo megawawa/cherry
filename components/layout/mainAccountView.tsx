@@ -168,7 +168,7 @@ export default function MainAccountView({ activeKey }: {
                             </Tab.Pane>
                             <Tab.Pane eventKey="manageFeatures">
                                 <LockItem locked={false}>
-                                    <FeaturesPanel />
+                                    <FeaturesPanel handleChange={null} state={null} />
                                 </LockItem>
                             </Tab.Pane>
                             <Tab.Pane eventKey="answeredQuizHistory">

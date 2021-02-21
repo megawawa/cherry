@@ -84,6 +84,18 @@
   align-self: flex-start;
 }
 
+.column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin-top: 3rem;
+  align-self: flex-start;
+  flex-direction: column;
+}
+
+
 .cardFooter {
   display: flex;
   flex-direction: row;

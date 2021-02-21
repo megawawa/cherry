@@ -5,6 +5,7 @@ import {
     DbProblemCreateType, DBProblemEditType,
     ProblemDetailViewType, ProblemPreviewType
 } from './quiz'
+import { CredentialType, TutorOrStudentAccount } from './user';
 
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -55,7 +56,8 @@ export async function connectToDatabase() {
     return cached.conn
 }
 
-export async function getUserFromCredential(credentials) {
+export async function getUserFromCredential(credentials: CredentialType):
+    Promise<TutorOrStudentAccount> {
     let result = null;
     const { db } = await connectToDatabase();
     console.log("credentials: ", credentials);
@@ -76,7 +78,9 @@ export async function getUserFromCredential(credentials) {
                 } else {
                     return {
                         id: 1, name: user.username,
-                        email: credentials.email
+                        email: credentials.email,
+                        isTutor: user.isTutor ?? false,
+                        isStudent: user.isStudent ?? false,
                     };
                 }
             }
@@ -85,10 +89,9 @@ export async function getUserFromCredential(credentials) {
     return result;
 }
 
-export async function genUserFromCredential(credentials) {
+export async function genUserFromCredential(credentials: CredentialType) {
     let result = null;
     const { db } = await connectToDatabase();
-    console.log("credentials: ", credentials);
     if (!credentials.name || !credentials.email || !credentials.password) {
         return;
     }
@@ -100,6 +103,8 @@ export async function genUserFromCredential(credentials) {
                     username: credentials.name,
                     password: generateHash(credentials.password),
                     email: credentials.email,
+                    isTutor: credentials.isTutor,
+                    isStudent: credentials.isStudent,
                 }
             }, { upsert: true, returnNewDocument: false })
         .then(
@@ -112,6 +117,8 @@ export async function genUserFromCredential(credentials) {
                 return {
                     name: credentials.name,
                     email: credentials.email,
+                    isTutor: credentials.isTutor,
+                    isStudent: credentials.isStudent,
                 }
             }
         );

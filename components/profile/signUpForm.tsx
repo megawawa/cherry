@@ -3,21 +3,9 @@ import { useRouter } from 'next/router';
 import { Form, Button } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
 
-type SignUpFormType = {
-    name?: string,
-    password?: string,
-    email?: string,
-}
 
-export default function SignUpForm({ csrfToken, error }) {
-    const [state, setState] = useState<SignUpFormType>({});
+export default function SignUpForm({ csrfToken, error, handleChange, state }) {
     const router = useRouter();
-    const handleChange = (event) => {
-        setState({
-            ...state,
-            [event.target.name]: event.target.value
-        });
-    };
 
     const [session] = useSession();
 
@@ -25,6 +13,8 @@ export default function SignUpForm({ csrfToken, error }) {
         <Form method='post' action='/api/auth/callback/credentials'>
             <input name='csrfToken' type='hidden' defaultValue={csrfToken}></input>
             <input name='isNewUser' type='hidden' defaultValue={1}></input>
+            <input name='isStudent' type='hidden' defaultValue={state.isStudent}></input>
+            <input name='isTutor' type='hidden' defaultValue={state.isTutor}></input>
             <Form.Group controlId="formBasicName">
                 <Form.Label>Display name</Form.Label>
                 <Form.Control
