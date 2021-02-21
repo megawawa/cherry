@@ -183,7 +183,12 @@ export default function MainAccountView({ activeKey }: {
                             </Tab.Pane>
                             <Tab.Pane eventKey="askQuiz">
                                 <LockItem locked={false}>
-                                    <CreateQuizPanel />
+                                    <CreateQuizPanel isTutor={false} />
+                                </LockItem>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="createQuiz">
+                                <LockItem locked={false}>
+                                    <CreateQuizPanel isTutor={true} />
                                 </LockItem>
                             </Tab.Pane>
                         </Tab.Content>

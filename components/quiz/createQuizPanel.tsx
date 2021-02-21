@@ -6,8 +6,9 @@ import styles from '../../styles/Problem.module.css';
 import { QuizCreateFormType } from '../../libs/quiz';
 
 
-export default function CreateQuizPanel({ }) {
-    let [state, setState] = useState({ text: "Select reason", index: -1 });
+export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
+    // if isTutor, need to go to mode 2 -- directly providing solution
+    let [state, setState] = useState({ text: "Select reason", index: isTutor ? 2 : -1 });
     const router = useRouter();
 
     let [quiz, setQuiz] = useState<QuizCreateFormType>();
@@ -87,6 +88,7 @@ export default function CreateQuizPanel({ }) {
                     onChange={handleChange} />
             </Form.Group>
 
+            {!isTutor &&
             <Form.Group controlId="formattedSolution">
                 <div style={{ display: "inline-block" }}>I need help because:</div>
                 <Dropdown className="ml-2" style={{ display: "inline-block" }}>
@@ -97,7 +99,7 @@ export default function CreateQuizPanel({ }) {
                         {items}
                     </Dropdown.Menu>
                 </Dropdown>
-            </Form.Group>
+            </Form.Group>}
 
             <Form.Group controlId="solution">
                 {solutionInput}
