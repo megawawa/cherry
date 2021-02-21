@@ -46,43 +46,49 @@ function SolutionStep({
     indent: number, expanded: boolean, hasChild: boolean,
     onEditStep: (string) => void
 }) {
-    return <div className={styles.stepContainer}>
-        <div style={{ "width": indent * 0.5 + "rem" }}></div>
-        {hasChild ?
+    return (<div style={{
+        display: "flex", alignItems: "center",
+        flexDirection: "column", justifyContent: 'flex-start'
+    }}>
+        {hasChild &&
             <button className={styles.expandButton} onClick={onClick}
                 type="button">
                 <img className={styles.buttonImg}
-                    src={expanded ? "/minus.svg" : "/add.svg"}
+                    src={"/add.svg"}
                     alt="my image" />
-            </button> :
-            <div className={styles.expandButtonPlaceholder}></div>}
-        <div className={styles.step +
-            (alwaysVisible ? (' ' + styles.alwaysVisibleStep) : '')}>
-            {onEditStep ?
-                <div className={styles.stepInput}>
-                    <TextareaAutosize className={styles.stepInputText}
-                        onChange={() => { }} value={value}>
-                    </TextareaAutosize>
-                </div> :
-                <div className={styles.stepText}>
-                    {value}
-                </div>
-            }
-        </div>
-        <OverlayTrigger trigger="click" placement="right" rootClose overlay={
-            <UpdatingPopover id="popover-basic" style={{ minWidth: "400px" }}>
-                <CommentPanel />
-            </UpdatingPopover>}>
-            <div style={{ marginLeft: "auto" }}>
-                <button className={styles.commentButton} onClick={() => { }}
-                    type="button">
-                    <img className={styles.commentImg}
-                        src={"/comment.svg"}
-                        alt="my image" />
-                </button>
+            </button>}
+        <div className={styles.stepContainer}>
+            <div className={styles.step +
+                (alwaysVisible ? (' ' + styles.alwaysVisibleStep) : '')}>
+                {onEditStep ?
+                    <div className={styles.stepInput}>
+                        <TextareaAutosize className={styles.stepInputText}
+                            onChange={(event) => {
+                                onEditStep(
+                                    (event.target as HTMLTextAreaElement).value);
+                            }} value={value}>
+                        </TextareaAutosize>
+                    </div> :
+                    <div className={styles.stepText}>
+                        {value}
+                    </div>
+                }
             </div>
-        </OverlayTrigger >
-    </div >;
+            <OverlayTrigger trigger="click" placement="right" rootClose overlay={
+                <UpdatingPopover id="popover-basic" style={{ minWidth: "400px" }}>
+                    <CommentPanel />
+                </UpdatingPopover>}>
+                <div style={{ marginLeft: "auto" }}>
+                    <button className={styles.commentButton} onClick={() => { }}
+                        type="button">
+                        <img className={styles.commentImg}
+                            src={"/comment.svg"}
+                            alt="my image" />
+                    </button>
+                </div>
+            </OverlayTrigger >
+        </div >
+    </div>);
 }
 
 function convertToBoolArray(list) {
@@ -90,21 +96,30 @@ function convertToBoolArray(list) {
 }
 
 // no pagination, assuming solution is fetched once
-export function SolutionPanel({ solution, expandList = [], updateSolutionStep }
+export function SolutionPanel({ solution, expandList = [], updateSolutionStep,
+    updateExpandList = () => { } }
     : {
         solution: Solution, expandList?: ExpandList,
-        updateSolutionStep?: (number, string) => void
+        updateSolutionStep?: (number, string) => void,
+        updateExpandList?: (ExpandList) => void,
     }) {
-    const [expandListState, updateExpandList] = useState<ExpandList>(
+    const [expandListState, updateExpandListState] = useState<ExpandList>(
         sanitize(solution, expandList));
     const [expandStatusListState, updateExpandStatusListState] =
         useState<Array<boolean>>(convertToBoolArray(expandListState));
 
     // derive updated state from props
     useEffect(() => {
-        updateExpandList(sanitize(solution, expandList));
+        updateExpandListState(sanitize(solution, expandList));
         updateExpandStatusListState(convertToBoolArray(expandListState));
     }, [solution]);
+
+    const handleSolutionStepUpdate = (index, value) => {
+        // need to commit expandList for parent class
+        // so that rerender remembers current expandListState
+        updateExpandList(expandListState);
+        updateSolutionStep(index, value);
+    }
 
     const solutionSteps = getVisibleSteps(solution, expandListState);
     const newlyExpandedSteps = (id: number) => {
@@ -116,19 +131,10 @@ export function SolutionPanel({ solution, expandList = [], updateSolutionStep }
         updateExpandStatusListState(updatedStatusList);
 
         // union
-        if (!expanded) {
-            updateExpandList(Array.from(new Set(
-                expandListState.concat(getStepsToExpandFromId(solution, id)))));
-            return;
-        }
-
-        // diff.
-        // TODO(@megawawa, 1/11/2021) could collapse all.
-        // for now not needed for demo purpose
-        updateExpandList(Array.from(new Set(
-            expandListState.filter(
-                (elem) => !getStepsToExpandFromId(solution, id).includes(elem)
-            ))));
+        updateExpandListState(Array.from(new Set(
+            expandListState.concat(
+                getStepsToExpandFromId(solution, id, expandListState)))));
+        return;
     }
 
     var solutionItems = solutionSteps.map(
@@ -137,11 +143,13 @@ export function SolutionPanel({ solution, expandList = [], updateSolutionStep }
                 key={solutionStep.id}
                 value={solutionStep.text}
                 indent={solutionStep.level}
-                hasChild={solutionStep.hasChild}
+                hasChild={getStepsToExpandFromId(solution,
+                    solutionStep.id, expandListState)
+                    .length != 0}
                 alwaysVisible={solutionStep.alwaysVisible}
                 expanded={expandStatusListState[solutionStep.id]}
                 onClick={newlyExpandedSteps.bind(this, solutionStep.id)}
-                onEditStep={updateSolutionStep?.bind(solutionStep.id)} />
+                onEditStep={handleSolutionStepUpdate?.bind(this, solutionStep.id)} />
     )
     return <div>{solutionItems}</div>;
 }

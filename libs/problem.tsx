@@ -1,6 +1,7 @@
 import { setPriority } from 'os'
+import { resourceLimits } from 'worker_threads'
 import ProblemSummaryCard from '../components/quiz/problemSummary'
-import { getDefaultSolutionById, getProblemStatementById, getProcessedStepsAndStepTrees } from './mockDb'
+import { getProblemStatementById } from './mockDb'
 
 /* 
  * This file is for abstracting "problem" from backend point of view.
@@ -12,7 +13,6 @@ export class SolutionStep {
     id: number
     text?: string
     level?: number
-    hasChild: boolean
     alwaysVisible: boolean
 }
 
@@ -30,26 +30,66 @@ export type StepsLevel = Array<number>;
  *  2) i = N: steps to expand to from root
  */
 export type Solution = {
-    stepsTree: StepsTree;
+    rootExpansion: ExpandList;
     steps: Steps;
 }
 
-export function getStepsToExpandFromId(solution: Solution, stepId: number)
+function computeChild(
+    currentStepId: number,
+    prevStepId: number,
+    steps: Steps): ExpandList {
+    let parentLevel = steps[currentStepId]?.level ?? -1;
+    let currentKidLevel = -1;
+    let startStepId = prevStepId + 1;
+    // find children
+    for (let j = currentStepId - 1; j > prevStepId; --j) {
+        if (steps[j].level <= parentLevel) {
+            startStepId = j;
+            break;
+        }
+        // if stepsLevel[j] > currentKidLevel
+        // j is the kid of the step with 
+        // step level of "currentKidLevel"
+        if (steps[j].level <= currentKidLevel
+            || currentKidLevel == -1) {
+            currentKidLevel = steps[j].level;
+        }
+    }
+    let children = [];
+    for (; startStepId < currentStepId; startStepId++) {
+        if (steps[startStepId].level == currentKidLevel) {
+            children.push(startStepId);
+        }
+    }
+    return children;
+}
+
+export function getStepsToExpandFromId(solution: Solution, stepId: number,
+    expandedList: ExpandList)
     : ExpandList {
-    if (!solution?.stepsTree) {
+    if (!solution?.steps) {
         return [];
     }
-    return solution.stepsTree[stepId];
+
+    let prevStepId = -1;
+    expandedList.forEach((item) => {
+        if (item < stepId) {
+            if (prevStepId < item) {
+                prevStepId = item;
+            }
+        }
+    })
+    return computeChild(stepId, prevStepId, solution.steps);
 }
 
 // sanitize expandList. If it is empty, set to default expansion
 // (of root) from solution
 export function sanitize(solution: Solution, expandList: ExpandList): ExpandList {
-    if (!solution?.stepsTree) {
+    if (!solution?.rootExpansion) {
         return expandList;
     }
     if (expandList.length == 0) {
-        return solution.stepsTree[solution.stepsTree.length - 1];
+        return solution.rootExpansion;
     }
     return expandList;
 }
@@ -71,90 +111,68 @@ export type Problem = {
     solution?: string
 }
 
-export function computeStepLevel(steps, stepsTree) {
+export function processSteps(steps, rootExpansion) {
     // init
-    const ROOT = stepsTree.length - 1;
-    let bfs = stepsTree[ROOT].concat([]);
-    stepsTree[ROOT].forEach((index) => {
+    rootExpansion.forEach((index) => {
         steps[index].level = 0;
-        steps[index].hasChild = false;
         steps[index].alwaysVisible = true;
     })
-
-    let visited = {};
-
-    while (bfs.length != 0) {
-        let stepToExpand = bfs.shift();
-        if (visited[stepToExpand]) {
-            throw Error;
-        }
-        visited[stepToExpand] = true;
-        steps[stepToExpand].hasChild = stepsTree[stepToExpand].length != 0;
-        stepsTree[stepToExpand].forEach((index) => {
-            bfs.push(index);
-            steps[index].level = steps[stepToExpand].level + 1;
-            steps[index].hasChild = false;
-            steps[index].alwaysVisible = false;
-        });
-    }
-}
-
-function computeChild(
-    stepsLevel: StepsLevel,
-    currentIndex: number,
-    parentLevel: number) {
-    let currentKidLevel = -1;
-    let children = [];
-    // find children
-    for (let j = currentIndex - 1; j >= 0; --j) {
-        if (stepsLevel[j] <= parentLevel) {
-            break;
-        }
-        // if stepsLevel[j] > currentKidLevel
-        // j is the kid of the step with 
-        // step level of "currentKidLevel"
-        if (stepsLevel[j] <= currentKidLevel
-            || currentKidLevel == -1) {
-            children.push(j);
-            currentKidLevel = stepsLevel[j];
-        }
-    }
-    return children;
 }
 
 export function parseTextToSolution(text: string): Solution {
-    let steps = text.split('\n--');
     let stepsLevel = [];
-    let stepsTree = [];
+    let steps = [];
+    if (!text || !text.startsWith('  ')) {
+        return getSolutionFromStepsAndStepLevel(steps, stepsLevel);
+    }
+    text = text.substr(2);
+    steps = text.split('\n  ');
 
     for (let i = 0; i < steps.length; ++i) {
-        const regMatch = RegExp('[^-]', 'g');
-        regMatch.exec(steps[i]);
-        if (regMatch.lastIndex == 0) {
+        const regMatch = RegExp('[\\S]+', 'g');
+        const match = regMatch.exec(steps[i]);
+        if (!match) {
             // empty string. set level to 0
             stepsLevel.push(0);
         } else {
-            stepsLevel.push(regMatch.lastIndex - 1);
+            stepsLevel.push(match.index);
         }
         steps[i] = steps[i].substr(stepsLevel[i]);
     }
 
-    // process indentation to create stepsTree
-    for (let i = 0; i < steps.length; ++i) {
-        stepsTree.push(
-            computeChild(stepsLevel, i, stepsLevel[i]));
+    return getSolutionFromStepsAndStepLevel(steps, stepsLevel);
+}
+
+export function parseSolutionToText(solution: Solution): string {
+    return solution.steps.map((step) =>
+        ' '.repeat(step.level + 2) + step.text).join('\n');
+}
+
+function getSolutionFromStepsAndStepLevel(steps: string[],
+    stepsLevel: StepsLevel): Solution {
+    if (steps.length != stepsLevel.length) {
+        console.log("error in getSolutionFromStepsAndStepLevel,\
+         step and stepLevel length mismatch");
     }
+    let results = [];
+    steps.forEach((elem, index) => {
+        results.push({
+            id: index,
+            text: elem,
+            level: stepsLevel[index],
+            alwaysVisible: false
+        })
+    });
 
-    stepsTree.push(
-        computeChild(stepsLevel, steps.length, -1));
+    let rootExpansion = computeChild(
+        results.length /* current step id */,
+        -1 /* previous step id */,
+        results);
 
-    console.log(steps, stepsTree, stepsLevel);
+    processSteps(results, rootExpansion);
 
-    let solutionSteps = [];
-    [solutionSteps, stepsTree] =
-        getProcessedStepsAndStepTrees(steps, stepsTree);
     return {
-        stepsTree: stepsTree,
-        steps: solutionSteps,
+        steps: results,
+        rootExpansion: rootExpansion
     };
 }

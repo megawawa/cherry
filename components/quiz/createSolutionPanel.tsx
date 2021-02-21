@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { parseTextToSolution, Problem, Solution } from "../../libs/problem";
+import { parseTextToSolution, parseSolutionToText, Problem, Solution, ExpandList } from "../../libs/problem";
 import { useAccountContext } from "../layout/accountContext";
 import { SolutionPanel } from "./solution";
 import TextareaAutosize from 'react-autosize-textarea';
@@ -16,19 +16,32 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
     let [solutionText, updateSolutionText] = useState<string>(
         value ?? context?.problemData?.solution ?? "");
 
+    const [expandList, updateExpandList] = useState<ExpandList>([]);
+
     const onSolutionTextUpdate = (event) => {
         updateSolutionText(event.target.value);
         updateSolution(parseTextToSolution(event.target.value));
         onTextUpdate(event);
+        updateExpandList([]);
+    }
+
+    const updateList = (list) => {
+        console.log('updating...', list);
+        updateExpandList(list);
     }
 
     const updateSolutionStep = (id: number, text: string) => {
+        console.log("here", id, text);
         const ret = solution.steps.slice(0);
         ret[id].text = text;
-        updateSolution({
-            stepsTree: solution.stepsTree,
+        const newSolution = {
+            rootExpansion: solution.rootExpansion,
             steps: ret,
-        });
+        };
+        updateSolutionText(
+            parseSolutionToText(newSolution)
+        );
+        updateSolution(newSolution);
     }
 
     return (
@@ -40,7 +53,8 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
                 <TextareaAutosize
                     style={{ width: "100%" }}
                     value={solutionText}
-                    placeholder={"Try the following example:\nstep 1\n--step 2\n---step 3\n--step 4"}
+                    placeholder={"Try the following example:\n\
+                    \n  step 1\n   step 1.a\n   step 1.b\n  step 2"}
                     rows={13}
                     onChange={onSolutionTextUpdate} />
             </div>
@@ -49,7 +63,9 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
                     Preview:
                 </div>
                 <SolutionPanel solution={solution}
-                    updateSolutionStep={updateSolutionStep} />
+                    updateSolutionStep={updateSolutionStep}
+                    expandList={expandList}
+                    updateExpandList={updateExpandList} />
             </div>
 
         </div>
