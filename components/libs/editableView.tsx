@@ -1,21 +1,31 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 
-export function EditableView({ defaultView, editView, editable }: {
+export function EditableView({ defaultView, editView, editable, onCancel, onSave }: {
     defaultView: JSX.Element
     editView: JSX.Element
     editable: boolean,
+    onCancel: () => void,
+    onSave: () => void,
 }) {
     let [state, updateState] = useState<{
         isEditMode: boolean,
     }>({
         isEditMode: false
     });
-    const handleOnClick = () => {
+    const handleOnSave = () => {
+        onSave();
         updateState({
             isEditMode: !state.isEditMode
-        })
-    }
+        });
+    };
+
+    const handleOnCancel = () => {
+        onCancel();
+        updateState({
+            isEditMode: !state.isEditMode
+        });
+    };
 
     return (
         <div>
@@ -29,12 +39,12 @@ export function EditableView({ defaultView, editView, editable }: {
                     marginTop: "1rem",
                 }}>
                     {state.isEditMode &&
-                        <Button variant="light" onClick={handleOnClick} style={
+                        <Button variant="light" onClick={handleOnCancel} style={
                             {
                                 marginRight: "1rem",
                             }}>
                             Cancel</Button>}
-                    <Button variant="light" onClick={handleOnClick}>
+                    <Button variant="light" onClick={handleOnSave}>
                         {state.isEditMode ? "Confirm" : "Edit"}</Button>
                 </div>)
             }

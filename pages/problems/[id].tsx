@@ -31,6 +31,20 @@ export default function ProblemPanel({ problemData, submitUserName }:
         });
     };
 
+    let [cachedQuiz, setCachedQuiz] = useState<QuizCreateFormType>(
+        quiz
+    );
+
+    /* rollback to checkpoint */
+    const handleCancel = () => {
+        setQuiz(cachedQuiz);
+    }
+
+    /* commit checkpoint */
+    const handleSave = () => {
+        setCachedQuiz(quiz);
+    }
+
     const updateSolution = (event) => {
         setQuiz({
             ...quiz,
@@ -56,6 +70,8 @@ export default function ProblemPanel({ problemData, submitUserName }:
                                     value={quiz?.problemStatement ?? ''}
                                     onChange={handleChange} />
                             }
+                            onCancel={handleCancel}
+                            onSave={handleSave}
                             editable={true} />
                     </Card.Text>
                 </Card.Body>
@@ -71,6 +87,8 @@ export default function ProblemPanel({ problemData, submitUserName }:
                             <CreateSolutionPanel onTextUpdate={updateSolution}
                                 value={quiz?.solution ?? ""} />
                         }
+                        onCancel={handleCancel}
+                        onSave={handleSave}
                         editable={true} />
                 </Card.Body>
             </Card>
