@@ -127,9 +127,11 @@ export default function MainAccountView({ activeKey }: {
                                 <Nav.Link eventKey="answerQuiz">
                                     <LockTab locked={false} text="Answer Quiz" />
                                 </Nav.Link>
-                                <Nav.Link eventKey="createQuiz">
-                                    <LockTab locked={false} text="Create Quiz" />
-                                </Nav.Link>
+                                <Link href="/createQuiz/?tutor=1" passHref>
+                                    <Nav.Link eventKey="createQuiz">
+                                        <LockTab locked={false} text="Create Quiz" />
+                                    </Nav.Link>
+                                </Link>
                                 <Nav.Link eventKey="createProblemSet">
                                     <LockTab locked={false} text="Create Problem Set" />
                                 </Nav.Link>
