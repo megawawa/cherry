@@ -18,6 +18,12 @@ const options = {
       // e.g. domain, username, password, 2FA token, etc.
       authorize: async (credentials) => {
         if (credentials.isNewUser) {
+          if (credentials.isStudent) {
+            credentials.isStudent = (credentials.isStudent == "true");
+          }
+          if (credentials.isTutor) {
+            credentials.isTutor = (credentials.isTutor == "true");
+          }
           const user = await genUserFromCredential(credentials);
 
           if (user) {
