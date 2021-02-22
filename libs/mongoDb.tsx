@@ -5,7 +5,7 @@ import {
     DbProblemCreateType, DBProblemEditType,
     ProblemDetailViewType, ProblemPreviewType
 } from './quiz'
-import { CredentialType, TutorOrStudentAccount } from './user';
+import { CredentialType, TutorOrStudentAccount, TutorPreviewType } from './user';
 
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -66,7 +66,7 @@ export async function getUserFromCredential(credentials: CredentialType):
     }
     result = await db
         .collection("users")
-        .findOne({ email: credentials.email })
+        .findOne({ email: credentials.email }, { username: 1, isTutor: 1, isStudent: 1 })
         .then(
             (user) => {
                 console.log("user: ", user);
@@ -77,7 +77,8 @@ export async function getUserFromCredential(credentials: CredentialType):
                     //password did not match
                 } else {
                     return {
-                        id: 1, name: user.username,
+                        id: 1, /* id not used for generating session */
+                        name: user.username,
                         email: credentials.email,
                         isTutor: user.isTutor ?? false,
                         isStudent: user.isStudent ?? false,
@@ -175,7 +176,7 @@ export async function getProblemDetailViewFromId(id: string):
 export async function uploadQuiz(quiz: DbProblemCreateType) {
     const { db } = await connectToDatabase();
 
-    return await db
+    const uploadQuizRes = await db
         .collection("problems")
         .updateOne({
             problemStatement
@@ -194,6 +195,25 @@ export async function uploadQuiz(quiz: DbProblemCreateType) {
                 return quiz;
             }
         );
+
+    
+    if (uploadQuizRes) {
+        console.log("uploadedQuiz", uploadQuizRes);
+        await db.collection("users").update(
+            { username: uploadQuizRes.submitUserName }
+            , {
+                "$inc": { submittedQuizCount: 1 }
+            }, { upsert: false, returnNewDocument: false }).then(
+                result => {
+                    if (result.matchedCount == 0) {
+                        console.log(`SubmitUsername does not exist.`);
+                        return;
+                    }
+                    console.log("update new user submitted quiz count");
+                }
+            );
+    }
+    return uploadQuizRes;
 }
 
 export async function editQuiz(quiz: DBProblemEditType) {
@@ -222,3 +242,21 @@ export async function editQuiz(quiz: DBProblemEditType) {
         );
 }
 
+export async function getTopTutors(pageIndex: number)
+    : Promise<TutorPreviewType> {
+    const { db } = await connectToDatabase();
+    const result = await db
+        .collection("users")
+        .find({ isTutor: true }, {
+            sort: { submittedQuizCount: -1 }
+        })
+        .skip((pageIndex - 1) * 10)
+        .limit(10)
+        .toArray();
+    return result.map((obj) => {
+        obj.id = obj._id.valueOf().toString();
+        delete obj._id;
+        obj.name = obj.username;
+        return obj;
+    });
+}

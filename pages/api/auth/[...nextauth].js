@@ -17,7 +17,6 @@ const options = {
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
       authorize: async (credentials) => {
-        console.log("Credentials credentials", credentials);
         if (credentials.isNewUser) {
           const user = await genUserFromCredential(credentials);
 
@@ -59,7 +58,6 @@ const options = {
 
   callbacks: {
     signIn: async (user, account, profile) => {
-      console.log("sign in", user, account, profile);
       return Promise.resolve(true)
     },
     redirect: async (url, baseUrl) => {
@@ -67,8 +65,6 @@ const options = {
     },
     jwt: async (token, user, account, profile, isNewUser) => {
       // result would be passed to session
-      console.log('jwt', token, user, account, profile, isNewUser);
-
       if (user) {
         token.isTutor = user.isTutor ?? false;
         token.isStudent = user.isStudent ?? false;
@@ -77,8 +73,6 @@ const options = {
       return Promise.resolve(token);
     },
     session: async (session, user) => {
-      console.log('session', session, user);
-
       if (user) {
         session.user.isTutor = user.isTutor ?? false;
         session.user.isStudent = user.isStudent ?? false;

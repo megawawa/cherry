@@ -13,3 +13,8 @@ export type CredentialType = {
     isTutor: boolean;
     isStudent: boolean;
 }
+
+export type TutorPreviewType = {
+    name: string;
+    id: string;
+}

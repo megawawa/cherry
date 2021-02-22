@@ -55,7 +55,7 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <NavbarLink href='/tutor' text='Tutor [locked if not student]' />
+                    <NavbarLink href='/tutors/1' text='Tutor [locked if not student]' />
                     {/* TODO: @megawawa(02/18/2021) load last viewed quiz
                         <NavbarLink href='/problems/0' text='Problems'
                         registeredHref='/problems/[id]' /> */}
