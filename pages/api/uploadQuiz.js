@@ -18,16 +18,22 @@ export default async function handler(req, res) {
         return;
     }
 
-    if (!req.body) {
+    if (!req.body?.quiz) {
         res.status(422).json({ text: "quiz shouldn't be empty" });
         return;
     }
 
+    if (!req.body?.tags) {
+        res.status(422).json({ text: "tags shouldn't be empty" });
+        return;
+    }
+
+
     const quiz = {
-        problemStatement: req.body?.problemStatement ?? "",
+        problemStatement: req.body?.quiz?.problemStatement ?? "",
         submitUserName: session.user.name,
-        tags: ["third grade", "math"],
-        solution: req.body?.solution ?? "",
+        tags: req.body?.tags,
+        solution: req.body?.quiz?.solution ?? "",
         summary: {
             pastAttempts: 0, successfulAttempts: 0
         }

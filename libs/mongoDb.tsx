@@ -132,7 +132,7 @@ export async function getProblemPreviewFromTags(tags: Array<string>, pageIndex: 
     const { db } = await connectToDatabase();
     const result = await db
         .collection("problems")
-        .find({ tags: { $eq: tags } })
+        .find({ tags: { $in: tags } })
         .skip((pageIndex - 1) * 10)
         .limit(10)
         .toArray();

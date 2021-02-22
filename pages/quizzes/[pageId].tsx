@@ -1,33 +1,53 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useAccountContext } from "../../components/layout/accountContext";
 import MainAccountView from "../../components/layout/mainAccountView";
-import { getProblemPreviewFromTags } from "../../libs/mongoDb";
 import { ProblemPreviewType } from "../../libs/quiz";
 
-export default function QuizzesPage({ tags, quizzes, current }: {
-    tags: Array<string>,
-    quizzes: Array<ProblemPreviewType>,
+export default function QuizzesPage({ current }: {
     current: number,
 }) {
     const context = useAccountContext();
     useEffect(() => {
-        context.update({
-            tags: tags,
-            quizzes: quizzes,
-            quizzesIndex: current,
-        });
-    }, [tags, quizzes, current]);
+        (async () => {
+            
+            if (!context.tags) {
+                context.update({
+                    tags: [],
+                });
+                return;
+            }
+
+            console.log("fetching quiz", context.tags, context.quizzesIndex);
+            const url = `/api/getQuiz?` +
+                `tags=${JSON.stringify(context.tags)}&current=${current}`;
+
+            const res = await fetch(
+                url,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'GET'
+                }
+            )
+
+            const result = await res.json();
+            console.log("fetched quiz: ", context.tags, current, result);
+
+            context.update({
+                quizzes: result,
+                quizzesIndex: current,
+            });
+        })();
+    }, [context.tags, context.quizzesIndex]);
+
     return <MainAccountView activeKey={'browseQuiz'} />;
 }
 
-export async function getServerSideProps({params}) {
-    const tags = ['third grade', 'math'];
+export async function getServerSideProps({ params }) {
     const current = parseInt(params.pageId) ?? 1;
-    const quizzes = await getProblemPreviewFromTags(tags, current);
     return {
         props: {
-            tags: tags,
-            quizzes: quizzes,
             current: current,
         }
     };

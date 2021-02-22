@@ -1,0 +1,44 @@
+.TagInput {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+}
+
+.TagInputText {
+    outline: 2px solid darkgrey;
+    border-radius: 0.25rem;
+    background: transparent;
+    margin: 0 0 0 0.5rem;
+    padding: 0.25rem;
+    vertical-align: middle;
+    display:inline-block;
+
+}
+
+.TagInputButton {
+    border-radius: 0.25rem;
+    margin: 0 0 0 0.5rem;
+    vertical-align: middle;
+    padding: 0.25rem;
+    display:inline-block;
+    background: rgb(66, 65, 65);
+}
+
+.TagInputText:focus {
+    outline: none;
+}
+
+.TagText {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+}
+
+.TagsContainer {
+    outline: 2px solid lightgrey;
+    min-height: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: "center";
+    padding: 1px;
+}

@@ -1,14 +1,21 @@
 import { useRouter } from 'next/router';
 import { useState } from "react";
 import { Button, Dropdown, Form } from "react-bootstrap";
+
 import CreateSolutionPanel from "./createSolutionPanel";
 import styles from '../../styles/Problem.module.css';
 import { QuizCreateFormType } from '../../libs/quiz';
+import InputButtonList from '../libs/inputButtonList';
+import { useAccountContext } from '../layout/accountContext';
+import { triggerAsyncId } from 'async_hooks';
 
 
 export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
     // if isTutor, need to go to mode 2 -- directly providing solution
     let [state, setState] = useState({ text: "Select reason", index: isTutor ? 2 : -1 });
+
+    let accountState = useAccountContext();
+
     const router = useRouter();
 
     let [quiz, setQuiz] = useState<QuizCreateFormType>();
@@ -63,7 +70,10 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
             '/api/uploadQuiz',
             {
                 body: JSON.stringify(
-                    quiz
+                    { 
+                        quiz: quiz,
+                        tags: accountState.tags ?? [],
+                    }
                 ),
                 headers: {
                     'Content-Type': 'application/json'
@@ -89,21 +99,31 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
             </Form.Group>
 
             {!isTutor &&
-            <Form.Group controlId="formattedSolution">
-                <div style={{ display: "inline-block" }}>I need help because:</div>
-                <Dropdown className="ml-2" style={{ display: "inline-block" }}>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        {state.text}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        {items}
-                    </Dropdown.Menu>
-                </Dropdown>
-            </Form.Group>}
+                <Form.Group controlId="formattedSolution">
+                    <div style={{ display: "inline-block" }}>I need help because:</div>
+                    <Dropdown className="ml-2" style={{ display: "inline-block" }}>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            {state.text}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {items}
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Form.Group>}
 
             <Form.Group controlId="solution">
                 {solutionInput}
             </Form.Group>
+
+            <div>
+                Tags:
+                <InputButtonList tags={accountState.tags}
+                    onUpdate={(tagsState) => {
+                        accountState.update({
+                            tags: tagsState
+                        });
+                    }} />
+            </div>
 
             <Button variant="primary" type="submit" className="mt-2">
                 Submit

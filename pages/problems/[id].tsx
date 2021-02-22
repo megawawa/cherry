@@ -111,7 +111,7 @@ export default function ProblemPanel({ problemData, submitUserName }:
         </div>);
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
     const problemData = await getProblemDetailViewFromId(params.id);
     return {
         props: {
@@ -124,13 +124,4 @@ export async function getStaticProps({ params }) {
             submitUserName: problemData.submitUserName,
         }
     }
-}
-
-export async function getStaticPaths() {
-    return {
-        paths: [
-            { params: { id: '60225e6b98a1d61be8ba7f7c' } },
-        ],
-        fallback: true,
-    };
 }
