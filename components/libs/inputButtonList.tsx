@@ -9,7 +9,6 @@ function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable }: 
     onFinishedEdit: (string) => Promise<void>,
     updateParentIsEditable: (boolean) => void,
 }) {
-    console.log("value", value);
     // when value is empty, inputButton is just created,
     // and thus it is always editable
     const [isEditable, updateIsEditable] = useState<boolean>(value == "");

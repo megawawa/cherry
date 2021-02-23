@@ -70,7 +70,7 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
             '/api/uploadQuiz',
             {
                 body: JSON.stringify(
-                    { 
+                    {
                         quiz: quiz,
                         tags: accountState.tags ?? [],
                     }
@@ -89,7 +89,7 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
 
     return <div>
         <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="problemStatement">
+            <Form.Group controlId={`problemStatement_${isTutor}`}>
                 <Form.Label>Problem</Form.Label>
                 <Form.Control as="textarea" rows={3} className={styles.createQuizFormInput}
                     placeholder="problem statement. eg: 1/2 + 1/6 + ... + 1/(40*41) = ?"

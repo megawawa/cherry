@@ -61,7 +61,7 @@ export default function ProfilePanel() {
                     onChange={handleChange} />
             </Form.Group>
 
-            <Form.Group controlId="phone">
+            <Form.Group controlId="contact">
                 <Form.Label>Other contact</Form.Label>
                 <Form.Control type="text"
                     placeholder="other contact"

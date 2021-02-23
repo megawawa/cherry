@@ -5,7 +5,7 @@ import {
     DbProblemCreateType, DBProblemEditType,
     ProblemDetailViewType, ProblemPreviewType
 } from './quiz'
-import { CredentialType, TutorOrStudentAccount, TutorPreviewType } from './user';
+import { CredentialType, TutorOrStudentAccount, TutorPreviewType, UserInterestsType } from './user';
 
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -196,7 +196,7 @@ export async function uploadQuiz(quiz: DbProblemCreateType) {
             }
         );
 
-    
+
     if (uploadQuizRes) {
         console.log("uploadedQuiz", uploadQuizRes);
         await db.collection("users").update(
@@ -259,4 +259,61 @@ export async function getTopTutors(pageIndex: number)
         obj.name = obj.username;
         return obj;
     });
+}
+
+export async function getTagsFromUser(user: string):
+    Promise<UserInterestsType> {
+    const { db } = await connectToDatabase();
+    const result = await db
+        .collection("users")
+        .findOne({ username: { $eq: user } }, {
+            $project: { "studentTags": 1, "tutorTags": 1 }
+        })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`found user interests.`, result);
+                    return result;
+                }
+                console.log("[getTagFromUser] user does not exist");
+            }
+        );
+    return {
+        studentTags: result?.studentTags ?? [],
+        tutorTags: result?.tutorTags ?? [],
+    }
+}
+
+export async function genTagsForUser(user, tags: UserInterestsType) {
+    const { db } = await connectToDatabase();
+    if (!user) {
+        return;
+    }
+
+    console.log('[genTagForUser]', user, tags);
+
+    // do not set student/tutor tags if null
+    if (!tags.studentTags) {
+        delete tags.studentTags;
+    }
+
+    if (!tags.tutorTags) {
+        delete tags.tutorTags;
+    }
+
+    await db
+        .collection("users")
+        .updateOne({ username: { $eq: user } },
+            {
+                "$set": tags
+            }, { upsert: false, returnNewDocument: false })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`updated user interests.`);
+                    return;
+                }
+                console.log("[genTagForUser] user does not exist");
+            }
+        );
 }
