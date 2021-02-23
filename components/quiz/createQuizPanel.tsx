@@ -117,7 +117,7 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
 
             <div>
                 Tags:
-                <InputButtonList tags={accountState.tags}
+                <InputButtonList tags={accountState.tags ?? []}
                     onUpdate={(tagsState) => {
                         accountState.update({
                             tags: tagsState

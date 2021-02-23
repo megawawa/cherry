@@ -43,13 +43,13 @@ function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable }: 
 }
 
 export default function InputButtonList({ tags, onUpdate }: {
-    tags: Array<string>,
+    tags?: Array<string>,
     onUpdate: (tagsState: Array<string>) => void,
 }) {
     useEffect(() => {
-        updateTags(tags);
+        updateTags(tags ?? []);
     }, [tags]);
-    const [tagsState, updateTags] = useState(tags);
+    const [tagsState, updateTags] = useState(tags ?? []);
 
     const [isEditable, updateIsEditable] = useState(true);
 

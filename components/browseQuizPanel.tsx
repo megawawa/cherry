@@ -28,7 +28,7 @@ export default function BrowseQuizPanel() {
     return <div>
         <div>
             Hot topics
-            <InputButtonList tags={state.tags} onUpdate={(tagsState) => {
+            <InputButtonList tags={state.tags ?? []} onUpdate={(tagsState) => {
                 state.update({
                     tags: tagsState
                 });
