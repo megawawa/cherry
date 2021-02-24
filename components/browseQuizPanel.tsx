@@ -19,10 +19,6 @@ export default function BrowseQuizPanel() {
         state.update({
             quizzesIndex: index
         });
-
-        router.push(
-            `/quizzes/${index}`
-        );
     };
 
     return <div>
@@ -35,7 +31,7 @@ export default function BrowseQuizPanel() {
             }} />
         </div>
         <QuizzesPanel quizzes={state.quizzes} displayUser={true} />
-        <PaginationFooter current={state.quizzesIndex}
+        <PaginationFooter current={state.quizzesIndex ?? 1}
             onUpdateIndex={handleUpdateIndex} />
     </div>;
 }

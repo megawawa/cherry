@@ -1,7 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
-import { useAccountContext } from "../../components/layout/accountContext";
-import MainAccountView from "../../components/layout/mainAccountView";
-import { ProblemPreviewType } from "../../libs/quiz";
+import { useAccountContext } from "../components/layout/accountContext";
+import MainAccountView from "../components/layout/mainAccountView";
 
 export default function QuizzesPage({ current }: {
     current: number,
@@ -9,17 +8,20 @@ export default function QuizzesPage({ current }: {
     const context = useAccountContext();
     useEffect(() => {
         (async () => {
-            
-            if (!context.tags) {
+
+            if (!context.tags || !context.quizzesIndex) {
+                const sanitizedTags = context.tags ?? [];
+                const sanitizedIndex = context.quizzesIndex ?? 1;
                 context.update({
-                    tags: [],
+                    tags: sanitizedTags,
+                    quizzesIndex: sanitizedIndex,
                 });
                 return;
             }
 
             console.log("fetching quiz", context.tags, context.quizzesIndex);
             const url = `/api/getQuiz?` +
-                `tags=${JSON.stringify(context.tags)}&current=${current}`;
+                `tags=${JSON.stringify(context.tags)}&current=${context.quizzesIndex}`;
 
             const res = await fetch(
                 url,
@@ -32,11 +34,12 @@ export default function QuizzesPage({ current }: {
             )
 
             const result = await res.json();
-            console.log("fetched quiz: ", context.tags, current, result);
+            console.log("fetched quiz: ", context.tags,
+                context.quizzesIndex, result);
 
             context.update({
                 quizzes: result,
-                quizzesIndex: current,
+                quizzesIndex: context.quizzesIndex,
             });
         })();
     }, [context.tags, context.quizzesIndex]);
@@ -45,10 +48,7 @@ export default function QuizzesPage({ current }: {
 }
 
 export async function getServerSideProps({ params }) {
-    const current = parseInt(params.pageId) ?? 1;
     return {
-        props: {
-            current: current,
-        }
+        props: {}
     };
 }

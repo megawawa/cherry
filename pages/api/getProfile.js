@@ -18,9 +18,9 @@ export default async function handler(req, res) {
         return;
     }
 
-    const result = await getProfileFromUser(session.user.name);
+    const result = await getProfileFromUser(session.user.id);
 
-    console.log('getProfileFromUser', session.user.name, result);
+    console.log('getProfileFromUser', session.user.id, result);
 
     res.status(200).json(result);
 }

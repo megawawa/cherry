@@ -16,7 +16,10 @@ function QuizPanel({ quiz, displayUser }:
                     </Link>
                     {displayUser &&
                         (<div>
-                            Submitted by user: {quiz.submitUserName}
+                            Submitted by user: {" "}
+                            <Link href={`/profile/${quiz.submitUserId}`}>
+                                <a>{quiz.submitUserName}</a>
+                            </Link>
                         </div>)}
                 </Card.Text>
             </Card.Body>

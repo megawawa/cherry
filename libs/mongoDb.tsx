@@ -5,7 +5,7 @@ import {
     DbProblemCreateType, DBProblemEditType,
     ProblemDetailViewType, ProblemPreviewType
 } from './quiz'
-import { CredentialType, ProfileFormType, TutorOrStudentAccount, TutorPreviewType, UserInterestsType } from './user';
+import { CredentialType, ProfileFormType, ProfilePreviewType, TutorOrStudentAccount, TutorPreviewType, UserInterestsType } from './user';
 
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -77,7 +77,7 @@ export async function getUserFromCredential(credentials: CredentialType):
                     //password did not match
                 } else {
                     return {
-                        id: 1, /* id not used for generating session */
+                        id: user._id.valueOf().toString(),
                         name: user.username,
                         email: credentials.email,
                         isTutor: user.isTutor ?? false,
@@ -170,6 +170,7 @@ export async function getProblemDetailViewFromId(id: string):
         summary: result.summary ?? {},
         solution: result.solution ?? "",
         submitUserName: result.submitUserName ?? "",
+        submitUserId: result.submitUserName ?? "",
     }
 }
 
@@ -318,14 +319,14 @@ export async function genTagsForUser(user, tags: UserInterestsType) {
         );
 }
 
-export async function genProfileForUser(user: string,
+export async function genProfileForUser(id: string,
     profile: ProfileFormType) {
     const { db } = await connectToDatabase();
-    if (!user) {
+    if (!id) {
         return;
     }
 
-    console.log('[genTagForUser]', user, profile);
+    console.log('[genTagForUser]', id, profile);
 
     // do not set student/tutor tags if null
     if (!profile.contact) {
@@ -350,7 +351,7 @@ export async function genProfileForUser(user: string,
 
     await db
         .collection("users")
-        .updateOne({ username: { $eq: user } },
+        .updateOne({ _id: { $eq: ObjectId(id) } },
             {
                 "$set": profile
             }, { upsert: false, returnNewDocument: false })
@@ -365,15 +366,16 @@ export async function genProfileForUser(user: string,
         );
 }
 
-export async function getProfileFromUser(user: string):
-    Promise<ProfileFormType> {
+export async function getProfileFromUser(id: string):
+    Promise<ProfilePreviewType> {
     const { db } = await connectToDatabase();
     const result = await db
         .collection("users")
-        .findOne({ username: { $eq: user } }, {
+        .findOne({ _id: { $eq: ObjectId(id) } }, {
             $project: {
                 "contact": 1, "intro": 1,
-                "email": 1, "otherContact": 1, "phone": 1
+                "email": 1, "otherContact": 1,
+                "phone": 1, "username": 1,
             }
         })
         .then(
@@ -391,5 +393,6 @@ export async function getProfileFromUser(user: string):
         email: result?.email ?? "",
         otherContact: result?.otherContact ?? "",
         phone: result?.phone ?? "",
+        name: result?.username ?? "",
     }
 }

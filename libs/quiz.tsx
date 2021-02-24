@@ -16,12 +16,14 @@ export type ProblemDetailViewType = {
     summary: Summary;
     solution: string;
     submitUserName: string;
+    submitUserId: string;
 }
 
 export type ProblemPreviewType = {
     problemStatement?: string;
     id?: string;
     submitUserName: string;
+    submitUserId: string;
     tags: Array<string>;
 }
 

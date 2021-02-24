@@ -32,6 +32,7 @@ export default async function handler(req, res) {
     const quiz = {
         problemStatement: req.body?.quiz?.problemStatement ?? "",
         submitUserName: session.user.name,
+        submitUserId: session.user.id,
         tags: req.body?.tags,
         solution: req.body?.quiz?.solution ?? "",
         summary: {

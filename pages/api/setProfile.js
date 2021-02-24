@@ -23,6 +23,6 @@ export default async function handler(req, res) {
         return;
     }
 
-    await genProfileForUser(session.user.name, req.body?.profile);
+    await genProfileForUser(session.user.id, req.body?.profile);
     res.status(200).json({ quizUpdate: 'success' });
 }

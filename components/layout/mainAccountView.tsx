@@ -108,7 +108,7 @@ export default function MainAccountView({ activeKey }: {
                                 Public profile
                                </div>
                             <Nav.Item>
-                                <Link href={`/quizzes/${context.quizzesIndex ?? 1}`} passHref>
+                                <Link href="/quizzes" passHref>
                                     <Nav.Link eventKey="browseQuiz">
                                         <LockTab locked={false} text="Browse Quiz" />
                                     </Nav.Link>

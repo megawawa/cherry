@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import styles from '../../styles/Profile.module.css'
 import { uploadProfileForUser, getUserProfile, ProfileFormType } from "../../libs/user";
+import TextareaAutosize from 'react-autosize-textarea';
 
 export default function ProfilePanel() {
     const [state, setState] = useState<ProfileFormType>({});
@@ -56,11 +57,16 @@ export default function ProfilePanel() {
 
             <Form.Group controlId="intro">
                 <Form.Label>Self-introduction</Form.Label>
-                <Form.Control as="textarea" rows={3}
-                    placeholder="Introduce yourself"
-                    name="intro"
-                    value={state.intro ?? ''}
-                    onChange={handleChange} />
+                <div>
+                    <TextareaAutosize
+                        style={{ width: "100%" }}
+                        onChange={handleChange}
+                        name="intro"
+                        placeholder="Introduce yourself"
+                        rows={5}
+                        value={state.intro ?? ''}>
+                    </TextareaAutosize>
+                </div>
             </Form.Group>
 
             <Form.Group controlId="email">

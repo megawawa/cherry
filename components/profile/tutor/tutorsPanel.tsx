@@ -10,11 +10,9 @@ function TutorPanel({ tutor }:
         <Card className={styles.card}>
             <Card.Body>
                 <Card.Text>
-                    {/* TODO @megawawa(2/21/2021) link to profile*/}
-                    {/* <Link href={`/profiles/${tutor.id}`}>
-                        <a>{tutor.name}</a>
-                    </Link> */}
-                    {`username: ${tutor.name}`}
+                    <Link href={`/profile/${tutor.id}`}>
+                        <a>{`username: ${tutor.name}`}</a>
+                    </Link>
                 </Card.Text>
             </Card.Body>
         </Card>

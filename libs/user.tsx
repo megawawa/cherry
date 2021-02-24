@@ -34,6 +34,11 @@ export type ProfileFormType = {
     otherContact?: string,
 }
 
+export type ProfilePreviewType = ProfileFormType & {
+    name: string
+}
+
+
 export async function getUserTags(): Promise<UserInterestsType> {
     console.log("fetching interest");
     const url = `/api/getTags`;

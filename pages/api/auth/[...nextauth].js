@@ -74,6 +74,9 @@ const options = {
       if (user) {
         token.isTutor = user.isTutor ?? false;
         token.isStudent = user.isStudent ?? false;
+        if (user.id) {
+          token.id = user.id;
+        }
       }
 
       return Promise.resolve(token);
@@ -82,6 +85,9 @@ const options = {
       if (user) {
         session.user.isTutor = user.isTutor ?? false;
         session.user.isStudent = user.isStudent ?? false;
+        if (user.id) {
+          session.user.id = user.id;
+        }
       }
 
       return Promise.resolve(session);
