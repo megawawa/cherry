@@ -1,14 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import styles from '../../styles/Profile.module.css'
-
-type ProfileFormType = {
-    contact?: string,
-    intro?: string,
-    email?: string,
-    phone?: string,
-    otherContact?: string,
-}
+import { uploadProfileForUser, getUserProfile, ProfileFormType } from "../../libs/user";
 
 export default function ProfilePanel() {
     const [state, setState] = useState<ProfileFormType>({});
@@ -19,8 +12,35 @@ export default function ProfilePanel() {
         });
     };
 
+    const syncState = async () => {
+        // already initialized interest. sync interest to db
+        if (state.contact != undefined
+            && state.intro != undefined
+            && state.email != undefined
+            && state.otherContact != undefined
+            && state.phone != undefined) {
+            uploadProfileForUser(state);
+            return;
+        }
+
+        // fetch interest from db
+        const userProfile = await getUserProfile();
+        state.contact = state.contact ?? "";
+        state.intro = state.intro ?? "";
+        state.email = state.email ?? "";
+        state.otherContact = state.otherContact ?? "";
+        state.phone = state.phone ?? "";
+
+        setState(userProfile);
+    };
+
+    useEffect(() => {
+        syncState();
+    }, [state]);
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        syncState();
     }
 
     return <div className={styles.profilePanel}>

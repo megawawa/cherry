@@ -26,6 +26,14 @@ export type UserInterestsType = {
     tutorTags?: Array<string>,
 }
 
+export type ProfileFormType = {
+    contact?: string,
+    intro?: string,
+    email?: string,
+    phone?: string,
+    otherContact?: string,
+}
+
 export async function getUserTags(): Promise<UserInterestsType> {
     console.log("fetching interest");
     const url = `/api/getTags`;
@@ -67,5 +75,50 @@ export async function uploadTagsForUser(tags: UserInterestsType)
 
     const result = await res.json();
     console.log("uploaded interest", result);
+    return result;
+}
+
+export async function getUserProfile()
+    : Promise<ProfileFormType> {
+    console.log("get user profile");
+    const url = `/api/getProfile`;
+
+    const res = await fetch(
+        url,
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        }
+    )
+
+    const result = await res.json();
+    console.log("fetched profile", result);
+    return result;
+}
+
+export async function uploadProfileForUser(profile: ProfileFormType)
+    : Promise<void> {
+    console.log("uploading profile", profile);
+    const url = `/api/setProfile`;
+
+    const res = await fetch(
+        url,
+        {
+            body: JSON.stringify(
+                {
+                    profile: profile
+                }
+            ),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        }
+    )
+
+    const result = await res.json();
+    console.log("uploaded profile", result);
     return result;
 }

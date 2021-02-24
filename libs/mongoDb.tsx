@@ -5,7 +5,7 @@ import {
     DbProblemCreateType, DBProblemEditType,
     ProblemDetailViewType, ProblemPreviewType
 } from './quiz'
-import { CredentialType, TutorOrStudentAccount, TutorPreviewType, UserInterestsType } from './user';
+import { CredentialType, ProfileFormType, TutorOrStudentAccount, TutorPreviewType, UserInterestsType } from './user';
 
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -316,4 +316,80 @@ export async function genTagsForUser(user, tags: UserInterestsType) {
                 console.log("[genTagForUser] user does not exist");
             }
         );
+}
+
+export async function genProfileForUser(user: string,
+    profile: ProfileFormType) {
+    const { db } = await connectToDatabase();
+    if (!user) {
+        return;
+    }
+
+    console.log('[genTagForUser]', user, profile);
+
+    // do not set student/tutor tags if null
+    if (!profile.contact) {
+        delete profile.contact;
+    }
+
+    if (!profile.intro) {
+        delete profile.intro;
+    }
+
+    if (!profile.email) {
+        delete profile.email;
+    }
+
+    if (!profile.otherContact) {
+        delete profile.otherContact;
+    }
+
+    if (!profile.phone) {
+        delete profile.phone;
+    }
+
+    await db
+        .collection("users")
+        .updateOne({ username: { $eq: user } },
+            {
+                "$set": profile
+            }, { upsert: false, returnNewDocument: false })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`updated user profile.`);
+                    return;
+                }
+                console.log("[genProfileForUser] user does not exist");
+            }
+        );
+}
+
+export async function getProfileFromUser(user: string):
+    Promise<ProfileFormType> {
+    const { db } = await connectToDatabase();
+    const result = await db
+        .collection("users")
+        .findOne({ username: { $eq: user } }, {
+            $project: {
+                "contact": 1, "intro": 1,
+                "email": 1, "otherContact": 1, "phone": 1
+            }
+        })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`found user interests.`, result);
+                    return result;
+                }
+                console.log("[getProfileFromUser] user does not exist");
+            }
+        );
+    return {
+        contact: result?.contact ?? "",
+        intro: result?.intro ?? "",
+        email: result?.email ?? "",
+        otherContact: result?.otherContact ?? "",
+        phone: result?.phone ?? "",
+    }
 }
