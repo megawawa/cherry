@@ -19,7 +19,14 @@ export default function QuizzesPage({ quizzes }: {
 
 export async function getServerSideProps(context) {
     const session = await getSession(context);
-    const quizzes = await getProblemPreviewFromUser(session.user.name);
+    if (!session?.user?.id) {
+        return {
+            props: {
+                quizzes: [],
+            }
+        };
+    }
+    const quizzes = await getProblemPreviewFromUser(session?.user?.id);
     return {
         props: {
             quizzes: quizzes,
