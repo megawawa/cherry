@@ -9,7 +9,7 @@ export default async function handler(req, res) {
         console.log('Session', JSON.stringify(session, null, 2))
     } else {
         // Not Signed in
-        res.status(401);
+        res.status(401).json({ text: '[uploadQuiz] not logged in' });;
         return;
     }
 

@@ -53,8 +53,11 @@ export async function getUserTags(): Promise<UserInterestsType> {
         }
     )
 
-    const result = await res.json();
+    let result = await res.json();
     console.log("fetched interest", result);
+    if (res.status != 200) {
+        result = {};
+    }
     return result;
 }
 
@@ -98,8 +101,11 @@ export async function getUserProfile()
         }
     )
 
-    const result = await res.json();
+    let result = await res.json();
     console.log("fetched profile", result);
+    if (res.status != 200) {
+        result = {};
+    }
     return result;
 }
 

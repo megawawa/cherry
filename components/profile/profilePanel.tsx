@@ -25,12 +25,17 @@ export default function ProfilePanel() {
         }
 
         // fetch interest from db
-        const userProfile = await getUserProfile();
-        state.contact = state.contact ?? "";
-        state.intro = state.intro ?? "";
-        state.email = state.email ?? "";
-        state.otherContact = state.otherContact ?? "";
-        state.phone = state.phone ?? "";
+        let userProfile = await getUserProfile();
+        userProfile.contact = state.contact ??
+            userProfile.contact ?? "";
+        userProfile.intro = state.intro ??
+            userProfile.intro ?? "";
+        userProfile.email = state.email ??
+            userProfile.email ?? "";
+        userProfile.otherContact = state.otherContact ??
+            userProfile.otherContact ?? "";
+        userProfile.phone = state.phone ??
+            userProfile.phone ?? "";
 
         setState(userProfile);
     };

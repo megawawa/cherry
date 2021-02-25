@@ -28,6 +28,6 @@ export default async function handler(req, res) {
         return;
     }
 
-    await genTagsForUser(session.user.name, req.body?.tags);
+    await genTagsForUser(session.user.id, req.body?.tags);
     res.status(200).json({ quizUpdate: 'success' });
 }

@@ -262,12 +262,12 @@ export async function getTopTutors(pageIndex: number)
     });
 }
 
-export async function getTagsFromUser(user: string):
+export async function getTagsFromUser(id: string):
     Promise<UserInterestsType> {
     const { db } = await connectToDatabase();
     const result = await db
         .collection("users")
-        .findOne({ username: { $eq: user } }, {
+        .findOne({ _id: { $eq: ObjectId(id) } }, {
             $project: { "studentTags": 1, "tutorTags": 1 }
         })
         .then(
@@ -285,13 +285,13 @@ export async function getTagsFromUser(user: string):
     }
 }
 
-export async function genTagsForUser(user, tags: UserInterestsType) {
+export async function genTagsForUser(id: string, tags: UserInterestsType) {
     const { db } = await connectToDatabase();
-    if (!user) {
+    if (!id) {
         return;
     }
 
-    console.log('[genTagForUser]', user, tags);
+    console.log('[genTagForUser]', id, tags);
 
     // do not set student/tutor tags if null
     if (!tags.studentTags) {
@@ -304,7 +304,7 @@ export async function genTagsForUser(user, tags: UserInterestsType) {
 
     await db
         .collection("users")
-        .updateOne({ username: { $eq: user } },
+        .updateOne({ _id: { $eq: ObjectId(id) } },
             {
                 "$set": tags
             }, { upsert: false, returnNewDocument: false })
