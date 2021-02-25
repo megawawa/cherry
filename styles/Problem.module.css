@@ -43,13 +43,12 @@
 
 .parseSolutionContainer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
 .parseSolutionContainerItem {
-    width: 48%;
     min-width: 350px;
 }
 

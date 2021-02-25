@@ -61,7 +61,7 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
                 onChange={handleChange} />
         </div>;
     } else if (state.index == 2) {
-        solutionInput = <CreateSolutionPanel onTextUpdate={updateSolution} />;
+        solutionInput = <CreateSolutionPanel onSolutionTextUpdate={updateSolution} />;
     }
 
     const handleSubmit = async (event) => {

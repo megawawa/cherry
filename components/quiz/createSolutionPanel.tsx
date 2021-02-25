@@ -6,8 +6,8 @@ import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Problem.module.css'
 import { MathSymbolList } from "../mathSymbolList";
 
-export default function CreateSolutionPanel({ onTextUpdate, value }: {
-    onTextUpdate: (value: string) => void, value?: string
+export default function CreateSolutionPanel({ onSolutionTextUpdate, value }: {
+    onSolutionTextUpdate: (value: string) => void, value?: string
 }) {
     const context = useAccountContext();
 
@@ -19,10 +19,10 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
 
     const [expandList, updateExpandList] = useState<ExpandList>([]);
 
-    const onSolutionTextUpdate = (value) => {
+    const onSolutionTextAreaUpdate = (value) => {
         updateSolutionText(value);
         updateSolution(parseTextToSolution(value));
-        onTextUpdate(value);
+        onSolutionTextUpdate(value);
         updateExpandList([]);
     }
 
@@ -53,7 +53,7 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
                 </div>
                 <MathSymbolList handleTextUpdate={
                     (addedText) => {
-                        onSolutionTextUpdate(solutionText + addedText);
+                        onSolutionTextAreaUpdate(solutionText + addedText);
                     }
                 } />
                 <TextareaAutosize
@@ -63,7 +63,7 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
                     \n  step 1\n   step 1.a\n   step 1.b\n  step 2"}
                     rows={13}
                     onChange={(event) => {
-                        onSolutionTextUpdate(
+                        onSolutionTextAreaUpdate(
                             (event.target as HTMLTextAreaElement).value);
                     }} />
             </div>

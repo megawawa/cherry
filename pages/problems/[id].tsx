@@ -100,7 +100,7 @@ export default function ProblemPanel({ problemData, submitUserName }:
                         defaultView={
                             <SolutionPanel solution={parseTextToSolution(quiz?.solution ?? "")} />}
                         editView={
-                            <CreateSolutionPanel onTextUpdate={updateSolution}
+                            <CreateSolutionPanel onSolutionTextUpdate={updateSolution}
                                 value={quiz?.solution ?? ""} />
                         }
                         onCancel={handleCancel}
