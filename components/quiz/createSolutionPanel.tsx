@@ -4,9 +4,10 @@ import { useAccountContext } from "../layout/accountContext";
 import { SolutionPanel } from "./solution";
 import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Problem.module.css'
+import { MathSymbolList } from "../mathSymbolList";
 
 export default function CreateSolutionPanel({ onTextUpdate, value }: {
-    onTextUpdate: (event: Event) => void, value?: string
+    onTextUpdate: (value: string) => void, value?: string
 }) {
     const context = useAccountContext();
 
@@ -18,10 +19,10 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
 
     const [expandList, updateExpandList] = useState<ExpandList>([]);
 
-    const onSolutionTextUpdate = (event) => {
-        updateSolutionText(event.target.value);
-        updateSolution(parseTextToSolution(event.target.value));
-        onTextUpdate(event);
+    const onSolutionTextUpdate = (value) => {
+        updateSolutionText(value);
+        updateSolution(parseTextToSolution(value));
+        onTextUpdate(value);
         updateExpandList([]);
     }
 
@@ -50,13 +51,21 @@ export default function CreateSolutionPanel({ onTextUpdate, value }: {
                 <div>
                     Input your solution here:
                 </div>
+                <MathSymbolList handleTextUpdate={
+                    (addedText) => {
+                        onSolutionTextUpdate(solutionText + addedText);
+                    }
+                } />
                 <TextareaAutosize
                     style={{ width: "100%" }}
                     value={solutionText}
                     placeholder={"Try the following example:\n\
                     \n  step 1\n   step 1.a\n   step 1.b\n  step 2"}
                     rows={13}
-                    onChange={onSolutionTextUpdate} />
+                    onChange={(event) => {
+                        onSolutionTextUpdate(
+                            (event.target as HTMLTextAreaElement).value);
+                    }} />
             </div>
             <div className={styles.parseSolutionContainerItem}>
                 <div>

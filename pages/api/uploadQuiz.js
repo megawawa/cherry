@@ -2,11 +2,10 @@ import { uploadQuiz } from "../../libs/mongoDb"
 import { getSession } from 'next-auth/client'
 
 export default async function handler(req, res) {
-
     const session = await getSession({ req })
     if (session) {
         // Signed in
-        console.log('Session', JSON.stringify(session, null, 2))
+        console.log('[uploadQuiz] Session', JSON.stringify(session, null, 2))
     } else {
         // Not Signed in
         res.status(401).json({ text: '[uploadQuiz] not logged in' });;

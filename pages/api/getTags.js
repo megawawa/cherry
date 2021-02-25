@@ -18,9 +18,9 @@ export default async function handler(req, res) {
         return;
     }
 
-    const result = await getTagsFromUser(session.user.name);
+    const result = await getTagsFromUser(session.user.id);
 
-    console.log('fetchedTagsFromUser', session.user.name, result);
+    console.log('fetchedTagsFromUser', session.user.id, result);
 
     res.status(200).json(result);
 }

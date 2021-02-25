@@ -27,10 +27,10 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
         });
     };
 
-    const updateSolution = (event) => {
+    const updateSolution = (value: string) => {
         setQuiz({
             ...quiz,
-            solution: event.target.value
+            solution: value
         });
     };
 

@@ -61,10 +61,10 @@ export default function ProblemPanel({ problemData, submitUserName }:
         )
     }
 
-    const updateSolution = (event) => {
+    const updateSolution = (value) => {
         setQuiz({
             ...quiz,
-            solution: event.target.value
+            solution: value
         });
     };
 
