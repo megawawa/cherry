@@ -61,7 +61,9 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
                 onChange={handleChange} />
         </div>;
     } else if (state.index == 2) {
-        solutionInput = <CreateSolutionPanel onSolutionTextUpdate={updateSolution} />;
+        // disallow comment editing when creating quiz
+        solutionInput = <CreateSolutionPanel onSolutionTextUpdate={updateSolution}
+            commentsList={[]} />;
     }
 
     const handleSubmit = async (event) => {

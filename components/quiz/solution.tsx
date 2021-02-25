@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Solution, ExpandList, getVisibleSteps, getStepsToExpandFromId, sanitize } from '../../libs/problem'
 import styles from '../../styles/Problem.module.css'
 import TextareaAutosize from 'react-autosize-textarea';
-import { FormControl, InputGroup, OverlayTrigger, Popover, PopoverProps } from 'react-bootstrap';
+import { Button, FormControl, InputGroup, OverlayTrigger, Popover, PopoverProps } from 'react-bootstrap';
+import { Comments, CommentsList, Comment } from '../../libs/quiz';
+import { useSession } from 'next-auth/client';
+import Link from 'next/link';
 
 const UpdatingPopover = React.forwardRef<HTMLButtonElement, PopoverProps>(
     ({ popper, children, show: _, ...props }, ref) => {
@@ -19,16 +22,50 @@ const UpdatingPopover = React.forwardRef<HTMLButtonElement, PopoverProps>(
     },
 );
 
-function CommentPanel() {
+function PastComment({ comment }: {
+    comment: Comment
+}) {
+    return <div>
+        <Link href={`/profile/${comment.id}`}>
+            <a>{comment.username}</a>
+        </Link>
+        <span>{":  "}</span>
+        {comment.comment}
+    </div>;
+}
+
+function CommentPanel({ comments, uploadComment }: {
+    comments: Comments,
+    uploadComment: (comment: string) => void,
+}) {
+    const [state, updateState] = useState<string>();
+
+    const handleChange = (event) => {
+        updateState(event.target.value);
+    }
+
     return (
         <>
             <Popover.Title as="h3">Comment here</Popover.Title>
             <Popover.Content>
-                Can someone <strong>help</strong> me? I got stuck here
+                {comments && comments.map((comment) => (
+                    <div>
+                        <PastComment comment={comment} />
+                    </div>))}
+
                 <InputGroup size="sm" className="mb-3">
-                    <TextareaAutosize />
+                    <TextareaAutosize
+                        value={state ?? ''}
+                        onChange={handleChange}
+                    />
                     <InputGroup.Append>
-                        <InputGroup.Text id="inputGroup-sizing-sm">Send</InputGroup.Text>
+                        <Button id="inputGroup-sizing-sm"
+                            onClick={() => {
+                                uploadComment(state);
+                                updateState("");
+                            }}>
+                            Send
+                        </Button>
                     </InputGroup.Append>
                 </InputGroup>
             </Popover.Content>
@@ -40,11 +77,13 @@ function CommentPanel() {
 function SolutionStep({
     value, onClick, indent,
     expanded, hasChild, alwaysVisible,
-    onEditStep,
+    onEditStep, comments,
+    uploadComment
 }: {
     value: string, onClick: () => void, alwaysVisible: boolean,
     indent: number, expanded: boolean, hasChild: boolean,
-    onEditStep: (string) => void
+    onEditStep: (string) => void, comments: Comments
+    uploadComment: (string) => void,
 }) {
     return (<div style={{
         display: "flex", alignItems: "center",
@@ -76,7 +115,7 @@ function SolutionStep({
             </div>
             <OverlayTrigger trigger="click" placement="right" rootClose overlay={
                 <UpdatingPopover id="popover-basic" style={{ minWidth: "400px" }}>
-                    <CommentPanel />
+                    <CommentPanel comments={comments} uploadComment={uploadComment} />
                 </UpdatingPopover>}>
                 <div style={{ marginLeft: "auto" }}>
                     <button className={styles.commentButton} onClick={() => { }}
@@ -96,15 +135,48 @@ function convertToBoolArray(list) {
 }
 
 // no pagination, assuming solution is fetched once
-export function SolutionPanel({ solution, expandList = [], updateSolutionStep,
-    updateExpandList = () => { } }
+export function SolutionPanel({ solution, commentsList, expandList = [],
+    updateSolutionStep,
+    updateExpandList = () => { },
+    onUploadComment,
+}
     : {
         solution: Solution, expandList?: ExpandList,
         updateSolutionStep?: (number, string) => void,
         updateExpandList?: (ExpandList) => void,
+        commentsList: CommentsList,
+        onUploadComment?: (
+            stepIndex: number, commentIndex: number, comment: string
+        ) => Promise<void>,
     }) {
     const [expandListState, updateExpandListState] = useState<ExpandList>(
         sanitize(solution, expandList));
+    const [session] = useSession();
+
+    const [commentsListState, UpdateCommentsListState] = useState<CommentsList>(
+        commentsList ?? []
+    );
+
+    const uploadComment = (index: number, comment: string) => {
+        const dupList = commentsListState.slice(0);
+        if (!dupList[index]) {
+            dupList[index] = [];
+        }
+        dupList[index].push({
+            comment: comment,
+            username: session?.user?.name,
+            id: session?.user?.id,
+        });
+        if (onUploadComment) {
+            onUploadComment(
+                index,
+                dupList[index].length - 1,
+                comment,
+            );
+        }
+        UpdateCommentsListState(dupList);
+    }
+
     const [expandStatusListState, updateExpandStatusListState] =
         useState<Array<boolean>>(convertToBoolArray(expandListState));
 
@@ -138,7 +210,7 @@ export function SolutionPanel({ solution, expandList = [], updateSolutionStep,
     }
 
     var solutionItems = solutionSteps.map(
-        (solutionStep) =>
+        (solutionStep, index) =>
             <SolutionStep
                 key={solutionStep.id}
                 value={solutionStep.text}
@@ -149,7 +221,9 @@ export function SolutionPanel({ solution, expandList = [], updateSolutionStep,
                 alwaysVisible={solutionStep.alwaysVisible}
                 expanded={expandStatusListState[solutionStep.id]}
                 onClick={newlyExpandedSteps.bind(this, solutionStep.id)}
-                onEditStep={handleSolutionStepUpdate?.bind(this, solutionStep.id)} />
+                onEditStep={handleSolutionStepUpdate?.bind(this, solutionStep.id)}
+                comments={commentsListState[index]}
+                uploadComment={(comment: string) => { uploadComment(index, comment); }} />
     )
     return <div>{solutionItems}</div>;
 }

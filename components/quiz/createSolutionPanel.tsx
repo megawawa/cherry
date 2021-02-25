@@ -5,9 +5,15 @@ import { SolutionPanel } from "./solution";
 import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Problem.module.css'
 import { MathSymbolList } from "../mathSymbolList";
+import { CommentsList } from "../../libs/quiz";
 
-export default function CreateSolutionPanel({ onSolutionTextUpdate, value }: {
-    onSolutionTextUpdate: (value: string) => void, value?: string
+export default function CreateSolutionPanel({
+     onSolutionTextUpdate, value, onUploadComment, commentsList }: {
+    onSolutionTextUpdate: (value: string) => void, value?: string,
+    onUploadComment?: (
+        stepIndex: number, commentIndex: number, comment: string
+    ) => Promise<void>,
+    commentsList: CommentsList
 }) {
     const context = useAccountContext();
 
@@ -74,7 +80,9 @@ export default function CreateSolutionPanel({ onSolutionTextUpdate, value }: {
                 <SolutionPanel solution={solution}
                     updateSolutionStep={updateSolutionStep}
                     expandList={expandList}
-                    updateExpandList={updateExpandList} />
+                    commentsList={commentsList}
+                    updateExpandList={updateExpandList}
+                    onUploadComment={onUploadComment} />
             </div>
 
         </div>

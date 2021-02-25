@@ -6,12 +6,12 @@ import { EditableView } from '../../components/libs/editableView';
 import styles from '../../styles/Problem.module.css'
 
 import { Problem, parseTextToSolution } from '../../libs/problem';
-import { QuizCreateFormType } from '../../libs/quiz';
+import { CommentsList, QuizCreateFormType } from '../../libs/quiz';
 import { getProblemDetailViewFromId } from '../../libs/mongoDb';
 import { useSession } from 'next-auth/client';
 
 import { Form } from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card'
 
 
@@ -23,6 +23,9 @@ export default function ProblemPanel({ problemData, submitUserName }:
         problemStatement: problemData?.problemStatement ?? '',
         solution: problemData?.solution ?? '',
     });
+
+    // solution panel has its own comment list.
+    let [commentList, setCommentList] = useState<CommentsList>([]);
 
     const handleChange = (event) => {
         setQuiz({
@@ -51,6 +54,51 @@ export default function ProblemPanel({ problemData, submitUserName }:
                         ...quiz,
                         "id": problemData.id,
                         "submitUserName": session?.user?.name,
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            }
+        )
+    }
+
+    // right now, only get Comment when user sends message TODO: test it
+    const handleGetComment = async (problemId: string, stepId: number) => {
+        const url = `/api/getComments?` +
+            `problemId=${JSON.stringify(problemId)}&stepId=${stepId}`;
+
+        const res = await fetch(
+            url,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'GET'
+            }
+        )
+
+        const result = await res.json();
+        console.log("fetched comment: ", problemId,
+            stepId, result);
+
+        /* setCommentList ... */
+    }
+
+    const handleUploadComment = async (
+        stepIndex: number, commentIndex: number, comment: string) => {
+        console.log("upload comment", stepIndex, commentIndex, comment);
+        const res = await fetch(
+            '/api/editComment',
+            {
+                body: JSON.stringify(
+                    {
+                        stepIndex: stepIndex,
+                        commentIndex: commentIndex,
+                        comment: comment,
+                        userId: session.user.id,
+                        solutionId: problemData.id,
                     }
                 ),
                 headers: {
@@ -98,10 +146,14 @@ export default function ProblemPanel({ problemData, submitUserName }:
                 <Card.Body>
                     <EditableView
                         defaultView={
-                            <SolutionPanel solution={parseTextToSolution(quiz?.solution ?? "")} />}
+                            <SolutionPanel solution={parseTextToSolution(quiz?.solution ?? "")}
+                                commentsList={commentList}
+                                onUploadComment={handleUploadComment} />}
                         editView={
                             <CreateSolutionPanel onSolutionTextUpdate={updateSolution}
-                                value={quiz?.solution ?? ""} />
+                                value={quiz?.solution ?? ""}
+                                commentsList={commentList}
+                                onUploadComment={handleUploadComment} />
                         }
                         onCancel={handleCancel}
                         onSave={handleSave}

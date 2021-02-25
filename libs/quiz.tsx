@@ -17,6 +17,7 @@ export type ProblemDetailViewType = {
     solution: string;
     submitUserName: string;
     submitUserId: string;
+    id: string;
 }
 
 export type ProblemPreviewType = {
@@ -33,4 +34,22 @@ export type DbProblemCreateType = ProblemPreviewType & {
 
 export type DBProblemEditType = DbProblemCreateType & {
     id: string
+}
+
+export type Comment = {
+    username: string;
+    id: string; // userId
+    comment: string;
+};
+
+export type Comments = Array<Comment>;
+
+export type CommentsList = Array<Comments>;
+
+export type CommentEditType = {
+    stepIndex: number,
+    solutionId: string,
+    comment: string,
+    commentIndex: number,
+    userId: string,
 }
