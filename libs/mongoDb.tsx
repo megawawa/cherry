@@ -407,11 +407,7 @@ export async function getComments(problemId: string,
     const { db } = await connectToDatabase();
     const result = await db
         .collection("problems")
-        .findOne({ _id: { $eq: ObjectId(problemId) } }, {
-            $project: {
-                [`commentsList.${stepIndex}.comments`]: 1
-            }
-        })
+        .findOne({ _id: { $eq: ObjectId(problemId) } })
         .then(
             result => {
                 if (result.matchedCount != 0) {
@@ -421,8 +417,9 @@ export async function getComments(problemId: string,
                 console.log("[getProfileFromUser] user does not exist");
             }
         );
-    console.log("[getComments]", result)
-    return result;
+    const comments = result.commentsList[stepIndex].comments;
+    console.log("[getComments]", comments);
+    return comments;
 }
 
 export async function editComment(comment: CommentEditType, insert: boolean) {
@@ -471,6 +468,8 @@ export async function editComment(comment: CommentEditType, insert: boolean) {
                 {
                     [`commentsList.${comment.stepIndex}.comments`]: {
                         comment: comment.comment,
+                        id: comment.id,
+                        username: comment.username,
                     }
                 }
             });

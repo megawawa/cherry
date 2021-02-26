@@ -64,10 +64,9 @@ export default function ProblemPanel({ problemData, submitUserName }:
         )
     }
 
-    // right now, only get Comment when user sends message TODO: test it
-    const handleGetComment = async (problemId: string, stepId: number) => {
+    const handleGetComment = async (stepId: number) => {
         const url = `/api/getComments?` +
-            `problemId=${JSON.stringify(problemId)}&stepId=${stepId}`;
+            `problemId=${JSON.stringify(problemData.id)}&stepId=${stepId}`;
 
         const res = await fetch(
             url,
@@ -80,10 +79,14 @@ export default function ProblemPanel({ problemData, submitUserName }:
         )
 
         const result = await res.json();
-        console.log("fetched comment: ", problemId,
+        console.log("fetched comment: ", problemData.id,
             stepId, result);
 
-        /* setCommentList ... */
+        if (res.status == 200) {
+            const dup = commentList.slice(0);
+            dup[stepId] = result;
+            setCommentList(dup);
+        }
     }
 
     const handleUploadComment = async (
@@ -148,12 +151,14 @@ export default function ProblemPanel({ problemData, submitUserName }:
                         defaultView={
                             <SolutionPanel solution={parseTextToSolution(quiz?.solution ?? "")}
                                 commentsList={commentList}
-                                onUploadComment={handleUploadComment} />}
+                                onUploadComment={handleUploadComment}
+                                onHandleGetComment={handleGetComment} />}
                         editView={
                             <CreateSolutionPanel onSolutionTextUpdate={updateSolution}
                                 value={quiz?.solution ?? ""}
                                 commentsList={commentList}
-                                onUploadComment={handleUploadComment} />
+                                onUploadComment={handleUploadComment}
+                                onHandleGetComment={handleGetComment} />
                         }
                         onCancel={handleCancel}
                         onSave={handleSave}

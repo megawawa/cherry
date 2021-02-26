@@ -46,10 +46,8 @@ export type Comments = Array<Comment>;
 
 export type CommentsList = Array<Comments>;
 
-export type CommentEditType = {
+export type CommentEditType = Comment & {
     stepIndex: number,
     solutionId: string,
-    comment: string,
     commentIndex: number,
-    userId: string,
 }

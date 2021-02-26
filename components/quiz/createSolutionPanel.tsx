@@ -8,12 +8,15 @@ import { MathSymbolList } from "../mathSymbolList";
 import { CommentsList } from "../../libs/quiz";
 
 export default function CreateSolutionPanel({
-     onSolutionTextUpdate, value, onUploadComment, commentsList }: {
+    onSolutionTextUpdate, value, onUploadComment, commentsList,
+    onHandleGetComment = async () => { }
+}: {
     onSolutionTextUpdate: (value: string) => void, value?: string,
     onUploadComment?: (
         stepIndex: number, commentIndex: number, comment: string
     ) => Promise<void>,
-    commentsList: CommentsList
+    commentsList: CommentsList,
+    onHandleGetComment?: (stepId: number) => Promise<void>
 }) {
     const context = useAccountContext();
 
@@ -82,7 +85,8 @@ export default function CreateSolutionPanel({
                     expandList={expandList}
                     commentsList={commentsList}
                     updateExpandList={updateExpandList}
-                    onUploadComment={onUploadComment} />
+                    onUploadComment={onUploadComment}
+                    onHandleGetComment={onHandleGetComment} />
             </div>
 
         </div>

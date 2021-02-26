@@ -78,12 +78,14 @@ function SolutionStep({
     value, onClick, indent,
     expanded, hasChild, alwaysVisible,
     onEditStep, comments,
-    uploadComment
+    uploadComment,
+    onHandleGetComment,
 }: {
     value: string, onClick: () => void, alwaysVisible: boolean,
     indent: number, expanded: boolean, hasChild: boolean,
     onEditStep: (string) => void, comments: Comments
     uploadComment: (string) => void,
+    onHandleGetComment: () => Promise<void>,
 }) {
     return (<div style={{
         display: "flex", alignItems: "center",
@@ -118,7 +120,9 @@ function SolutionStep({
                     <CommentPanel comments={comments} uploadComment={uploadComment} />
                 </UpdatingPopover>}>
                 <div style={{ marginLeft: "auto" }}>
-                    <button className={styles.commentButton} onClick={() => { }}
+                    <button className={styles.commentButton} onClick={() => {
+                        onHandleGetComment();
+                    }}
                         type="button">
                         <img className={styles.commentImg}
                             src={"/comment.svg"}
@@ -139,6 +143,7 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
     updateSolutionStep,
     updateExpandList = () => { },
     onUploadComment,
+    onHandleGetComment,
 }
     : {
         solution: Solution, expandList?: ExpandList,
@@ -148,14 +153,19 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
         onUploadComment?: (
             stepIndex: number, commentIndex: number, comment: string
         ) => Promise<void>,
+        onHandleGetComment: (stepId: number) => Promise<void>
     }) {
     const [expandListState, updateExpandListState] = useState<ExpandList>(
         sanitize(solution, expandList));
     const [session] = useSession();
 
-    const [commentsListState, UpdateCommentsListState] = useState<CommentsList>(
+    const [commentsListState, updateCommentsListState] = useState<CommentsList>(
         commentsList ?? []
     );
+
+    useEffect(() => {
+        updateCommentsListState(commentsList)
+    }, [commentsList]);
 
     const uploadComment = (index: number, comment: string) => {
         const dupList = commentsListState.slice(0);
@@ -174,7 +184,7 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
                 comment,
             );
         }
-        UpdateCommentsListState(dupList);
+        updateCommentsListState(dupList);
     }
 
     const [expandStatusListState, updateExpandStatusListState] =
@@ -206,6 +216,7 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
         updateExpandListState(Array.from(new Set(
             expandListState.concat(
                 getStepsToExpandFromId(solution, id, expandListState)))));
+
         return;
     }
 
@@ -223,7 +234,8 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
                 onClick={newlyExpandedSteps.bind(this, solutionStep.id)}
                 onEditStep={handleSolutionStepUpdate?.bind(this, solutionStep.id)}
                 comments={commentsListState[index]}
-                uploadComment={(comment: string) => { uploadComment(index, comment); }} />
+                uploadComment={(comment: string) => { uploadComment(index, comment); }}
+                onHandleGetComment={onHandleGetComment.bind(this, solutionStep.id)} />
     )
     return <div>{solutionItems}</div>;
 }

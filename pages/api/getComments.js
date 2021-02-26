@@ -9,27 +9,31 @@ export default async function handler(req, res) {
     }
 
     const problemId = req.query?.problemId;
-    const stepIndex = req.query?.stepIndex;
+    const stepIndex = req.query?.stepId;
 
     if (!problemId) {
-        res.status(422).json({ text: "problemId shouldn't be empty"});
+        res.status(422)
+            .json({ text: "[getComment]problemId shouldn't be empty" });
         return;
     }
 
-    if (!stepIndex) {
-        res.status(422).json({ text: "stepIndex shouldn't be empty"});
+    if (stepIndex == undefined) {
+        res.status(422)
+            .json({ text: "[getComment]stepIndex shouldn't be empty" });
     }
 
     const parsedProblemId = JSON.parse(problemId);
     const parsedStepIndex = parseInt(stepIndex);
 
     if (!parsedProblemId) {
-        res.status(422).json({ text: "parsedProblemId shouldn't be empty"});
+        res.status(422)
+            .json({ text: "[getComment]parsedProblemId shouldn't be empty" });
         return;
     }
 
-    if (!parsedStepIndex) {
-        res.status(422).json({ text: "parsedStepIndex page shouldn't be empty"});
+    if (parsedStepIndex == undefined) {
+        res.status(422)
+            .json({ text: "[getComment]parsedStepIndex page shouldn't be empty" });
     }
 
     res.status(200).json(await getComments(parsedProblemId, parsedStepIndex));
