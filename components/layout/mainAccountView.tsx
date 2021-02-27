@@ -12,6 +12,7 @@ import BrowseQuizPanel from '../browseQuizPanel';
 import Link from 'next/link';
 import { AccountContextProvider, useAccountContext } from './accountContext';
 import CreateQuizPanel from '../quiz/createQuizPanel';
+import ProfilePanelView from '../profile/profilePanelView';
 
 function LockTab({ locked, text }: { locked: boolean, text: string }) {
     return <div className={styles.profileLeftItem}>
@@ -116,14 +117,19 @@ export default function MainAccountView({ activeKey }: {
                                 <Nav.Link eventKey="browseTest">
                                     <LockTab locked={false} text="Browse Test" />
                                 </Nav.Link>
+                                <Nav.Link eventKey="viewProfile">
+                                    <LockTab locked={false} text="Profile" />
+                                </Nav.Link>
                             </Nav.Item>
                             <div className={styles.profileLeftSectionHeader}>
                                 Tutor
                             </div>
                             <Nav.Item>
-                                <Nav.Link href="/profileHistory" eventKey="answeredQuizHistory">
-                                    <LockTab locked={false} text="History" />
-                                </Nav.Link>
+                                <Link href="/profileHistory" passHref>
+                                    <Nav.Link eventKey="answeredQuizHistory">
+                                        <LockTab locked={false} text="History" />
+                                    </Nav.Link>
+                                </Link >
                                 <Nav.Link eventKey="answerQuiz">
                                     <LockTab locked={false} text="Answer Quiz" />
                                 </Nav.Link>
@@ -191,6 +197,11 @@ export default function MainAccountView({ activeKey }: {
                             <Tab.Pane eventKey="createQuiz">
                                 <LockItem locked={false}>
                                     <CreateQuizPanel isTutor={true} />
+                                </LockItem>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="viewProfile">
+                                <LockItem locked={false}>
+                                    <ProfilePanelView />
                                 </LockItem>
                             </Tab.Pane>
                         </Tab.Content>

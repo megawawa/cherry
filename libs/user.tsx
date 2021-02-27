@@ -35,7 +35,7 @@ export type ProfileFormType = {
 }
 
 export type ProfilePreviewType = ProfileFormType & {
-    name: string
+    name?: string
 }
 
 
@@ -86,10 +86,10 @@ export async function uploadTagsForUser(tags: UserInterestsType)
     return result;
 }
 
-export async function getUserProfile()
-    : Promise<ProfileFormType> {
+export async function getUserProfile(userId: string)
+    : Promise<ProfilePreviewType> {
     console.log("get user profile");
-    const url = `/api/getProfile`;
+    const url = `/api/getProfile?userId=${userId}`;
 
     const res = await fetch(
         url,

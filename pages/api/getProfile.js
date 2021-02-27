@@ -3,24 +3,21 @@ import { getProfileFromUser } from "../../libs/mongoDb";
 
 export default async function handler(req, res) {
 
-    const session = await getSession({ req })
-    if (session) {
-        // Signed in
-        console.log('Session', JSON.stringify(session, null, 2))
-    } else {
-        // Not Signed in
-        res.status(401).json({ text: '[getProfile] user not signed in' });
-        return;
-    }
-
     if (req.method !== 'GET') {
         res.status(200).json({ text: 'this api is get only' });
         return;
     }
 
-    const result = await getProfileFromUser(session.user.id);
+    const userId = req.query?.userId;
 
-    console.log('getProfileFromUser', session.user.id, result);
+    if (!userId) {
+        res.status(422).json({ text: '[getProfile] need userId' });
+        return;
+    }
+
+    const result = await getProfileFromUser(userId);
+
+    console.log('getProfileFromUser', userId, result);
 
     res.status(200).json(result);
 }
