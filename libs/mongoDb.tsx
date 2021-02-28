@@ -330,28 +330,7 @@ export async function genProfileForUser(id: string,
         return;
     }
 
-    console.log('[genTagForUser]', id, profile);
-
-    // do not set student/tutor tags if null
-    if (!profile.contact) {
-        delete profile.contact;
-    }
-
-    if (!profile.intro) {
-        delete profile.intro;
-    }
-
-    if (!profile.email) {
-        delete profile.email;
-    }
-
-    if (!profile.otherContact) {
-        delete profile.otherContact;
-    }
-
-    if (!profile.phone) {
-        delete profile.phone;
-    }
+    console.log('[genProfileForUser]', id, profile);
 
     await db
         .collection("users")
