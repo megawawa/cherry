@@ -47,10 +47,11 @@ export default function InputButtonList({ tags, onUpdate, valid }: {
     onUpdate: (tagsState: Array<string>) => void,
     valid?: boolean,
 }) {
+    const [tagsState, updateTags] = useState(tags ?? []);
+
     useEffect(() => {
         updateTags(tags ?? []);
     }, [tags]);
-    const [tagsState, updateTags] = useState(tags ?? []);
 
     const [isEditable, updateIsEditable] = useState(true);
 

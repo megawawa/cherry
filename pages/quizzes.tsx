@@ -8,20 +8,9 @@ export default function QuizzesPage({ current }: {
     const context = useAccountContext();
     useEffect(() => {
         (async () => {
-
-            if (!context.tags || !context.quizzesIndex) {
-                const sanitizedTags = context.tags ?? [];
-                const sanitizedIndex = context.quizzesIndex ?? 1;
-                context.update({
-                    tags: sanitizedTags,
-                    quizzesIndex: sanitizedIndex,
-                });
-                return;
-            }
-
             console.log("fetching quiz", context.tags, context.quizzesIndex);
             const url = `/api/getQuiz?` +
-                `tags=${JSON.stringify(context.tags)}&current=${context.quizzesIndex}`;
+                `tags=${JSON.stringify(context.tags ?? [])}&current=${context.quizzesIndex ?? 1}`;
 
             const res = await fetch(
                 url,

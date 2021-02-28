@@ -32,5 +32,5 @@ export default function QuizzesPanel({ quizzes, displayUser }:
     const quizPanels = quizzes?.map((quiz) =>
         <QuizPanel quiz={quiz} key={quiz.id} displayUser={displayUser} />);
 
-    return <div className={styles.quizPreviewList}>{quizPanels}</div>;
+    return <div className={styles.quizPreviewList}>Matched quizzes{quizPanels}</div>;
 }

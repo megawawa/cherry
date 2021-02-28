@@ -35,12 +35,12 @@ export function PaginationFooter({ current, onUpdateIndex }: {
             </>
         )}
         <PaginationValidItem current={current - 1} />
-        <Pagination.Item active onClick={handleUpdateTo(current)}>
+        <Pagination.Item active onClick={handleUpdateTo.bind(this, current)}>
             {current}</Pagination.Item>
         <PaginationValidItem current={current + 1} />
         <PaginationValidItem current={current + 2} />
         <Pagination.Ellipsis />
-        <Pagination.Item onClick={handleUpdateTo(maxIndex)}>
+        <Pagination.Item onClick={handleUpdateTo.bind(this, maxIndex)}>
             {maxIndex}</Pagination.Item>
         { (current <= maxIndex) && <Pagination.Next />}
         <Pagination.Last />
