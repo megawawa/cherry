@@ -41,6 +41,16 @@ export default function EditProfileModal({ isActive, onClose, profile, onSave }:
         </Modal.Header>
         <Modal.Body>
             <Form >
+                <Form.Group controlId="education">
+                    <Form.Label>Education</Form.Label>
+                    <Form.Control
+                        type="text" placeholder="eg: input your college here"
+                        name="education"
+                        value={state.education ?? ''}
+                        onChange={handleChange}
+                        isValid={(state.education ?? '') != ''} />
+                </Form.Group>
+
                 <Form.Group controlId="intro">
                     <Form.Label>Self-introduction</Form.Label>
                     <div>

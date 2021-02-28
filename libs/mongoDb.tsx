@@ -359,6 +359,7 @@ export async function getProfileFromUser(id: string):
                 "contact": 1, "intro": 1,
                 "email": 1, "otherContact": 1,
                 "phone": 1, "username": 1,
+                "education": 1,
             }
         })
         .then(
@@ -377,6 +378,7 @@ export async function getProfileFromUser(id: string):
         otherContact: result?.otherContact ?? "",
         phone: result?.phone ?? "",
         name: result?.username ?? "",
+        education: result?.education ?? "",
     }
 }
 

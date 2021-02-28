@@ -72,7 +72,11 @@ export default function ProfileCardView({ profile, profileUserId }: {
                 <Card.Title>{state.name ?? ""}</Card.Title>
                 {state.contact &&
                     (<Card.Text>
-                        Preferred Contact: {state.contact ?? ""}
+                        Contact preference: {state.contact ?? ""}
+                    </Card.Text>)}
+                {state.education &&
+                    (<Card.Text>
+                        Education: {state.education ?? ""}
                     </Card.Text>)}
                 {state.intro &&
                     (<Card.Text>

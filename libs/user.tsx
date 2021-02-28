@@ -32,6 +32,7 @@ export type ProfileFormType = {
     email?: string,
     phone?: string,
     otherContact?: string,
+    education?: string,
 }
 
 export type ProfilePreviewType = ProfileFormType & {
