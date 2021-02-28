@@ -87,6 +87,13 @@ function SolutionStep({
     uploadComment: (string) => void,
     onHandleGetComment: () => Promise<void>,
 }) {
+    const [loading, setLoaded] = useState<boolean>(true);
+
+    useEffect(() => {
+        onHandleGetComment();
+        setLoaded(false);
+    }, [loading]);
+
     return (<div style={{
         display: "flex", alignItems: "center",
         flexDirection: "column", justifyContent: 'flex-start'
@@ -125,7 +132,8 @@ function SolutionStep({
                         onHandleGetComment();
                     }}
                         type="button">
-                        <img className={styles.commentImg}
+                        <img className={(comments?.length > 0) ?
+                            styles.commentImgHasComment : styles.commentImg}
                             src={"/comment.svg"}
                             alt="my image" />
                     </button>

@@ -396,7 +396,7 @@ export async function getComments(problemId: string,
                 console.log("[getProfileFromUser] user does not exist");
             }
         );
-    const comments = result.commentsList[stepIndex].comments;
+    const comments = result.commentsList[stepIndex]?.comments ?? [];
     console.log("[getComments]", comments);
     return comments;
 }

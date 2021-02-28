@@ -127,6 +127,11 @@
     width: 1.5rem;
 }
 
+.commentImgHasComment {
+    width: 1.5rem;
+    background-color: yellow;
+}
+
 
 .Invalid {
     outline: 1px solid red;
