@@ -248,12 +248,12 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
     )
     return <div>
         {solutionItems}
-        <Button variant="primary" onClick={() => {
+        {(solution.steps.length > 0) && (<Button variant="primary" onClick={() => {
             // reset to default expansion state
             updateExpandListState(
                 sanitize(solution, []));
         }} className="mt-2">
             Collapse All
-        </Button>
+        </Button>)}
     </div>;
 }

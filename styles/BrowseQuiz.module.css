@@ -14,3 +14,13 @@
   .quizPreviewList {
       margin-top: 2rem;
   }
+
+  .mainHeader {
+      font-size: 1.5rem;
+      font-weight: bold
+  }
+
+  .subHeader {
+    font-size: 1.2rem;
+    font-weight: bold
+}

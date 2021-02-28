@@ -4,7 +4,7 @@ import { useAccountContext } from "./layout/accountContext";
 import QuizzesPanel from "./quiz/quizPanel";
 import styles from '../styles/BrowseQuiz.module.css'
 
-export default function BrowseQuizPanel() {
+export default function AnsweredQuizPanel() {
     let state = useAccountContext();
 
     return <Accordion defaultActiveKey="0">

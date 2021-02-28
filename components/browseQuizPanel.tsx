@@ -6,6 +6,7 @@ import InputButtonList from "./libs/inputButtonList";
 import { PaginationFooter } from "./libs/paginationFooter";
 import QuizzesPanel from "./quiz/quizPanel";
 import styles from '../styles/BrowseQuiz.module.css'
+import Link from "next/link";
 
 export default function BrowseQuizPanel() {
     let state = useAccountContext();
@@ -52,9 +53,9 @@ export default function BrowseQuizPanel() {
         fetchAndUpdateTopics(state.tags ?? []);
     }, [state.tags]);
 
-    return <div style={{ display: "flex", flexDirection: "column", minHeight: "80vh"}}>
+    return <div style={{ display: "flex", flexDirection: "column", minHeight: "80vh" }}>
         <div>
-            Selected topics
+            <span className={styles.mainHeader}>Selected topics</span>
             <InputButtonList tags={state.tags ?? []} onUpdate={(tagsState) => {
                 state.update({
                     tags: tagsState
@@ -62,38 +63,70 @@ export default function BrowseQuizPanel() {
                 fetchAndUpdateTopics(tagsState);
             }} />
         </div>
+        <div style={{
+            justifyContent: "flex-end",
+            flexDirection: "row",
+            display: "flex",
+            marginTop: "1rem",
+        }}>
+            <Button variant="primary" style={
+                {
+                    marginRight: "1rem",
+                }}>
+                Take a test</Button>
+            <Link href="/createQuiz?tutor=1" passHref>
+                <Button variant="primary" style={
+                    {
+                        marginRight: "1rem",
+                    }}>
+                    Create quiz</Button>
+            </Link>
+            <Button variant="primary" style={
+                {
+                    marginRight: "1rem",
+                }}>
+                Find a tutor</Button>
+            <Link href="/createQuiz" passHref>
+                <Button variant="primary">
+                    Need help on quiz?</Button>
+            </Link>
+        </div>
         <div>
-            Select additional topic:
+            {subTopics?.length > 0 && (
+                <span className={styles.subHeader}>
+                    Too many results? Select additional topic:
+                </span>
+            )}
             {subTopics.map((topic) => (
-            <Card className={styles.card}>
-                <Card.Body>
-                    <Card.Text>
-                        <a style={{ textDecoration: "underline" }}
-                            onClick={() => {
-                                if (!state.tags) {
-                                    state.update({
-                                        tags: [topic]
-                                    });
-                                    return;
-                                }
-
-                                let hasDuplicate = false;
-                                for (let i = 0; i < state.tags.length; i++) {
-                                    if (state.tags[i] == topic) {
-                                        hasDuplicate = true;
-                                        break;
+                <Card className={styles.card}>
+                    <Card.Body>
+                        <Card.Text>
+                            <a style={{ textDecoration: "underline" }}
+                                onClick={() => {
+                                    if (!state.tags) {
+                                        state.update({
+                                            tags: [topic]
+                                        });
+                                        return;
                                     }
-                                }
 
-                                if (!hasDuplicate) {
-                                    state.update({
-                                        tags: state.tags?.concat([topic])
-                                    });
-                                }
-                            }}>{topic}</a>
-                    </Card.Text>
-                </Card.Body>
-            </Card>))}
+                                    let hasDuplicate = false;
+                                    for (let i = 0; i < state.tags.length; i++) {
+                                        if (state.tags[i] == topic) {
+                                            hasDuplicate = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!hasDuplicate) {
+                                        state.update({
+                                            tags: state.tags?.concat([topic])
+                                        });
+                                    }
+                                }}>{topic}</a>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>))}
         </div>
         <QuizzesPanel quizzes={state.quizzes} displayUser={true} />
         <div style={{
@@ -107,5 +140,5 @@ export default function BrowseQuizPanel() {
                 current={state.quizzesIndex ?? 1}
                 onUpdateIndex={handleUpdateIndex} />
         </div>
-    </div>;
+    </div >;
 }
