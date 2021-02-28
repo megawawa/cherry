@@ -83,9 +83,11 @@ export default function ProblemPanel({ problemData, submitUserName }:
             stepId, result);
 
         if (res.status == 200) {
-            const dup = commentList.slice(0);
-            dup[stepId] = result;
-            setCommentList(dup);
+            setCommentList((commentList) => {
+                const dup = commentList.slice(0);
+                dup[stepId] = result;
+                return dup;
+            });
         }
     }
 

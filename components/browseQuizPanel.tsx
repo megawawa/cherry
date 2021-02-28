@@ -63,7 +63,7 @@ export default function BrowseQuizPanel() {
             }} />
         </div>
         <div>
-            Popular sub-topics
+            Select additional topic:
             {subTopics.map((topic) => (
             <Card className={styles.card}>
                 <Card.Body>
