@@ -8,6 +8,7 @@ import { QuizCreateFormType } from '../../libs/quiz';
 import InputButtonList from '../libs/inputButtonList';
 import { useAccountContext } from '../layout/accountContext';
 import { triggerAsyncId } from 'async_hooks';
+import { parseTextToSolution } from '../../libs/problem';
 
 
 export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
@@ -89,15 +90,37 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
         router.push('/profileHistory');
     };
 
+    const isValidProblemStatement = () => {
+        return (quiz?.problemStatement ?? '') != '';
+    }
+
+    const isValidTags = () => {
+        return accountState?.tags?.length >= 2;
+    }
+
+    const isValidSolution = () => {
+        // we are doing double parsing text to solution here:
+        // once here, and once in createSolutionPanel
+        // however performance is not a big concern.
+        return parseTextToSolution(quiz?.solution ?? ' ')?.steps?.length > 0;
+    }
+
     return <div>
         <Form onSubmit={handleSubmit}>
             <Form.Group controlId={`problemStatement_${isTutor}`}>
                 <Form.Label>Problem</Form.Label>
-                <Form.Control as="textarea" rows={3} className={styles.createQuizFormInput}
+                <Form.Control
+                    isValid={isValidProblemStatement()}
+                    isInvalid={!isValidProblemStatement()}
+                    as="textarea" rows={3} className={styles.createQuizFormInput}
                     placeholder="problem statement. eg: 1/2 + 1/6 + ... + 1/(40*41) = ?"
                     name="problemStatement"
                     value={quiz?.problemStatement ?? ''}
                     onChange={handleChange} />
+                {!isValidProblemStatement() && (
+                    <Form.Text style={{ color: "red" }}>
+                        Problem statement couldn't be empty
+                    </Form.Text>)}
             </Form.Group>
 
             {!isTutor &&
@@ -124,13 +147,21 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
                         accountState.update({
                             tags: tagsState
                         });
-                    }} />
+                    }}
+                    valid={isValidTags()} />
+                {!isValidTags() && (
+                    <Form.Text style={{ color: "red" }}>
+                        Please provide at least 2 tags to make the quiz easier to find.
+                        Good tags would cover the quiz topic/concept, e.g. "math", "linear algebra", "metrix multiplication"
+                    </Form.Text>)}
             </div>
 
-            <Button variant="primary" type="submit" className="mt-2">
+            <Button variant="primary" type="submit" className="mt-2"
+                disabled={!isValidProblemStatement() || !isValidTags()
+                    || !isValidSolution()}>
                 Submit
             </Button>
         </Form>
 
-    </div>;
+    </div >;
 }

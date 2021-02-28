@@ -35,10 +35,17 @@
 }
 
 .TagsContainer {
-    outline: 2px solid lightgrey;
     min-height: 2.5rem;
     display: flex;
     flex-wrap: wrap;
     align-items: "center";
     padding: 1px;
+}
+
+.Invalid {
+    outline: 1px solid red;
+}
+
+.Valid {
+    outline: 1px solid green;
 }

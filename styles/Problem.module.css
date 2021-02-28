@@ -57,7 +57,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin: 0rem 0 1rem;
+    margin: 0rem 0 0.1rem;
 }
 
 .stepInput {
@@ -68,7 +68,7 @@
 
 .stepInputText {
     width: 100%;
-    min-width: 350px;
+    min-width: 600px;
     border: none;
     background: transparent;
 }
@@ -100,7 +100,7 @@
 .expandButton {
     border-radius: 50%;
     border-color: black;
-    padding: 0 0.3rem;
+    padding: 0.25 0.25rem;
 }
 
 .expandButtonPlaceholder {
@@ -125,4 +125,13 @@
 
 .commentImg {
     width: 1.5rem;
+}
+
+
+.Invalid {
+    outline: 1px solid red;
+}
+
+.Valid {
+    outline: 1px solid green;
 }

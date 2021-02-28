@@ -99,6 +99,7 @@ function SolutionStep({
                     alt="my image" />
             </button>}
         <div className={styles.stepContainer}>
+            <div style={{ "width": indent * 2 + "rem" }}></div>
             <div className={styles.step +
                 (alwaysVisible ? (' ' + styles.alwaysVisibleStep) : '')}>
                 {onEditStep ?
@@ -237,5 +238,14 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
                 uploadComment={(comment: string) => { uploadComment(index, comment); }}
                 onHandleGetComment={onHandleGetComment.bind(this, solutionStep.id)} />
     )
-    return <div>{solutionItems}</div>;
+    return <div>
+        {solutionItems}
+        <Button variant="primary" onClick={() => {
+            // reset to default expansion state
+            updateExpandListState(
+                sanitize(solution, []));
+        }} className="mt-2">
+            Collapse All
+        </Button>
+    </div>;
 }

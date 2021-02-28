@@ -6,6 +6,7 @@ import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Problem.module.css'
 import { MathSymbolList } from "../mathSymbolList";
 import { CommentsList } from "../../libs/quiz";
+import { Form } from "react-bootstrap";
 
 export default function CreateSolutionPanel({
     onSolutionTextUpdate, value, onUploadComment, commentsList,
@@ -40,6 +41,10 @@ export default function CreateSolutionPanel({
         updateExpandList(list);
     }
 
+    const isValidSolution = () => {
+        return solution?.steps?.length > 0;
+    }
+
     const updateSolutionStep = (id: number, text: string) => {
         console.log("here", id, text);
         const ret = solution.steps.slice(0);
@@ -66,6 +71,7 @@ export default function CreateSolutionPanel({
                     }
                 } />
                 <TextareaAutosize
+                    className={!isValidSolution() ? styles.Invalid : styles.Valid}
                     style={{ width: "100%" }}
                     value={solutionText}
                     placeholder={"Try the following example:\n\
@@ -76,6 +82,18 @@ export default function CreateSolutionPanel({
                             (event.target as HTMLTextAreaElement).value);
                     }} />
             </div>
+            {!isValidSolution() && (
+                <Form.Text style={{ color: "red" }}>
+                    Invalid solution input. Please make sure solution input
+                    starts with two empty spaces, for example: "  step 1".
+                    (<a style={{textDecoration: "underline"}}
+                        onClick={() => {
+                        onSolutionTextAreaUpdate(
+                            "  example step 1\n   example step 1.a\
+                            \n   example step 1.b\n  example step 2"
+                        );
+                    }}>Click here to prefill solution input with example</a>)
+                </Form.Text>)}
             <div className={styles.parseSolutionContainerItem}>
                 <div>
                     Preview:

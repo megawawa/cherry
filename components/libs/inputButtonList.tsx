@@ -42,9 +42,10 @@ function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable }: 
             : value}</Button>;
 }
 
-export default function InputButtonList({ tags, onUpdate }: {
+export default function InputButtonList({ tags, onUpdate, valid }: {
     tags?: Array<string>,
     onUpdate: (tagsState: Array<string>) => void,
+    valid?: boolean,
 }) {
     useEffect(() => {
         updateTags(tags ?? []);
@@ -89,7 +90,8 @@ export default function InputButtonList({ tags, onUpdate }: {
         onFinishedEdit={(checkUpdatedTag.bind(this, index))}
         updateParentIsEditable={updateIsEditable} />);
 
-    return <div className={styles.TagsContainer}
+    return <div className={styles.TagsContainer + ' '
+        + ((valid == false) ? styles.Invalid : styles.Valid)}
         onClick={() => {
             if (tagsState.indexOf("") != -1) {
                 return;
