@@ -9,10 +9,6 @@ export function PaginationFooter({ current, onUpdateIndex }: {
         onUpdateIndex(parseInt(event.target.text));
     };
 
-    const handleUpdateTo = (index) => {
-        return () => { onUpdateIndex(index) };
-    };
-
     function PaginationValidItem({ current }: { current: number }) {
         if (current >= 1 && current <= maxIndex) {
             return <Pagination.Item onClick={handleClick}
@@ -24,8 +20,8 @@ export function PaginationFooter({ current, onUpdateIndex }: {
     return (<Pagination>
         { (current != 1) && (
             <>
-                <Pagination.First onClick={handleUpdateTo(1)} />
-                <Pagination.Prev onClick={handleUpdateTo(current - 1)} />
+                <Pagination.First onClick={onUpdateIndex.bind(this, 1)} />
+                <Pagination.Prev onClick={onUpdateIndex.bind(this, current - 1)} />
             </>)
         }
         { (current >= 4) && (
@@ -35,12 +31,12 @@ export function PaginationFooter({ current, onUpdateIndex }: {
             </>
         )}
         <PaginationValidItem current={current - 1} />
-        <Pagination.Item active onClick={handleUpdateTo.bind(this, current)}>
+        <Pagination.Item active onClick={onUpdateIndex.bind(this, current)}>
             {current}</Pagination.Item>
         <PaginationValidItem current={current + 1} />
         <PaginationValidItem current={current + 2} />
         <Pagination.Ellipsis />
-        <Pagination.Item onClick={handleUpdateTo.bind(this, maxIndex)}>
+        <Pagination.Item onClick={onUpdateIndex.bind(this, maxIndex)}>
             {maxIndex}</Pagination.Item>
         { (current <= maxIndex) && <Pagination.Next />}
         <Pagination.Last />

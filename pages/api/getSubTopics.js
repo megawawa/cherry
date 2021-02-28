@@ -1,4 +1,4 @@
-import { getProblemPreviewFromTags } from "../../libs/mongoDb";
+import { getSubTopics } from "../../libs/mongoDb";
 
 export default async function handler(req, res) {
 
@@ -21,7 +21,9 @@ export default async function handler(req, res) {
         return;
     }
 
-    const result = parsedTags.length == 0  ? ["math"] : ["third grade", "test"];
+
+    // const result = parsedTags.length == 0  ? ["math"] : ["third grade", "test"];
+    const result = await getSubTopics(parsedTags);
 
     console.log("genSubTopic:", parsedTags, result);
     res.status(200).json(result);

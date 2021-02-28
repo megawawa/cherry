@@ -178,6 +178,27 @@ export async function getProblemDetailViewFromId(id: string):
     }
 }
 
+function* iterator(tags: Array<string>) {
+    tags.sort();
+
+    for (let i = 0; i < Math.pow(2, tags.length); i++) {
+        let selectedIndex = [];
+        let j = i;
+        while (j != 0) {
+            // find least significant bit
+            selectedIndex.push(Math.log2(j & -j));
+            // clear least significant bit
+            j = j & (j - 1);
+        }
+
+        if (selectedIndex.length > 3) {
+            continue;
+        }
+
+        yield selectedIndex.map((index) => tags[index]);
+    }
+}
+
 export async function uploadQuiz(quiz: DbProblemCreateType) {
     const { db } = await connectToDatabase();
 
@@ -204,7 +225,7 @@ export async function uploadQuiz(quiz: DbProblemCreateType) {
 
     if (uploadQuizRes) {
         console.log("uploadedQuiz", uploadQuizRes);
-        await db.collection("users").update(
+        await db.collection("users").updateOne(
             { username: uploadQuizRes.submitUserName }
             , {
                 "$inc": { submittedQuizCount: 1 }
@@ -217,6 +238,19 @@ export async function uploadQuiz(quiz: DbProblemCreateType) {
                     console.log("update new user submitted quiz count");
                 }
             );
+
+        const tagsSubset = iterator(quiz.tags);
+        const bulkOp = db
+            .collection("tags").initializeUnorderedBulkOp();
+        while (true) {
+            let tags = tagsSubset.next().value;
+            if (!tags) break;
+            bulkOp.find({ tags: { $eq: tags } })
+                .upsert()
+                .updateOne(
+                    { "$inc": { count: 1 } });
+        }
+        bulkOp.execute();
     }
     return uploadQuizRes;
 }
@@ -457,4 +491,39 @@ export async function editComment(comment: CommentEditType, insert: boolean) {
     }
 
     await bulkOp.execute();
+}
+
+export async function getSubTopics(tags: Array<string>,
+    stepIndex: number
+): Promise<Array<string>> {
+    // TODO(@megawawa, 2/28/2021) getSubTopic only works for short array
+    const { db } = await connectToDatabase();
+    let query: any = {
+        [`tags.${tags.length}`]: { $exists: true },
+        [`tags.${tags.length + 1}`]: { $exists: false }
+    };
+    if (tags.length != 0) {
+        query["tags"] = { $all: tags };
+    }
+    const result = await db
+        .collection("tags")
+        .find(query)
+        .sort({ count: -1 })
+        .limit(5)
+        .toArray();
+    const parsedResult = result.map((obj) => {
+        let additionalTag = [];
+        obj.tags.forEach((tag) => {
+            if (tags.indexOf(tag) == -1) {
+                additionalTag.push(tag);
+            }
+        });
+        if (additionalTag.length == 0) {
+            console.log("[db-getSubtopic] invalid result item from db",
+                additionalTag, tags, obj.tags);
+        }
+        return additionalTag[0];
+    });
+    console.log("[db-getSubtopic]", parsedResult);
+    return parsedResult;
 }

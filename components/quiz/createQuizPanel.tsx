@@ -95,7 +95,7 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
     }
 
     const isValidTags = () => {
-        return accountState?.tags?.length >= 2;
+        return accountState?.tags?.length >= 2 && (accountState?.tags?.length <= 8);
     }
 
     const isValidSolution = () => {
@@ -150,9 +150,13 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
                     }}
                     valid={isValidTags()} />
                 {!isValidTags() && (
-                    <Form.Text style={{ color: "red" }}>
-                        Please provide at least 2 tags to make the quiz easier to find.
-                        Good tags would cover the quiz topic/concept, e.g. "math", "linear algebra", "metrix multiplication"
+                    (accountState?.tags?.length >= 8) ? (
+                        <Form.Text style={{ color: "red" }}>
+                            Too many tags
+                        </Form.Text>) :
+                        <Form.Text style={{ color: "red" }}>
+                            Please provide at least 2 tags to make the quiz easier to find.
+                            Good tags would cover the quiz topic/concept, e.g. "math", "linear algebra", "metrix multiplication"
                     </Form.Text>)}
             </div>
 
