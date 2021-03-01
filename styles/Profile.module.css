@@ -42,3 +42,7 @@
 .profilePanel {
     max-width: 60vw;
 }
+
+.profileMainViewSection {
+    padding: 0.5rem 0rem;
+}

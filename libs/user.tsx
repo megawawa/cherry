@@ -22,23 +22,34 @@ export type TutorPreviewType = {
 }
 
 export type UserInterestsType = {
-    studentTags?: Array<string>,
-    tutorTags?: Array<string>,
+    studentTags?: Array<string>;
+    tutorTags?: Array<string>;
 }
 
 export type ProfileFormType = {
-    contact?: string,
-    intro?: string,
-    email?: string,
-    phone?: string,
-    otherContact?: string,
-    education?: string,
+    contact?: string;
+    intro?: string;
+    email?: string;
+    phone?: string;
+    otherContact?: string;
+    education?: string;
 }
 
 export type ProfilePreviewType = ProfileFormType & {
     name?: string
 }
 
+export type Rate = {
+    type: string;
+    number: number;
+}
+
+export type TutorRequestFormType = {
+    message?: string;
+    id?: string;
+    rate?: Rate;
+    requestTime?: Date;
+}
 
 export async function getUserTags(): Promise<UserInterestsType> {
     console.log("fetching interest");
@@ -133,4 +144,30 @@ export async function uploadProfileForUser(profile: ProfileFormType)
     const result = await res.json();
     console.log("uploaded profile", result);
     return result;
+}
+
+export async function createTutorRequestForUser(
+    request: TutorRequestFormType): Promise<void> {
+        console.log("create tutor request", request);
+        const url = `/api/sendTutorRequest`;
+        request.requestTime = new Date();
+    
+        const res = await fetch(
+            url,
+            {
+                body: JSON.stringify(
+                    {
+                        request: request
+                    }
+                ),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            }
+        )
+    
+        const result = await res.json();
+        console.log("create tutor request", result);
+        return result;
 }

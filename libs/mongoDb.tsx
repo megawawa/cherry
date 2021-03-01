@@ -8,7 +8,7 @@ import {
     DbProblemCreateType, DBProblemEditType,
     ProblemDetailViewType, ProblemPreviewType
 } from './quiz'
-import { CredentialType, ProfileFormType, ProfilePreviewType, TutorOrStudentAccount, TutorPreviewType, UserInterestsType } from './user';
+import { CredentialType, ProfileFormType, ProfilePreviewType, TutorOrStudentAccount, TutorPreviewType, TutorRequestFormType, UserInterestsType } from './user';
 
 
 const { MONGODB_URI, MONGODB_DB } = process.env
@@ -526,4 +526,33 @@ export async function getSubTopics(tags: Array<string>,
     });
     console.log("[db-getSubtopic]", parsedResult);
     return parsedResult;
+}
+
+export async function genTutorRequestForUser(id: string,
+    request: TutorRequestFormType) {
+    const { db } = await connectToDatabase();
+    if (!id) {
+        return;
+    }
+
+    console.log('[genTutorRequestForUser]', id, request);
+
+    const res = await db
+        .collection("tutor_request")
+        .updateOne({}, {
+            "$setOnInsert": request
+        }, { upsert: true, returnNewDocument: false })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`[genTutorRequestForUser]submitted tutor request.`);
+                    return;
+                }
+                console.log("[genTutorRequestForUser] user does not exist");
+            }
+        );
+
+    console.log("[genTutorRequestForUser]", res);
+
+    return res;
 }
