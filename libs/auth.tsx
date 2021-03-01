@@ -1,4 +1,4 @@
-import {hashSync, compareSync, genSaltSync} from "bcrypt"
+import {hashSync, compareSync, genSaltSync} from "bcryptjs"
 
 export function generateHash(password: string) {
     return hashSync(password, genSaltSync(8), null);
