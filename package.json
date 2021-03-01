@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.6.0",
     "cross-env": "^7.0.3",
     "mongodb": "^3.6.4",
