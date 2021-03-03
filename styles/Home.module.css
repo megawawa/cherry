@@ -6,7 +6,7 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .main {
@@ -19,15 +19,48 @@
   min-height: 100vh;
 }
 
-
 .mainNew {
-  padding: 5rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.mainLeft {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  font-size: 1.5rem;
+}
+
+.mainRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  mix-blend-mode: difference;
+  font-size: 1.5rem;
+  background-color: white;
+  color: black;
+}
+
+.mainFloating {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: black;
+  color: white;
+  font-size: 1.5rem;
 }
 
 .footer {
@@ -106,7 +139,6 @@
   flex-direction: column;
 }
 
-
 .cardFooter {
   display: flex;
   flex-direction: row;
@@ -138,10 +170,38 @@
   height: 1em;
 }
 
+.button {
+  font: bold;
+  margin: 0 3rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  color: black;
+}
+
+.buttonList {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .highlightCardText {
   color: purple;
-  font-size: 1.5rem;
+  font-size: 4rem;
   font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.textBox {
+  max-width: 450px;
+}
+
+.highlightCardTextRight {
+  color: black;
+  font-size: 4rem;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .infoContainer {
