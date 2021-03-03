@@ -51,6 +51,14 @@
   color: black;
 }
 
+.containerLeft {
+  margin-right: 200px;
+}
+
+.containerRight {
+  margin-left: 200px;
+}
+
 .mainFloating {
   flex: 1;
   display: flex;
@@ -176,6 +184,14 @@
   font-size: 1rem;
   border-radius: 0.25rem;
   color: black;
+}
+
+.buttonDark {
+  font: bold;
+  margin: 0 3rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  color: white;
 }
 
 .buttonList {

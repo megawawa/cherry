@@ -22,7 +22,7 @@ export default function Home() {
 
       <main>
         <div className={styles.mainNew}>
-          <div style={{position: "absolute"}}>
+          <div style={{ position: "absolute" }}>
             <Image
               src="/front.png"
               alt="Picture of the author"
@@ -31,52 +31,54 @@ export default function Home() {
             />
           </div>
           <Jumbotron className={styles.mainLeft}>
-            <h1>Hello, Student</h1>
-            <p></p>
-            <div className={styles.textBox}>
-              <p>
-                <span>
-                  Take personalized quizzes, </span>
-              </p>
-              <p>
-                <span>
-                  Get answers,</span>
-              </p>
-              <p>
-                <span>{"for "}</span>
-                <span className={styles.highlightCardText}>Free</span>
-              </p>
+            <div className={styles.containerLeft}>
+              <h1>Hello, Student</h1>
+              <p></p>
+              <div className={styles.textBox}>
+                <p>
+                  <span>
+                    Take personalized quizzes, </span>
+                </p>
+                <p>
+                  <span>
+                    Get answers,</span>
+                </p>
+                <p>
+                  <span>{"for "}</span>
+                  <span className={styles.highlightCardText}>Free</span>
+                </p>
+              </div>
+              <Link href="/signup" passHref>
+                <Button variant="outline-dark" className={styles.button}
+                >Sign up Now</Button>
+              </Link>
             </div>
-            <Link href="/signup" passHref>
-              <Button variant="outline-dark" className={styles.button}
-              >Sign up Now</Button>
-            </Link>
-
           </Jumbotron>
           <Jumbotron className={styles.mainRight}>
-            <h1>Hello, Tutor</h1>
-            <p></p>
-            <div className={styles.textBox}>
-              <p>
-                <span>
-                  We match you with students,  </span>
-              </p>
-              <p>
-                <span>
-                  On your terms, </span>
-              </p>
-              <p>
-                <span> {"with "}</span>
-                <span className={styles.highlightCardTextRight}>{" Zero"}</span>
-                <span>{" commission fee"}</span>
-              </p>
+            <div className={styles.containerRight}>
+              <h1>Hello, Tutor</h1>
+              <p></p>
+              <div className={styles.textBox}>
+                <p>
+                  <span>
+                    We match you with students,  </span>
+                </p>
+                <p>
+                  <span>
+                    On your terms, </span>
+                </p>
+                <p>
+                  <span> {"with "}</span>
+                  <span className={styles.highlightCardTextRight}>{" Zero"}</span>
+                  <span>{" commission fee"}</span>
+                </p>
+              </div>
+
+              <Link href="/signup" passHref>
+                <Button variant="outline-dark" className={styles.button}>
+                  Sign up Now</Button>
+              </Link>
             </div>
-
-            <Link href="/signup" passHref>
-              <Button variant="outline-dark" className={styles.button}>
-                Sign up Now</Button>
-            </Link>
-
           </Jumbotron>
         </div>
         <Jumbotron className={styles.mainFloating}>
@@ -90,7 +92,7 @@ export default function Home() {
           </p>
           <p>
             <Link href="/quizzes" passHref>
-              <Button variant="outline-light" className={styles.button}>
+              <Button variant="outline-light" className={styles.buttonDark}>
                 Explore Now</Button>
             </Link>
           </p>
