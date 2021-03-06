@@ -32,18 +32,16 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
+  max-height: 100vh;
   font-size: 1.5rem;
 }
 
 .mainRight {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  flex-direction: row;
   min-height: 100vh;
   mix-blend-mode: difference;
   font-size: 1.5rem;
@@ -51,12 +49,83 @@
   color: black;
 }
 
+.mainSignUp {
+  min-width: 30vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  max-height: 100vh;
+  background-color: white;
+  color: black;
+}
+
+.mainSignUpInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: white;
+  color: black;
+}
+
 .containerLeft {
-  margin-right: 200px;
+  flex: 1;
+  padding-top: clamp(200px, 25vh, 25vh);
+}
+
+.containerLeftWrap {
+  padding-right: clamp(200px, 10vw, 10vw);
+  padding-left: clamp(200px, 10vw, 10vw);
 }
 
 .containerRight {
-  margin-left: 200px;
+  flex: 1;
+  padding-top: clamp(200px, 25vh, 25vh);
+  max-width: 400px;
+}
+
+.containerRightWrap {
+  flex: 1;
+}
+
+.containerRightTextWrap {
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+}
+
+.containerRightPaddingLeft {
+  flex: 1;
+  min-width: 200px;
+}
+
+.containerRightPaddingRight {
+  flex: 1;
+  max-width: clamp(50px, 3vw, 3vw);
+}
+
+.jumbotronInfoContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.jumbotronInfoCard {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+}
+
+.textBoxMiddle {
+  max-width: 750px;
+}
+
+.textContainer {
+  flex: 1;
 }
 
 .mainFloating {

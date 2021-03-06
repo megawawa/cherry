@@ -1,10 +1,13 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Card, Button, Jumbotron } from 'react-bootstrap'
+import { Card, Button, Jumbotron, Fade } from 'react-bootstrap'
 import styles from '../styles/Home.module.css'
 import { useSession } from 'next-auth/client'
+import React, { useState } from "react";
 import Link from "next/link";
 import MainAccountView from "../components/layout/mainAccountView";
+import StudentJumbotron from '../components/profile/student/studentJumbotron';
+import TutorJumbotron from '../components/profile/tutor/tutorJumbotron';
 
 export default function Home() {
   const [session] = useSession();
@@ -30,56 +33,8 @@ export default function Home() {
               height={400}
             />
           </div>
-          <Jumbotron className={styles.mainLeft}>
-            <div className={styles.containerLeft}>
-              <h1>Hello, Student</h1>
-              <p></p>
-              <div className={styles.textBox}>
-                <p>
-                  <span>
-                    Take personalized quizzes, </span>
-                </p>
-                <p>
-                  <span>
-                    Get answers,</span>
-                </p>
-                <p>
-                  <span>{"for "}</span>
-                  <span className={styles.highlightCardText}>Free</span>
-                </p>
-              </div>
-              <Link href="/signup" passHref>
-                <Button variant="outline-dark" className={styles.button}
-                >Sign up Now</Button>
-              </Link>
-            </div>
-          </Jumbotron>
-          <Jumbotron className={styles.mainRight}>
-            <div className={styles.containerRight}>
-              <h1>Hello, Tutor</h1>
-              <p></p>
-              <div className={styles.textBox}>
-                <p>
-                  <span>
-                    We match you with students,  </span>
-                </p>
-                <p>
-                  <span>
-                    On your terms, </span>
-                </p>
-                <p>
-                  <span> {"with "}</span>
-                  <span className={styles.highlightCardTextRight}>{" Zero"}</span>
-                  <span>{" commission fee"}</span>
-                </p>
-              </div>
-
-              <Link href="/signup" passHref>
-                <Button variant="outline-dark" className={styles.button}>
-                  Sign up Now</Button>
-              </Link>
-            </div>
-          </Jumbotron>
+          <StudentJumbotron isIntro={true} />
+          <TutorJumbotron isIntro={true} />
         </div>
         <Jumbotron className={styles.mainFloating}>
           <h1>Just browsing?</h1>

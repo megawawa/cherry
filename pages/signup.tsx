@@ -1,4 +1,4 @@
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Jumbotron } from 'react-bootstrap';
 import styles from '../styles/Home.module.css'
 import loginStyles from '../styles/Login.module.css'
 import SignUpForm from '../components/profile/signUpForm'
@@ -6,6 +6,9 @@ import React, { useDebugValue, useState } from 'react';
 import FeaturesPanel from '../components/featuresPanel';
 import { csrfToken } from 'next-auth/client'
 import { useRouter } from 'next/router'
+import Image from 'next/image';
+import StudentJumbotron from '../components/profile/student/studentJumbotron';
+import TutorJumbotron from '../components/profile/tutor/tutorJumbotron';
 
 export type SignUpFormType = {
     name?: string,
@@ -18,7 +21,8 @@ export type SignUpFormType = {
 export default function SignUpPage({ csrfToken }) {
     const router = useRouter();
     const [state, setState] = useState<SignUpFormType>({
-        isStudent: false, isTutor: false
+        isStudent: router.query?.student != undefined,
+        isTutor: router.query?.tutor != undefined
     });
     const handleChange = (event) => {
         setState({
@@ -41,22 +45,20 @@ export default function SignUpPage({ csrfToken }) {
         }
     }
 
-    return <main className={styles.main + ' ' + loginStyles.background}>
-        <div className={loginStyles.grid}>
-            <Card className={styles.card + ' p-3'}>
-                <SignUpForm csrfToken={csrfToken} error={router.query}
-                    handleChange={handleChange} state={state} />
-            </Card>
-
-            <div className={loginStyles.featuresGrid}>
-                <FeaturesPanel handleChange={handleCheckMark} state={state} />
+    return <main>
+        <div className={styles.mainNew}>
+            {state.isStudent &&
+                <StudentJumbotron isIntro={false} />}
+            <div className={styles.mainSignUp}>
+                <div>
+                    <Card className={styles.card + ' p-3'}>
+                        <SignUpForm csrfToken={csrfToken} context={router.query}
+                            handleChange={handleChange} state={state} />
+                    </Card>
+                </div>
             </div>
-        </div>
-
-        <div className={styles.textContainer}>
-            <div>
-                Welcome, have you quizzed today?
-            </div>
+            {state.isTutor &&
+                <TutorJumbotron isIntro={false} />}
         </div>
     </main>;
 }

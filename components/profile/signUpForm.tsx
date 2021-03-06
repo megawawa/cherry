@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
 
 
-export default function SignUpForm({ csrfToken, error, handleChange, state }) {
+export default function SignUpForm({ csrfToken, context, handleChange, state }) {
     const router = useRouter();
 
     const [session] = useSession();
@@ -13,8 +13,12 @@ export default function SignUpForm({ csrfToken, error, handleChange, state }) {
         <Form method='post' action='/api/auth/callback/credentials'>
             <input name='csrfToken' type='hidden' defaultValue={csrfToken}></input>
             <input name='isNewUser' type='hidden' defaultValue={1}></input>
-            <input name='isStudent' type='hidden' defaultValue={state.isStudent}></input>
-            <input name='isTutor' type='hidden' defaultValue={state.isTutor}></input>
+            <input name='isStudent' type='hidden'
+                defaultValue={(context?.student != undefined) ? "true" : "false"}>
+            </input>
+            <input name='isTutor' type='hidden'
+                defaultValue={(context?.tutor != undefined) ? "true" : "false"}>
+            </input>
             <Form.Group controlId="formBasicName">
                 <Form.Label>Display name</Form.Label>
                 <Form.Control
@@ -50,17 +54,19 @@ export default function SignUpForm({ csrfToken, error, handleChange, state }) {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
-            { error?.signUpError &&
+            {
+                context?.signUpError &&
                 (
                     <Form.Group controlId="errorPrompt">
                         <Form.Text style={{ color: "red" }}>
                             User name already exists
                         </Form.Text>
-                    </Form.Group>)}
+                    </Form.Group>)
+            }
             <Button variant="primary" type="submit">
                 Create account
                 </Button>
-        </Form>
+        </Form >
 
     );
 }

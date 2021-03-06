@@ -18,6 +18,7 @@ const options = {
       // e.g. domain, username, password, 2FA token, etc.
       authorize: async (credentials) => {
         if (credentials.isNewUser) {
+          console.log(credentials);
           if (credentials.isStudent) {
             credentials.isStudent = (credentials.isStudent == "true");
           }
@@ -29,7 +30,11 @@ const options = {
           if (user) {
             return Promise.resolve(user);
           } else {
-            return Promise.reject('/signup?signUpError=1');
+            if (credentials.isStudent) {
+              return Promise.reject('/signup?student=1&signUpError=1');
+            } else {
+              return Promise.reject('/signup?tutor=1&signUpError=1');
+            }
           }
         }
         // Add logic here to look up the user from the credentials supplied
