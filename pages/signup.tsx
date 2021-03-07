@@ -50,12 +50,10 @@ export default function SignUpPage({ csrfToken }) {
             {state.isStudent &&
                 <StudentJumbotron isIntro={false} />}
             <div className={styles.mainSignUp}>
-                <div>
-                    <Card className={styles.card + ' p-3'}>
-                        <SignUpForm csrfToken={csrfToken} context={router.query}
-                            handleChange={handleChange} state={state} />
-                    </Card>
-                </div>
+                <Card className={styles.card + ' p-3'}>
+                    <SignUpForm csrfToken={csrfToken} context={router.query}
+                        handleChange={handleChange} state={state} />
+                </Card>
             </div>
             {state.isTutor &&
                 <TutorJumbotron isIntro={false} />}

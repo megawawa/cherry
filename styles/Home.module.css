@@ -28,31 +28,85 @@
   min-height: 100vh;
 }
 
+.button {
+  font: bold;
+  margin: 0 3rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  color: rgb(20, 17, 179);
+  border-color: rgb(20, 17, 179);
+}
+
 .mainLeft {
   flex: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   min-height: 100vh;
   max-height: 100vh;
   font-size: 1.5rem;
+  color: rgb(86, 28, 201);
+  border-radius: 0;
+}
+
+.mainImageContainer {
+  position: absolute;
+  z-index: 10;
+  flex-direction: row;
+  display: flex;
+  width: 400px;
+  height: 400px;
+}
+
+.mainImageLeftFilterContainer {
+  filter: invert(17%) sepia(83%) saturate(4453%) hue-rotate(258deg) brightness(77%) contrast(108%);
+  overflow: hidden;
+  width: 200px;
+}
+
+.jumbotronLeftImageContainer {
+  filter: invert(17%) sepia(83%) saturate(4453%) hue-rotate(258deg) brightness(77%) contrast(108%);
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 50px;
+  display: flex;
+}
+
+.mainImageRightFilterContainer {
+  filter: invert(1);
+  overflow: hidden;
+  width: 200px;
+}
+
+.mainImageLeft {
+  width: 400px;
+  height: 400px;
+}
+
+.mainImageRight {
+  width: 400px;
+  height: 400px;
+  margin-left: -200px;
 }
 
 .mainRight {
   flex: 1;
   display: flex;
-  display: flex;
   flex-direction: row;
   min-height: 100vh;
   mix-blend-mode: difference;
   font-size: 1.5rem;
-  background-color: white;
+  background-color: rgb(170, 228, 55);
   color: black;
+  border-radius: 0;
 }
 
 .mainSignUp {
   min-width: 30vw;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -74,17 +128,26 @@
 
 .containerLeft {
   flex: 1;
-  padding-top: clamp(200px, 25vh, 25vh);
+  padding-top: clamp(200px, 20vh, 20vh);
 }
 
 .containerLeftWrap {
-  padding-right: clamp(200px, 10vw, 10vw);
-  padding-left: clamp(200px, 10vw, 10vw);
+  flex: 1
+}
+
+.containerLeftPaddingLeft {
+  flex: 1;
+  max-width: clamp(200px, 10vw, 10vw);
+}
+
+.containerLeftPaddingRight {
+  flex: 1;
+  min-width: clamp(200px, 10vw, 10vw);
 }
 
 .containerRight {
   flex: 1;
-  padding-top: clamp(200px, 25vh, 25vh);
+  padding-top: clamp(200px, 20vh, 20vh);
   max-width: 400px;
 }
 
@@ -92,7 +155,13 @@
   flex: 1;
 }
 
-.containerRightTextWrap {
+.containerTextWrap {
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+}
+
+.containerTextWrap {
   flex: 1;
   flex-direction: row;
   display: flex;
@@ -109,15 +178,35 @@
 }
 
 .jumbotronInfoContainer {
-  flex: 1;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  filter: drop-shadow(2px 2px 2px rgb(187, 187, 187));
+}
+
+.jumbotronInfoCardImage {
+  width: 20px;
 }
 
 .jumbotronInfoCard {
+  padding-top: 1rem;
   background-color: transparent;
   border: none;
   font-size: 1rem;
+  min-width: 300px;
+  max-width: 30%;
+  border-right: 0.5rem solid #eaeaea;
+}
+
+
+.jumbotronInfoCardDark {
+  padding-top: 1rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  min-width: 300px;
+  max-width: 30%;
+  border-right: 0.25rem solid rgb(75, 75, 75);
 }
 
 .textBoxMiddle {
@@ -247,14 +336,6 @@
   height: 1em;
 }
 
-.button {
-  font: bold;
-  margin: 0 3rem;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  color: black;
-}
-
 .buttonDark {
   font: bold;
   margin: 0 3rem;
@@ -272,7 +353,7 @@
 }
 
 .highlightCardText {
-  color: purple;
+  color: rgb(247, 55, 247);
   font-size: 4rem;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;

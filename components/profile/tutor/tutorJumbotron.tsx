@@ -10,7 +10,7 @@ export default function TutorJumbotron({ isIntro }: {
 }) {
     return <Jumbotron className={styles.mainRight}>
         <div className={styles.containerRightWrap}>
-            <div className={styles.containerRightTextWrap}>
+            <div className={styles.containerTextWrap}>
                 {isIntro &&
                     <div className={styles.containerRightPaddingLeft} />}
                 <div className={styles.containerRight}>
@@ -24,6 +24,10 @@ export default function TutorJumbotron({ isIntro }: {
                         <p>
                             <span>
                                 On your terms, </span>
+                        </p>
+                        <p>
+                            <span>
+                                {" "}&nbsp;</span>
                         </p>
                         <p>
                             <span> {"with "}</span>
@@ -43,33 +47,34 @@ export default function TutorJumbotron({ isIntro }: {
             {!isIntro &&
                 <div className={styles.jumbotronInfoContainer}>
                     <div className={styles.jumbotronInfoContainer}>
-                        <Card className={styles.jumbotronInfoCard}>
-                            <Card.Img variant="top" src="holder.js/100px180" />
-                            <Card.Body>
-                                <Card.Title>Take personalized </Card.Title>
+                        <Card className={styles.jumbotronInfoCardDark}>
+                            <Image src="/ask-question.svg"
+                                width={50} height={50} />                            <Card.Body>
+                                <Card.Title>1. Create your profile </Card.Title>
                                 <Card.Text>
                                     Some quick example text to build on the card title and make up the bulk of
                                     the card's content.
                          </Card.Text>
                             </Card.Body>
                         </Card>
-                        <Card className={styles.jumbotronInfoCard}>
-                            <Card.Img variant="top" src="holder.js/100px180" />
+                        <Card className={styles.jumbotronInfoCardDark}>
+                            <Image src="/ask-question.svg"
+                                width={50} height={50} />
                             <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
+                                <Card.Title>2. Be a contributor</Card.Title>
                                 <Card.Text>
                                     Some quick example text to build on the card title and make up the bulk of
                                     the card's content.
                          </Card.Text>
                             </Card.Body>
                         </Card>
-                        <Card className={styles.jumbotronInfoCard}>
-                            <Card.Img variant="top" src="holder.js/100px180" />
+                        <Card className={styles.jumbotronInfoCardDark}>
+                            <Image src="/ask-question.svg"
+                                width={50} height={50} />
                             <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
+                                <Card.Title>3. Match With Students</Card.Title>
                                 <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
+                                    Tell us your rate.
                          </Card.Text>
                             </Card.Body>
                         </Card>
