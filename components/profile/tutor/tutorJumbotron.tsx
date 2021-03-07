@@ -52,8 +52,8 @@ export default function TutorJumbotron({ isIntro }: {
                                 width={50} height={50} />                            <Card.Body>
                                 <Card.Title>1. Create your profile </Card.Title>
                                 <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
+                                    Your profile is the first thing the students see. Show everyone
+                                    a bit about yourself. What is your interest? What is your contact preference?
                          </Card.Text>
                             </Card.Body>
                         </Card>
@@ -61,10 +61,11 @@ export default function TutorJumbotron({ isIntro }: {
                             <Image src="/ask-question.svg"
                                 width={50} height={50} />
                             <Card.Body>
-                                <Card.Title>2. Be a contributor</Card.Title>
+                                <Card.Title>2. Build up your profile</Card.Title>
                                 <Card.Text>
-                                    Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.
+                                    Contribute to the community by submitting quizzes, answering students' questions
+                                    and addressing their comments.
+                                    Build up your profile in this process!
                          </Card.Text>
                             </Card.Body>
                         </Card>
@@ -74,7 +75,8 @@ export default function TutorJumbotron({ isIntro }: {
                             <Card.Body>
                                 <Card.Title>3. Match With Students</Card.Title>
                                 <Card.Text>
-                                    Tell us your rate.
+                                    Tell us your rate and preference and we will match students with you.
+                                    Well estalished profile would increase your match success rate.
                          </Card.Text>
                             </Card.Body>
                         </Card>
