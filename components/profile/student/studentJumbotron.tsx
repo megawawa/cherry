@@ -87,7 +87,7 @@ export default function StudentJumbotron({ isIntro }: {
                             <Card.Title>3. Find tutor</Card.Title>
                             <Card.Text>
                                 <p>Still have questions? Want to book a tutor session?
-                                Find tutor based on your own rate and schedule.
+                                Find tutor based on your preferred rate and schedule.
                                 </p>
                             </Card.Text>
                         </Card.Body>

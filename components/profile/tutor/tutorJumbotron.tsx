@@ -48,17 +48,17 @@ export default function TutorJumbotron({ isIntro }: {
                 <div className={styles.jumbotronInfoContainer}>
                     <div className={styles.jumbotronInfoContainer}>
                         <Card className={styles.jumbotronInfoCardDark}>
-                            <Image src="/ask-question.svg"
+                            <Image src="/create-tutor-profile.svg"
                                 width={50} height={50} />                            <Card.Body>
                                 <Card.Title>1. Create your profile </Card.Title>
                                 <Card.Text>
-                                    Your profile is the first thing the students see. Show everyone
+                                    Your profile is the first thing students see. Show everyone
                                     a bit about yourself. What is your interest? What is your contact preference?
                          </Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className={styles.jumbotronInfoCardDark}>
-                            <Image src="/ask-question.svg"
+                            <Image src="/build-profile.svg"
                                 width={50} height={50} />
                             <Card.Body>
                                 <Card.Title>2. Build up your profile</Card.Title>
@@ -70,7 +70,7 @@ export default function TutorJumbotron({ isIntro }: {
                             </Card.Body>
                         </Card>
                         <Card className={styles.jumbotronInfoCardDark}>
-                            <Image src="/ask-question.svg"
+                            <Image src="/talk.svg"
                                 width={50} height={50} />
                             <Card.Body>
                                 <Card.Title>3. Match With Students</Card.Title>
