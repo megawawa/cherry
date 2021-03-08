@@ -1,7 +1,7 @@
 import { profile } from 'console';
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import { getUserFromCredential, genUserFromCredential } from '../../../libs/mongoDb'
+import { getUserFromCredential, genUserFromCredential } from '../../../libs/mongoDb/credential'
 
 const options = {
   // Configure one or more authentication providers

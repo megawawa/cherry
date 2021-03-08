@@ -21,6 +21,7 @@ export default function BrowseQuizPanel() {
     const [subTopics, updateSubTopics] = useState<Array<string>>(["third grade"]);
 
     const handleUpdateIndex = (index) => {
+        console.log("updating for index", index);
         state.update({
             quizzesIndex: index
         });
@@ -70,7 +71,8 @@ export default function BrowseQuizPanel() {
                         tags: tagsState
                     });
                     fetchAndUpdateTopics(tagsState);
-                }} />
+                }}
+                    name="quiz-topic" />
             </div>
             <div style={{
                 justifyContent: "flex-end",
@@ -107,8 +109,8 @@ export default function BrowseQuizPanel() {
                         Too many results? Select additional topic:
                     </span>
                 )}
-                {subTopics.map((topic) => (
-                    <Card className={styles.card}>
+                {subTopics.map((topic, index) => (
+                    <Card className={styles.card} key={"browse-quiz-" + index}>
                         <Card.Body>
                             <Card.Text>
                                 <a style={{ textDecoration: "underline" }}

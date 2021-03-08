@@ -3,11 +3,12 @@ import { Button } from "react-bootstrap";
 import TextareaAutosize from 'react-autosize-textarea';
 import styles from '../../styles/Tag.module.css'
 
-function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable }: {
+function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable, name }: {
     value: string,
     onEdit: (string) => void,
     onFinishedEdit: (string) => Promise<void>,
     updateParentIsEditable: (boolean) => void,
+    name: string,
 }) {
     // when value is empty, inputButton is just created,
     // and thus it is always editable
@@ -33,7 +34,7 @@ function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable }: 
         </TextareaAutosize>;
     }
     return <Button className={styles.TagInputButton}
-        key={value} onClick={(event) => {
+        key={name + "-" + value} onClick={(event) => {
             updateIsEditable(!isEditable);
             updateParentIsEditable(false);
             event.stopPropagation();
@@ -42,10 +43,11 @@ function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable }: 
             : value}</Button>;
 }
 
-export default function InputButtonList({ tags, onUpdate, valid }: {
+export default function InputButtonList({ tags, onUpdate, valid, name }: {
     tags?: Array<string>,
     onUpdate: (tagsState: Array<string>) => void,
     valid?: boolean,
+    name: string,
 }) {
     const [tagsState, updateTags] = useState(tags ?? []);
 
@@ -89,7 +91,8 @@ export default function InputButtonList({ tags, onUpdate, valid }: {
     const buttons = tagsState?.map((tag, index) => <InputButton value={tag}
         onEdit={(updateTag.bind(this, index))}
         onFinishedEdit={(checkUpdatedTag.bind(this, index))}
-        updateParentIsEditable={updateIsEditable} />);
+        updateParentIsEditable={updateIsEditable}
+        name={name} />);
 
     return <div className={styles.TagsContainer + ' '
         + ((valid == false) ? styles.Invalid : styles.Valid)}

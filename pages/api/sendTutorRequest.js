@@ -1,4 +1,4 @@
-import { genTutorRequestForUser } from "../../libs/mongoDb"
+import { genTutorRequestForUser } from "../../libs/mongoDb/profile/tutor"
 import { getSession } from 'next-auth/client'
 
 export default async function handler(req, res) {

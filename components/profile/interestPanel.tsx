@@ -41,7 +41,8 @@ export default function InterestPanel() {
                     studentTags: tagsState,
                     tutorTags: tags.tutorTags,
                 });
-            }} />
+            }} 
+            name="student-interests" />
         </div>
         <div>
             <div>I am interesting in tutoring...
@@ -51,7 +52,8 @@ export default function InterestPanel() {
                     studentTags: tags.studentTags,
                     tutorTags: tagsState,
                 });
-            }} />
+            }} 
+            name="tutor-interests" />
         </div>
     </div>;
 }

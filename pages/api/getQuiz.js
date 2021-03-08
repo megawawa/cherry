@@ -1,4 +1,4 @@
-import { getProblemPreviewFromTags } from "../../libs/mongoDb";
+import { getProblemPreviewFromTags } from "../../libs/mongoDb/quiz/problem";
 
 export default async function handler(req, res) {
 

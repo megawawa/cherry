@@ -7,7 +7,7 @@ import styles from '../../styles/Problem.module.css'
 
 import { Problem, parseTextToSolution } from '../../libs/problem';
 import { CommentsList, QuizCreateFormType } from '../../libs/quiz';
-import { getProblemDetailViewFromId } from '../../libs/mongoDb';
+import { getProblemDetailViewFromId } from '../../libs/mongoDb/quiz/problem';
 import { useSession } from 'next-auth/client';
 
 import { Form } from 'react-bootstrap';

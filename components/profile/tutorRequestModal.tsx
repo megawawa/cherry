@@ -14,15 +14,24 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
     onClose: () => void,
     onSave: () => void,
 }) {
-    const [state, setState] = useState<TutorRequestFormType>({});
+    const [state, setState] = useState<TutorRequestFormType>({ tags: [] });
 
     let accountContext = useAccountContext();
 
-    const [tags, setTags] = useState<Array<string>>([]);
+    const updateTags = (tags) => {
+        setState((state) => (
+            {
+                ...state,
+                tags: tags
+            })
+        );
+    }
 
     useEffect(() => {
-        setTags(accountContext.tags ?? []);
-    }, [accountContext.tags])
+        updateTags(
+            accountContext.tags ?? []
+        );
+    }, [accountContext.tags]);
 
     const handleChange = (event) => {
         setState({
@@ -34,7 +43,7 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
 
     return <Modal show={isActive} onHide={onClose}>
         <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Tutor request</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Form >
@@ -44,7 +53,7 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
                         <TextareaAutosize
                             style={{ width: "100%" }}
                             onChange={handleChange}
-                            name="intro"
+                            name="message"
                             placeholder="Introduce yourself"
                             rows={5}
                             value={state.message ?? ''}>
@@ -55,9 +64,10 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
 
                 <Form.Group controlId="tutorRequest.tags">
                     <Form.Label>tags</Form.Label>
-                    <InputButtonList tags={tags ?? []} onUpdate={(tagsState) => {
-                        setTags(tagsState);
-                    }} />
+                    <InputButtonList tags={state.tags} onUpdate={(tagsState) => {
+                        updateTags(tagsState);
+                    }}
+                        name="create-tutor-request" />
                 </Form.Group>
             </Form>
 

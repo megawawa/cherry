@@ -1,4 +1,4 @@
-import { editQuiz } from "../../libs/mongoDb"
+import { editQuiz } from "../../libs/mongoDb/quiz/quiz"
 import { getSession } from 'next-auth/client'
 
 export default async function handler(req, res) {

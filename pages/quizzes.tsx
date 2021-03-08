@@ -28,7 +28,6 @@ export default function QuizzesPage({ current }: {
 
             context.update({
                 quizzes: result,
-                quizzesIndex: context.quizzesIndex,
             });
         })();
     }, [context.tags, context.quizzesIndex]);

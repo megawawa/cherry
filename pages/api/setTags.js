@@ -1,4 +1,4 @@
-import { genTagsForUser } from "../../libs/mongoDb"
+import { genTagsForUser } from "../../libs/mongoDb/tags"
 import { getSession } from 'next-auth/client'
 
 export default async function handler(req, res) {

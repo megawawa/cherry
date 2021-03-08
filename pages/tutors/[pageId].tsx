@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { PaginationFooter } from "../../components/libs/paginationFooter";
 import TutorsPanel from "../../components/profile/tutor/tutorsPanel";
-import { getTopTutors } from "../../libs/mongoDb";
+import { getTopTutors } from "../../libs/mongoDb/profile/tutor";
 import { TutorPreviewType } from "../../libs/user";
 import styles from '../../styles/Problem.module.css'
 

@@ -34,8 +34,8 @@ export default function QuizzesPanel({ quizzes, displayUser }:
             quizzes?.map((quiz) =>
                 <QuizPanel quiz={quiz} key={quiz.id} displayUser={displayUser} />)
         ) : (<div>
-            We have no matching quiz currently. Express your interest
-            and get notified when new quizzes come!
+            You have reached the end of the quiz list. Express your interest
+            and get notified when we have new quizzes!
         </div>);
 
     const [isStudentMode, setIsStudentMode] = useState<boolean>(true);

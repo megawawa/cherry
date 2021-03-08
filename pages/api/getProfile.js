@@ -1,5 +1,5 @@
 import { getSession } from 'next-auth/client'
-import { getProfileFromUser } from "../../libs/mongoDb";
+import { getProfileFromUser } from "../../libs/mongoDb/profile/profile";
 
 export default async function handler(req, res) {
 

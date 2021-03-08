@@ -78,7 +78,7 @@ export default function MainAccountView({ activeKey }: {
         <div className={styles.profileContainer}>
             <Tab.Container id="left-tabs-example" defaultActiveKey={activeKey}>
                 <Row>
-                    <Col sm={3} className={styles.column}>
+                    <Col sm={2} className={styles.column}>
                         <Nav variant="pills"
                             className={"flex-column " + styles.profileLeftMenu}>
                             <div className={styles.profileLeftSectionHeader}>
@@ -116,6 +116,9 @@ export default function MainAccountView({ activeKey }: {
                                 </Link>
                                 <Nav.Link eventKey="browseTest">
                                     <LockTab locked={false} text="Browse Test" />
+                                </Nav.Link>
+                                <Nav.Link eventKey="browseTutorRequest">
+                                    <LockTab locked={false} text="Browse Tutor Request" />
                                 </Nav.Link>
                                 <Nav.Link eventKey="viewProfile">
                                     <LockTab locked={false} text="Profile" />

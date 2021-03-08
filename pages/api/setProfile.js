@@ -1,4 +1,4 @@
-import { genProfileForUser } from "../../libs/mongoDb"
+import { genProfileForUser } from "../../libs/mongoDb/profile/profile"
 import { getSession } from 'next-auth/client'
 
 export default async function handler(req, res) {

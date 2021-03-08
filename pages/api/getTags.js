@@ -1,5 +1,5 @@
 import { getSession } from 'next-auth/client'
-import { getTagsFromUser } from "../../libs/mongoDb";
+import { getTagsFromUser } from "../../libs/mongoDb/tags";
 
 export default async function handler(req, res) {
 

@@ -8,10 +8,11 @@ export function MathSymbolList({ handleTextUpdate }: {
 
     return <>
         {
-            symbols.map((symbol) =>
-            (<Button variant="secondary" className="ml-2" onClick={() => {
-                handleTextUpdate(symbol);
-            }}>
+            symbols.map((symbol, index) =>
+            (<Button variant="secondary" className="ml-2" key={"math-symbol-" + index}
+                onClick={() => {
+                    handleTextUpdate(symbol);
+                }}>
                 {symbol}
             </Button>))
         }

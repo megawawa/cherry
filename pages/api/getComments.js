@@ -1,5 +1,5 @@
 import { getCommentRange } from "typescript";
-import { getComments } from "../../libs/mongoDb";
+import { getComments } from "../../libs/mongoDb/quiz/comment";
 
 export default async function handler(req, res) {
 

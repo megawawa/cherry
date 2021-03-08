@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { useAccountContext } from "../components/layout/accountContext";
 import MainAccountView from "../components/layout/mainAccountView";
-import { getProblemPreviewFromUser } from "../libs/mongoDb";
+import { getProblemPreviewFromUser } from "../libs/mongoDb/quiz/problem";
 import { ProblemPreviewType } from '../libs/quiz';
 import { getSession } from 'next-auth/client'
 

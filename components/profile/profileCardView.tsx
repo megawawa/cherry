@@ -1,4 +1,3 @@
-import { getProfileFromUser } from "../../libs/mongoDb";
 import { getUserProfile, ProfilePreviewType } from "../../libs/user";
 import { Card, Button } from "react-bootstrap";
 import styles from '../../styles/Home.module.css'

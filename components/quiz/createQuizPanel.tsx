@@ -148,7 +148,8 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
                             tags: tagsState
                         });
                     }}
-                    valid={isValidTags()} />
+                    valid={isValidTags()}
+                    name="create-quiz-panel" />
                 {!isValidTags() && (
                     (accountState?.tags?.length >= 8) ? (
                         <Form.Text style={{ color: "red" }}>

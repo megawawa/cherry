@@ -1,4 +1,4 @@
-import { getSubTopics } from "../../libs/mongoDb";
+import { getSubTopics } from "../../libs/mongoDb/tags";
 
 export default async function handler(req, res) {
 
