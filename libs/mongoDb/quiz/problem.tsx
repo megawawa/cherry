@@ -2,13 +2,14 @@ import { ObjectId } from 'mongodb'
 
 import { ProblemDetailViewType, ProblemPreviewType } from "../../quiz";
 import { connectToDatabase } from "../helper";
+import { eqTagsPredicate } from '../tags';
 
 export async function getProblemPreviewFromTags(tags: Array<string>, pageIndex: number):
     Promise<Array<ProblemPreviewType>> {
     const { db } = await connectToDatabase();
     const result = await db
         .collection("problems")
-        .find({ tags: { $all: tags } })
+        .find(eqTagsPredicate(tags))
         .skip((pageIndex - 1) * 10)
         .limit(10)
         .toArray();

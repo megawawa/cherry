@@ -16,7 +16,7 @@
 .column {
     border-right: 1px solid black;
     min-height: 100vh;
-    max-width: 40vw;
+    min-width: 300px;
 }
 
 .profileLeftMenu {

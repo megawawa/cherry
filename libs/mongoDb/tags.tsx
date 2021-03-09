@@ -59,11 +59,7 @@ await db
     );
 }
 
-export async function getSubTopics(tags: Array<string>,
-    stepIndex: number
-): Promise<Array<string>> {
-    // TODO(@megawawa, 2/28/2021) getSubTopic only works for short array
-    const { db } = await connectToDatabase();
+export function eqTagsPredicate(tags: Array<string>) {
     let query: any = {
         [`tags.${tags.length}`]: { $exists: true },
         [`tags.${tags.length + 1}`]: { $exists: false }
@@ -71,6 +67,17 @@ export async function getSubTopics(tags: Array<string>,
     if (tags.length != 0) {
         query["tags"] = { $all: tags };
     }
+    return query;
+}
+
+export async function getSubTopics(tags: Array<string>,
+    stepIndex: number
+): Promise<Array<string>> {
+    // TODO(@megawawa, 2/28/2021) getSubTopic only works for short array
+    const { db } = await connectToDatabase();
+
+    let query = eqTagsPredicate(tags);
+    
     const result = await db
         .collection("tags")
         .find(query)

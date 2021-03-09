@@ -8,17 +8,11 @@ import QuizzesPanel from "./quiz/quizPanel";
 import styles from '../styles/BrowseQuiz.module.css'
 import Link from "next/link";
 import TutorRequestModal from "./profile/tutorRequestModal";
+import GetSubTopicComponent from "./libs/subTopics";
+import { addTag } from "../libs/tags";
 
 export default function BrowseQuizPanel() {
     let state = useAccountContext();
-
-    const router = useRouter();
-
-    const buttons = state.tags?.map((tag) =>
-        <Button variant="secondary" className="ml-2"
-            key={tag}>{tag}</Button>);
-
-    const [subTopics, updateSubTopics] = useState<Array<string>>(["third grade"]);
 
     const handleUpdateIndex = (index) => {
         console.log("updating for index", index);
@@ -27,35 +21,13 @@ export default function BrowseQuizPanel() {
         });
     };
 
-    const fetchAndUpdateTopics = async (tags) => {
-        const url = `/api/getSubTopics?` +
-            `tags=${JSON.stringify(tags)}`;
-
-        const res = await fetch(
-            url,
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'GET'
-            }
-        )
-
-        const result = await res.json();
-        console.log("fetched subtopics: ", tags, result);
-        if (res.status != 200) {
-            console.log("fetching subtopic failed");
-            updateSubTopics([]);
-            return;
-        }
-        updateSubTopics(result);
-    }
-
-    useEffect(() => {
-        fetchAndUpdateTopics(state.tags ?? []);
-    }, [state.tags]);
-
     const [show, setShow] = useState<boolean>(false);
+
+    const updateTags = (tag: string) => {
+        state.update({
+            tags: addTag(state.tags, tag)
+        });
+    }
 
     return <>
         <TutorRequestModal isActive={show}
@@ -70,7 +42,6 @@ export default function BrowseQuizPanel() {
                     state.update({
                         tags: tagsState
                     });
-                    fetchAndUpdateTopics(tagsState);
                 }}
                     name="quiz-topic" />
             </div>
@@ -103,43 +74,9 @@ export default function BrowseQuizPanel() {
                         Need help on quiz?</Button>
                 </Link>
             </div>
-            <div>
-                {subTopics?.length > 0 && (
-                    <span className={styles.subHeader}>
-                        Too many results? Select additional topic:
-                    </span>
-                )}
-                {subTopics.map((topic, index) => (
-                    <Card className={styles.card} key={"browse-quiz-" + index}>
-                        <Card.Body>
-                            <Card.Text>
-                                <a style={{ textDecoration: "underline" }}
-                                    onClick={() => {
-                                        if (!state.tags) {
-                                            state.update({
-                                                tags: [topic]
-                                            });
-                                            return;
-                                        }
-
-                                        let hasDuplicate = false;
-                                        for (let i = 0; i < state.tags.length; i++) {
-                                            if (state.tags[i] == topic) {
-                                                hasDuplicate = true;
-                                                break;
-                                            }
-                                        }
-
-                                        if (!hasDuplicate) {
-                                            state.update({
-                                                tags: state.tags?.concat([topic])
-                                            });
-                                        }
-                                    }}>{topic}</a>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>))}
-            </div>
+            <GetSubTopicComponent
+                tags={state.tags} updateTags={updateTags}
+                name="browse-quiz" />
             <QuizzesPanel quizzes={state.quizzes} displayUser={true} />
             <div style={{
                 justifyContent: "flex-end",
