@@ -1,4 +1,4 @@
-import { genTutorRequestForUser } from "../../libs/mongoDb/profile/tutor"
+import { genTutorRequestForUser } from "../../libs/mongoDb/profile/tutorRequest"
 import { getSession } from 'next-auth/client'
 
 export default async function handler(req, res) {
@@ -23,6 +23,10 @@ export default async function handler(req, res) {
         return;
     }
 
-    await genTutorRequestForUser(session.user.id, req.body?.request);
+    let request = req.body?.request;
+    request.requestTime = new Date(request.requestTime);
+
+    await genTutorRequestForUser(session.user.id,
+        session.user.name, request);
     res.status(200).json({ quizUpdate: 'success' });
 }

@@ -1,13 +1,27 @@
 import { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import styles from '../../styles/BrowseQuiz.module.css'
+import { useAccountContext } from "../layout/accountContext";
 
-export default function GetSubTopicComponent({ tags, updateTags, name }: {
-    tags: Array<string>,
-    updateTags: (string) => void,
-    name: string,
-}) {
-    const [subTopics, updateSubTopics] = useState<Array<string>>(["third grade"]);
+export default function GetSubTopicComponent({ tags, updateTags, name,
+    cachedSubTopics }: {
+        tags: Array<string>,
+        updateTags: (string) => void,
+        name: string,
+        cachedSubTopics?: Array<string>,
+    }) {
+    let [subTopics, updateSubTopics] = useState<Array<string>>(
+        cachedSubTopics ?? []
+    );
+
+    let state = useAccountContext();
+
+    const updateAndSyncSubTopics = (subtopics: Array<string>) => {
+        state.update({
+            subTopics: subtopics
+        });
+        updateSubTopics(subtopics);
+    }
 
     const fetchAndUpdateTopics = async (tags) => {
         const url = `/api/getSubTopics?` +
@@ -27,10 +41,10 @@ export default function GetSubTopicComponent({ tags, updateTags, name }: {
         console.log("fetched subtopics: ", tags, result);
         if (res.status != 200) {
             console.log("fetching subtopic failed");
-            updateSubTopics([]);
+            updateAndSyncSubTopics([]);
             return;
         }
-        updateSubTopics(result);
+        updateAndSyncSubTopics(result);
     }
 
     useEffect(() => {

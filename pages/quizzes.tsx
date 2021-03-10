@@ -9,7 +9,7 @@ export default function QuizzesPage({ current }: {
     useEffect(() => {
         (async () => {
             console.log("fetching quiz", context.tags, context.quizzesIndex);
-            const url = `/api/getQuiz?` +
+            const url = `/api/getQuizzes?` +
                 `tags=${JSON.stringify(context.tags ?? [])}&current=${context.quizzesIndex ?? 1}`;
 
             const res = await fetch(

@@ -1,28 +1,26 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import { useAccountContext } from "./layout/accountContext";
-import InputButtonList from "./libs/inputButtonList";
-import { PaginationFooter } from "./libs/paginationFooter";
-import QuizzesPanel from "./quiz/quizPanel";
-import styles from '../styles/BrowseQuiz.module.css'
+import { useAccountContext } from "../../layout/accountContext";
+import InputButtonList from "../../libs/inputButtonList";
+import { PaginationFooter } from "../../libs/paginationFooter";
+import styles from '../../../styles/BrowseQuiz.module.css'
 import Link from "next/link";
-import TutorRequestModal from "./profile/tutorRequestModal";
-import GetSubTopicComponent from "./libs/subTopics";
-import { addTag } from "../libs/tags";
+import GetSubTopicComponent from "../../libs/subTopics";
+import { addTag } from "../../../libs/tags";
+import TutorRequestsPanel from "./tutorRequestPanel";
 
-export default function BrowseQuizPanel() {
+// TODO (@megawawa, 03/09/2021) change styles
+
+export default function BrowseTutorRequestPanel() {
     let state = useAccountContext();
 
     const handleUpdateIndex = (index) => {
         console.log("updating for index", index);
         state.update({
-            quizzesIndex: index
+            tutorRequestsIndex: index
         });
     };
-
-    const [show, setShow] = useState<boolean>(false);
-
     const updateTags = (tag: string) => {
         state.update({
             tags: addTag(state.tags, tag)
@@ -30,11 +28,6 @@ export default function BrowseQuizPanel() {
     }
 
     return <>
-        <TutorRequestModal isActive={show}
-            onClose={setShow.bind(this, false)}
-            onSave={() => {
-                setShow(false);
-            }} />
         <div style={{ display: "flex", flexDirection: "column", minHeight: "80vh" }}>
             <div>
                 <span className={styles.mainHeader}>Selected topics</span>
@@ -43,7 +36,7 @@ export default function BrowseQuizPanel() {
                         tags: tagsState
                     });
                 }}
-                    name="quiz-topic" />
+                    name="tutor-request-topic" />
             </div>
             <div style={{
                 justifyContent: "flex-end",
@@ -63,21 +56,11 @@ export default function BrowseQuizPanel() {
                         }}>
                         Create quiz</Button>
                 </Link>
-                <Button variant="primary" style={
-                    {
-                        marginRight: "1rem",
-                    }}
-                    onClick={setShow.bind(this, true)}>
-                    Find a tutor</Button>
-                <Link href="/createQuiz" passHref>
-                    <Button variant="primary">
-                        Need help on quiz?</Button>
-                </Link>
             </div>
             <GetSubTopicComponent
                 tags={state.tags} updateTags={updateTags}
-                name="browse-quiz" cachedSubTopics={state.subTopics} />
-            <QuizzesPanel quizzes={state.quizzes} displayUser={true} />
+                name="browse-tutor-request" cachedSubTopics={state.subTopics} />
+            <TutorRequestsPanel tutorRequests={state.tutorRequests} displayUser />
             <div style={{
                 justifyContent: "flex-end",
                 flexDirection: "column",
@@ -86,7 +69,7 @@ export default function BrowseQuizPanel() {
                 marginTop: "1rem",
             }}>
                 <PaginationFooter
-                    current={state.quizzesIndex ?? 1}
+                    current={state.tutorRequestsIndex ?? 1}
                     onUpdateIndex={handleUpdateIndex} />
             </div>
         </div >

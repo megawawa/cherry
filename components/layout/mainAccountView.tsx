@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { AccountContextProvider, useAccountContext } from './accountContext';
 import CreateQuizPanel from '../quiz/createQuizPanel';
 import ProfilePanelView from '../profile/profilePanelView';
+import BrowseTutorRequestPanel from '../profile/tutor/browseTutorRequestPanel';
 
 function LockTab({ locked, text }: { locked: boolean, text: string }) {
     return <div className={styles.profileLeftItem}>
@@ -117,9 +118,11 @@ export default function MainAccountView({ activeKey }: {
                                 <Nav.Link eventKey="browseTest">
                                     <LockTab locked={false} text="Browse Test" />
                                 </Nav.Link>
-                                <Nav.Link eventKey="browseTutorRequest">
-                                    <LockTab locked={false} text="Browse Tutor Request" />
-                                </Nav.Link>
+                                <Link href="/tutorRequests" passHref>
+                                    <Nav.Link eventKey="browseTutorRequest">
+                                        <LockTab locked={false} text="Browse Tutor Request" />
+                                    </Nav.Link>
+                                </Link>
                                 <Nav.Link eventKey="viewProfile">
                                     <LockTab locked={false} text="Profile" />
                                 </Nav.Link>
@@ -190,6 +193,11 @@ export default function MainAccountView({ activeKey }: {
                             <Tab.Pane eventKey="browseQuiz">
                                 <LockItem locked={false}>
                                     <BrowseQuizPanel />
+                                </LockItem>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="browseTutorRequest">
+                                <LockItem locked={false}>
+                                    <BrowseTutorRequestPanel />
                                 </LockItem>
                             </Tab.Pane>
                             <Tab.Pane eventKey="askQuiz">

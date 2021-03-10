@@ -19,37 +19,3 @@ export async function getTopTutors(pageIndex: number)
         return obj;
     });
 }
-
-export async function genTutorRequestForUser(id: string,
-    request: TutorRequestFormType) {
-    const { db } = await connectToDatabase();
-    if (!id) {
-        return;
-    }
-
-    request.userid = id;
-
-    console.log('[genTutorRequestForUser]', id, request);
-
-    const res = await db
-        .collection("tutor_request")
-        .insertOne(request,
-            { upsert: true, returnNewDocument: false })
-        .then(
-            result => {
-                if (result.matchedCount != 0) {
-                    console.log(`[genTutorRequestForUser]submitted tutor request.`);
-                    return result;
-                }
-                console.log("[genTutorRequestForUser] user does not exist");
-            }
-        );
-
-    if (res) {
-        increaseTagsCount(db, request.tags, "tutorRequestCount");
-    }
-
-    console.log("[genTutorRequestForUser]", res);
-
-    return res;
-}

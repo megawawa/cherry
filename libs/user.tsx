@@ -51,6 +51,7 @@ export type TutorRequestFormType = {
     requestTime?: Date;
     tags: Array<string>;
     userid?: string;
+    submitUserName?: string;
 }
 
 export async function getUserTags(): Promise<UserInterestsType> {
@@ -151,7 +152,7 @@ export async function uploadProfileForUser(profile: ProfileFormType)
 export async function createTutorRequestForUser(
     request: TutorRequestFormType): Promise<void> {
     console.log("create tutor request", request);
-    const url = `/api/sendTutorRequest`;
+    const url = `/api/submitTutorRequest`;
     request.requestTime = new Date();
 
     const res = await fetch(

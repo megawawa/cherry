@@ -19,7 +19,11 @@ export async function getComments(problemId: string,
                 console.log("[getProfileFromUser] user does not exist");
             }
         );
-    const comments = result.commentsList[stepIndex]?.comments ?? [];
+    if (!result?.commentsList) {
+        console.log("[getComments]", []);
+        return [];
+    }
+    const comments = result?.commentsList[stepIndex]?.comments ?? [];
     console.log("[getComments]", comments);
     return comments;
 }
