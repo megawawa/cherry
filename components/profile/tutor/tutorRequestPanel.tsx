@@ -25,13 +25,13 @@ function TutorRequestPanel({ tutorRequest, displayUser }:
                     <div>
                         {tutorRequest.requestTime.toLocaleDateString(
                             "en-US", {
-                                weekday: "long",
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                hour: 'numeric',
-                                minute: 'numeric',
-                            })}
+                            weekday: "long",
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                        })}
                     </div>
                 </Card.Text>
             </Card.Body>
@@ -52,12 +52,7 @@ export default function TutorRequestsPanel({ tutorRequests, displayUser }:
         </div>);
 
     return <div className={styles.quizPreviewList}>
-        <div style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            display: "flex",
-            marginTop: "1rem",
-        }}>
+        <div className={styles.quizPreviewListHeader}>
             <span className={styles.mainHeader}>Tutor Requests
             </span>
             <div style={{

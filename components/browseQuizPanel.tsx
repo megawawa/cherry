@@ -36,43 +36,46 @@ export default function BrowseQuizPanel() {
                 setShow(false);
             }} />
         <div style={{ display: "flex", flexDirection: "column", minHeight: "80vh" }}>
-            <div>
-                <span className={styles.mainHeader}>Selected topics</span>
-                <InputButtonList tags={state.tags ?? []} onUpdate={(tagsState) => {
-                    state.update({
-                        tags: tagsState
-                    });
-                }}
-                    name="quiz-topic" />
-            </div>
-            <div style={{
-                justifyContent: "flex-end",
-                flexDirection: "row",
-                display: "flex",
-                marginTop: "1rem",
-            }}>
-                <Button variant="primary" style={
-                    {
-                        marginRight: "1rem",
-                    }}>
-                    Take a test</Button>
-                <Link href="/createQuiz?tutor=1" passHref>
-                    <Button variant="primary" style={
-                        {
-                            marginRight: "1rem",
-                        }}>
-                        Create quiz</Button>
-                </Link>
-                <Button variant="primary" style={
-                    {
-                        marginRight: "1rem",
+            <div className={styles.quizPreviewList}>
+                <div>
+                    <span className={styles.mainHeader}>Selected topics</span>
+                    <InputButtonList tags={state.tags ?? []} onUpdate={(tagsState) => {
+                        state.update({
+                            tags: tagsState
+                        });
                     }}
-                    onClick={setShow.bind(this, true)}>
-                    Find a tutor</Button>
-                <Link href="/createQuiz" passHref>
-                    <Button variant="primary">
-                        Need help on quiz?</Button>
-                </Link>
+                        name="quiz-topic" />
+
+                    <div style={{
+                        justifyContent: "flex-end",
+                        flexDirection: "row",
+                        display: "flex",
+                        marginTop: "1rem",
+                    }}>
+                        <Button variant="primary" style={
+                            {
+                                marginRight: "1rem",
+                            }}>
+                            Take a test</Button>
+                        <Link href="/createQuiz?tutor=1" passHref>
+                            <Button variant="primary" style={
+                                {
+                                    marginRight: "1rem",
+                                }}>
+                                Create quiz</Button>
+                        </Link>
+                        <Button variant="primary" style={
+                            {
+                                marginRight: "1rem",
+                            }}
+                            onClick={setShow.bind(this, true)}>
+                            Find a tutor</Button>
+                        <Link href="/createQuiz" passHref>
+                            <Button variant="primary">
+                                Need help on quiz?</Button>
+                        </Link>
+                    </div>
+                </div>
             </div>
             <GetSubTopicComponent
                 tags={state.tags} updateTags={updateTags}

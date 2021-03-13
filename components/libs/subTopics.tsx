@@ -51,22 +51,19 @@ export default function GetSubTopicComponent({ tags, updateTags, name,
         fetchAndUpdateTopics(tags ?? []);
     }, [tags]);
 
-    return <div>
+    return <div className={styles.quizPreviewList}>
         {subTopics?.length > 0 && (
             <span className={styles.subHeader}>
-                Too many results? Select additional topic:
+                Suggested sub-topics:
             </span>
         )}
-        {subTopics.map((topic, index) => (
-            <Card className={styles.card} key={name + '-' + index}>
-                <Card.Body>
-                    <Card.Text>
-                        <a style={{ textDecoration: "underline" }}
-                            onClick={() => {
-                                updateTags(topic);
-                            }}>{topic}</a>
-                    </Card.Text>
-                </Card.Body>
-            </Card>))}
+        <div>
+            {subTopics.map((topic, index) => (
+                <Button key={name + '-' + index}
+                    onClick={() => {
+                        updateTags(topic);
+                    }} className="m-2" variant="secondary">{topic}
+                </Button>))}
+        </div>
     </div>
 }

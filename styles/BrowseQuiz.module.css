@@ -1,26 +1,38 @@
 .card {
-    border-radius: 1rem;
-    border: 0.5rem solid #eaeaea;
-    transition: color 0.15s ease, border-color 0.15s ease;
-    min-width: 400px;
-    max-width: 70vw;
-    margin: 0.5rem 0
-  }
-  
-  .card:hover, .card:focus, .card:active {
-    border-color: #0070f3;
-  }
+  border: none;
+  border: 0.2rem solid white;
+  border-bottom: 0.2rem solid #eaeaea;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  min-width: 400px;
+  max-width: 70vw;
+  margin: 0.5rem 0
+}
 
-  .quizPreviewList {
-      margin-top: 2rem;
-  }
+.card:hover, .card:focus, .card:active {
+  border: 0.2rem solid #0070f3;
+}
 
-  .mainHeader {
-      font-size: 1.5rem;
-      font-weight: bold
-  }
+.quizPreviewList {
+  margin-top: 0.5rem;
+  background-color: white;
+  padding: 0.5rem 1rem;
+}
 
-  .subHeader {
-    font-size: 1.2rem;
-    font-weight: bold
+.quizPreviewListHeader {
+  justify-content: space-between;
+  flex-direction: row;
+  display: flex;
+  margin-top: 1rem;
+  border-bottom: 0.2rem solid #eaeaea;
+  padding: 0.5rem;
+}
+
+.mainHeader {
+  font-size: 1.5rem;
+  font-weight: bold
+}
+
+.subHeader {
+  font-size: 1.2rem;
+  font-weight: bold
 }

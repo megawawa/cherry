@@ -46,12 +46,7 @@ export default function QuizzesPanel({ quizzes, displayUser }:
     };
 
     return <div className={styles.quizPreviewList}>
-        <div style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            display: "flex",
-            marginTop: "1rem",
-        }}>
+        <div className={styles.quizPreviewListHeader}>
             <span className={styles.mainHeader}>Quizzes
             </span>
             <div style={{
