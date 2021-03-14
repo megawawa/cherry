@@ -206,7 +206,7 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
     useEffect(() => {
         updateExpandListState(sanitize(solution, expandList));
         updateExpandStatusListState(convertToBoolArray(expandListState));
-    }, [solution.toString()]);
+    }, [solution]);
 
     const handleSolutionStepUpdate = (index, value) => {
         // need to commit expandList for parent class

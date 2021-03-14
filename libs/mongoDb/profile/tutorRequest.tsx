@@ -10,6 +10,7 @@ export async function getTutorRequestsFromTags(tags: Array<string>, pageIndex: n
     const result = await db
         .collection("tutor_request")
         .find(eqTagsPredicate(tags))
+        .sort([['requestTime', -1]])
         .skip((pageIndex - 1) * 10)
         .limit(10)
         .toArray();

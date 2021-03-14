@@ -5,7 +5,7 @@ import { EditableView } from '../../components/libs/editableView';
 
 import styles from '../../styles/Problem.module.css'
 
-import { Problem, parseTextToSolution } from '../../libs/problem';
+import { Problem, parseTextToSolution, Solution } from '../../libs/problem';
 import { CommentsList, QuizCreateFormType } from '../../libs/quiz';
 import { getProblemDetailViewFromId } from '../../libs/mongoDb/quiz/problem';
 import { useSession } from 'next-auth/client';
@@ -26,6 +26,14 @@ export default function ProblemPanel({ problemData, submitUserName }:
 
     // solution panel has its own comment list.
     let [commentList, setCommentList] = useState<CommentsList>([]);
+
+    let [parsedSolution, setParsedSolution] = useState<Solution>(
+        parseTextToSolution(quiz?.solution ?? "")
+    );
+    
+    useEffect(() => {
+        setParsedSolution(parseTextToSolution(quiz?.solution ?? ""));
+    }, [quiz?.solution ?? ""]);
 
     const handleChange = (event) => {
         setQuiz({
@@ -151,7 +159,7 @@ export default function ProblemPanel({ problemData, submitUserName }:
                 <Card.Body>
                     <EditableView
                         defaultView={
-                            <SolutionPanel solution={parseTextToSolution(quiz?.solution ?? "")}
+                            <SolutionPanel solution={parsedSolution}
                                 commentsList={commentList}
                                 onUploadComment={handleUploadComment}
                                 onHandleGetComment={handleGetComment} />}

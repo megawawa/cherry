@@ -36,3 +36,16 @@
   font-size: 1.2rem;
   font-weight: bold
 }
+
+.tagsList {
+  display: flex;
+  flex-direction: row;
+}
+
+.tag {
+  background-color: rgb(91, 102, 253);
+  margin: 0 0.25rem 0 0;
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.2rem;
+  color: white
+}

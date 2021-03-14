@@ -21,6 +21,13 @@ function QuizPanel({ quiz, displayUser }:
                                 <a>{quiz.submitUserName}</a>
                             </Link>
                         </div>)}
+                    <div className={styles.tagsList}>
+                        {quiz.tags.map((tag) =>
+                            <div className={styles.tag}>
+                                {tag}
+                            </div>
+                        )}
+                    </div>
                 </Card.Text>
             </Card.Body>
         </Card>

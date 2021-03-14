@@ -23,6 +23,11 @@ function TutorRequestPanel({ tutorRequest, displayUser }:
                             </Link>
                         </div>)}
                     <div>
+                        {tutorRequest.rate?.number && "$"}
+                        {tutorRequest.rate?.number}
+                        {tutorRequest.rate?.number && "/hour"}
+                    </div>
+                    <div>
                         {tutorRequest.requestTime.toLocaleDateString(
                             "en-US", {
                             weekday: "long",
@@ -32,6 +37,13 @@ function TutorRequestPanel({ tutorRequest, displayUser }:
                             hour: 'numeric',
                             minute: 'numeric',
                         })}
+                    </div>
+                    <div className={styles.tagsList}>
+                        {tutorRequest.tags.map((tag) =>
+                            <div className={styles.tag}>
+                                {tag}
+                            </div>
+                        )}
                     </div>
                 </Card.Text>
             </Card.Body>

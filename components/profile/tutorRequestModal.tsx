@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, FormControl, InputGroup, Modal } from "react-bootstrap";
 import styles from '../../styles/Profile.module.css'
 import { uploadProfileForUser, getUserProfile, createTutorRequestForUser, TutorRequestFormType } from "../../libs/user";
 import TextareaAutosize from 'react-autosize-textarea';
@@ -39,6 +39,16 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
             [event.target.name]: event.target.value
         });
     };
+
+    const handleRateChange = (event) => {
+        setState({
+            ...state,
+            rate: {
+                type: "hourly",
+                number: parseFloat(event.target.value),
+            }
+        });
+    };
     const [session] = useSession();
 
     return <Modal show={isActive} onHide={onClose}>
@@ -61,6 +71,17 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
                     </div>
                 </Form.Group>
 
+                <Form.Label htmlFor="inlineFormInputGroup" srOnly>
+                    Username
+                 </Form.Label>
+                <InputGroup className="mb-2">
+                    <InputGroup.Prepend>
+                        <InputGroup.Text>Hourly Rate</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <FormControl id="inlineFormInputGroup" placeholder=""
+                        value={state.rate?.number ?? ""}
+                        onChange={handleRateChange} />
+                </InputGroup>
 
                 <Form.Group controlId="tutorRequest.tags">
                     <Form.Label>Tags</Form.Label>
