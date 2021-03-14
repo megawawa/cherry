@@ -90,7 +90,10 @@ function SolutionStep({
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        onHandleGetComment();
+        console.log("loading for step", loading, value);
+        if (loading) {
+            onHandleGetComment();
+        }
         setLoading(false);
     }, [loading]);
 
@@ -203,7 +206,7 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
     useEffect(() => {
         updateExpandListState(sanitize(solution, expandList));
         updateExpandStatusListState(convertToBoolArray(expandListState));
-    }, [solution]);
+    }, [solution.toString()]);
 
     const handleSolutionStepUpdate = (index, value) => {
         // need to commit expandList for parent class
@@ -222,9 +225,9 @@ export function SolutionPanel({ solution, commentsList, expandList = [],
         updateExpandStatusListState(updatedStatusList);
 
         // union
-        updateExpandListState(Array.from(new Set(
-            expandListState.concat(
-                getStepsToExpandFromId(solution, id, expandListState)))));
+        updateExpandListState((prevExpandList) => Array.from(new Set(
+            prevExpandList.concat(
+                getStepsToExpandFromId(solution, id, prevExpandList)))));
 
         return;
     }

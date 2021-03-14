@@ -51,19 +51,19 @@ export default function GetSubTopicComponent({ tags, updateTags, name,
         fetchAndUpdateTopics(tags ?? []);
     }, [tags]);
 
-    return <div className={styles.quizPreviewList}>
-        {subTopics?.length > 0 && (
+    return <>{subTopics?.length > 0 && (
+        <div className={styles.quizPreviewList}>
             <span className={styles.subHeader}>
-                Suggested sub-topics:
-            </span>
-        )}
-        <div>
-            {subTopics.map((topic, index) => (
-                <Button key={name + '-' + index}
-                    onClick={() => {
-                        updateTags(topic);
-                    }} className="m-2" variant="secondary">{topic}
-                </Button>))}
-        </div>
-    </div>
+                Too many results? Select sub-topic:
+                </span>
+            <div>
+                {subTopics.map((topic, index) => (
+                    <Button key={name + '-' + index}
+                        onClick={() => {
+                            updateTags(topic);
+                        }} className="m-2" variant="secondary">{topic}
+                    </Button>))}
+            </div>
+        </div>)
+    }</>;
 }

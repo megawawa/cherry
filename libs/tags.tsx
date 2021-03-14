@@ -15,4 +15,6 @@ export function addTag(tags: Array<string>, newTag: string
     if (!hasDuplicate) {
         return tags?.concat([newTag]);
     }
+
+    return tags;
 }

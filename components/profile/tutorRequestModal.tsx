@@ -48,13 +48,13 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
         <Modal.Body>
             <Form >
                 <Form.Group controlId="tutorRequest.message">
-                    <Form.Label>Self-introduction</Form.Label>
+                    <Form.Label>Tell us what you are looking for</Form.Label>
                     <div>
                         <TextareaAutosize
                             style={{ width: "100%" }}
                             onChange={handleChange}
                             name="message"
-                            placeholder="Introduce yourself"
+                            placeholder=""
                             rows={5}
                             value={state.message ?? ''}>
                         </TextareaAutosize>
@@ -63,7 +63,7 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
 
 
                 <Form.Group controlId="tutorRequest.tags">
-                    <Form.Label>tags</Form.Label>
+                    <Form.Label>Tags</Form.Label>
                     <InputButtonList tags={state.tags} onUpdate={(tagsState) => {
                         updateTags(tagsState);
                     }}

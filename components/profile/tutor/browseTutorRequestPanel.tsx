@@ -22,6 +22,7 @@ export default function BrowseTutorRequestPanel() {
         });
     };
     const updateTags = (tag: string) => {
+        console.log("updating tags", state.tags, tag);
         state.update({
             tags: addTag(state.tags, tag)
         });
