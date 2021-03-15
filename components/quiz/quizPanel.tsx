@@ -4,6 +4,7 @@ import { Problem } from "../../libs/problem";
 import React, { useState } from "react";
 import { Card, Button, Form, FormCheck, DropdownButton, Dropdown } from "react-bootstrap";
 import Link from "next/link";
+import { submitFollowTagsFromUser } from "../../libs/tags";
 
 function QuizPanel({ quiz, displayUser }:
     { quiz: ProblemPreviewType, displayUser: boolean }) {
@@ -34,8 +35,11 @@ function QuizPanel({ quiz, displayUser }:
     </div>;
 }
 
-export default function QuizzesPanel({ quizzes, displayUser }:
-    { quizzes: Array<ProblemPreviewType>, displayUser: boolean }) {
+export default function QuizzesPanel({ quizzes, displayUser, onClick, followed }:
+    {
+        quizzes: Array<ProblemPreviewType>, displayUser: boolean,
+        onClick: () => void, followed: boolean,
+    }) {
     const quizPanels =
         (quizzes?.length > 0) ? (
             quizzes?.map((quiz) =>
@@ -70,8 +74,9 @@ export default function QuizzesPanel({ quizzes, displayUser }:
                     <Dropdown.Item onClick={onSwitchAction}>{
                         !isStudentMode ? "Student Mode" : "Tutor Mode"}</Dropdown.Item>
                 </DropdownButton>
-                <Button id="follow" variant="primary">
-                    Follow</Button>
+                <Button id="follow" variant={followed ? "success": "primary"}
+                    onClick={onClick}>
+                    {followed ? "Followed" : "Follow"}</Button>
             </div>
         </div>
 

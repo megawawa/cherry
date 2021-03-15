@@ -105,3 +105,69 @@ export async function getSubTopics(tags: Array<string>,
     return parsedResult;
 }
 
+
+export async function submitFollowTagsFromUser(userId: string,
+    tags: Array<string>,
+    tagsType: string) {
+
+    const { db } = await connectToDatabase();
+    if (!userId) {
+        return;
+    }
+
+    console.log('[submitFollowTagsFromUser]', userId, tags, tagsType);
+
+    await db
+        .collection("users")
+        .updateOne({
+            _id: { $eq: ObjectId(userId) }
+        },
+            {
+                $addToSet: { [tagsType]: tags }
+            }, { upsert: false, returnNewDocument: false })
+        .then(
+            result => {
+                if (result.matchedCount != 0) {
+                    console.log(`submitFollowTagsFromUser success.`);
+                    return;
+                }
+                console.log("[submitFollowTagsFromUser] user does not exist");
+            }
+        );
+}
+
+
+export async function getIfFollowTagsFromUser(userId: string,
+    tags: Array<string>,
+    tagsType: string) {
+
+    const { db } = await connectToDatabase();
+    if (!userId) {
+        return false;
+    }
+
+    if (!tags?.length) {
+        return false;
+    }
+
+    console.log('[getIfFollowTagsFromUser]', userId, tags, tagsType);
+
+    return await db
+        .collection("users")
+        .findOne({
+            _id: { $eq: ObjectId(userId) },
+            [tagsType]: { $all: [tags] }
+        })
+        .then(
+            result => {
+                console.log("[getIfFollowTagsFromUser]", result);
+                if (result) {
+                    console.log(`getIfFollowTagsFromUser success.`);
+                    return true;
+                }
+                console.log("[getIfFollowTagsFromUser] no matching results");
+                return false;
+            }
+        );
+}
+

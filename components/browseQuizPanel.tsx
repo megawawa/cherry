@@ -9,7 +9,7 @@ import styles from '../styles/BrowseQuiz.module.css'
 import Link from "next/link";
 import TutorRequestModal from "./profile/tutorRequestModal";
 import GetSubTopicComponent from "./libs/subTopics";
-import { addTag } from "../libs/tags";
+import { addTag, getIfFollowTagsFromUser, submitFollowTagsFromUser } from "../libs/tags";
 
 export default function BrowseQuizPanel() {
     let state = useAccountContext();
@@ -27,6 +27,21 @@ export default function BrowseQuizPanel() {
         state.update({
             tags: addTag(state.tags, tag)
         });
+    }
+
+    const [followed, setFollowed] = useState<boolean>();
+
+    useEffect(() => {
+        (async () => {
+            const isFollowed = await getIfFollowTagsFromUser(
+                state.tags, "follow-quizzes");
+            setFollowed(isFollowed);
+        })();
+    }, [state.tags]);
+
+    const onFollowClick = () => {
+        setFollowed(!followed);
+        submitFollowTagsFromUser(state.tags, "follow-quizzes");
     }
 
     return <>
@@ -80,7 +95,9 @@ export default function BrowseQuizPanel() {
             <GetSubTopicComponent
                 tags={state.tags} updateTags={updateTags}
                 name="browse-quiz" cachedSubTopics={state.subTopics} />
-            <QuizzesPanel quizzes={state.quizzes} displayUser={true} />
+            <QuizzesPanel quizzes={state.quizzes} displayUser={true}
+                onClick={onFollowClick}
+                followed={followed} />
             <div style={{
                 justifyContent: "flex-end",
                 flexDirection: "column",
