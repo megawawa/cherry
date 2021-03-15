@@ -23,6 +23,9 @@ export function addTag(tags: Array<string>, newTag: string
 export async function submitFollowTagsFromUser(tags: Array<string>,
     tagsType: string) {
     console.log("uploading follow list", tags, tagsType);
+    if (!tags) {
+        tags = [];
+    }
     const sortedTags = [...tags].sort();
 
     const url = `/api/submitFollow`;

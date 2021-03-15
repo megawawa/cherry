@@ -88,21 +88,25 @@ export async function getSubTopics(tags: Array<string>,
         .sort({ quizCount: -1 })
         .limit(5)
         .toArray();
-    const parsedResult = result.map((obj) => {
-        let additionalTag = [];
+    let tagsSet = [];
+    result.map((obj) => {
         obj.tags.forEach((tag) => {
-            if (tags.indexOf(tag) == -1) {
-                additionalTag.push(tag);
+            if (tags.indexOf(tag) != -1) {
+                return;
             }
+            if (tagsSet.indexOf(tag) != -1) {
+                return;
+            }
+            tagsSet.push(tag);
         });
-        if (additionalTag.length == 0) {
+        if (tagsSet.length == 0) {
             console.log("[db-getSubtopic] invalid result item from db",
-                additionalTag, tags, obj.tags);
+                tagsSet, tags, obj.tags);
         }
-        return additionalTag[0];
     });
-    console.log("[db-getSubtopic]", parsedResult);
-    return parsedResult;
+
+    console.log("[db-getSubtopic]", tagsSet);
+    return tagsSet;
 }
 
 
