@@ -59,6 +59,19 @@ export async function genTagsForUser(id: string, tags: UserInterestsType) {
         );
 }
 
+export function containsTagsPredicate(tags: Array<string>) {
+    if (tags.length == 0) {
+        return {
+            [`tags.0`]: { $exists: true }
+        };
+    }
+    let query: any = {
+        "tags": { $all: tags }
+    };
+
+    return query;
+}
+
 export function eqTagsPredicate(tags: Array<string>) {
     if (tags.length == 0) {
         return {
@@ -73,6 +86,7 @@ export function eqTagsPredicate(tags: Array<string>) {
 
     return query;
 }
+
 
 export async function getSubTopics(tags: Array<string>,
     stepIndex: number

@@ -2,14 +2,14 @@ import { ObjectId } from 'mongodb'
 
 import { TutorRequestFormType } from '../../user';
 import { connectToDatabase, increaseTagsCount } from "../helper";
-import { eqTagsPredicate } from '../tags';
+import { containsTagsPredicate } from '../tags';
 
 export async function getTutorRequestsFromTags(tags: Array<string>, pageIndex: number):
     Promise<Array<TutorRequestFormType>> {
     const { db } = await connectToDatabase();
     const result = await db
         .collection("tutor_request")
-        .find(eqTagsPredicate(tags))
+        .find(containsTagsPredicate(tags))
         .sort([['requestTime', -1]])
         .skip((pageIndex - 1) * 10)
         .limit(10)

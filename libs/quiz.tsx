@@ -26,6 +26,7 @@ export type ProblemPreviewType = {
     submitUserName: string;
     submitUserId: string;
     tags: Array<string>;
+    submitTime: Date;
 }
 
 export type DbProblemCreateType = ProblemPreviewType & {

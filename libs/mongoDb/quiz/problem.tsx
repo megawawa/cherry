@@ -2,14 +2,15 @@ import { ObjectId } from 'mongodb'
 
 import { ProblemDetailViewType, ProblemPreviewType } from "../../quiz";
 import { connectToDatabase } from "../helper";
-import { eqTagsPredicate } from '../tags';
+import { containsTagsPredicate } from '../tags';
 
 export async function getProblemPreviewFromTags(tags: Array<string>, pageIndex: number):
     Promise<Array<ProblemPreviewType>> {
     const { db } = await connectToDatabase();
     const result = await db
         .collection("problems")
-        .find(eqTagsPredicate(tags))
+        .find(containsTagsPredicate(tags))
+        .sort([['submitTime', -1]])
         .skip((pageIndex - 1) * 10)
         .limit(10)
         .toArray();

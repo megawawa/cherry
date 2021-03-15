@@ -36,7 +36,8 @@ export default async function handler(req, res) {
         solution: req.body?.quiz?.solution ?? "",
         summary: {
             pastAttempts: 0, successfulAttempts: 0
-        }
+        },
+        submitTime: new Date(),
     }
 
     uploadQuiz(quiz);

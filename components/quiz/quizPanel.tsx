@@ -8,6 +8,7 @@ import { submitFollowTagsFromUser } from "../../libs/tags";
 
 function QuizPanel({ quiz, displayUser }:
     { quiz: ProblemPreviewType, displayUser: boolean }) {
+    console.log("quiz", quiz);
     return <div>
         <Card className={styles.card}>
             <Card.Body>
@@ -22,6 +23,17 @@ function QuizPanel({ quiz, displayUser }:
                                 <a>{quiz.submitUserName}</a>
                             </Link>
                         </div>)}
+                    <div>
+                        {quiz.submitTime && quiz.submitTime?.toLocaleDateString(
+                            "en-US", {
+                            weekday: "long",
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                        })}
+                    </div>
                     <div className={styles.tagsList}>
                         {quiz.tags.map((tag) =>
                             <div className={styles.tag}>
@@ -74,7 +86,7 @@ export default function QuizzesPanel({ quizzes, displayUser, onClick, followed }
                     <Dropdown.Item onClick={onSwitchAction}>{
                         !isStudentMode ? "Student Mode" : "Tutor Mode"}</Dropdown.Item>
                 </DropdownButton>
-                <Button id="follow" variant={followed ? "success": "primary"}
+                <Button id="follow" variant={followed ? "success" : "primary"}
                     onClick={onClick}>
                     {followed ? "Followed" : "Follow"}</Button>
             </div>

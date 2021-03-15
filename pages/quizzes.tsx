@@ -22,9 +22,16 @@ export default function QuizzesPage({ current }: {
                 }
             )
 
-            const result = await res.json();
+            let result = await res.json();
             console.log("fetched quiz: ", context.tags,
                 context.quizzesIndex, result);
+            
+            result = result.map((quiz) => {
+                if (quiz.submitTime) {
+                    quiz.submitTime = new Date(quiz.submitTime);
+                }
+                return quiz;
+            });
 
             context.update({
                 quizzes: result,
