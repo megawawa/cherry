@@ -66,8 +66,8 @@ export function eqTagsPredicate(tags: Array<string>) {
         };
     }
     let query: any = {
-        [`tags.${tags.length}`]: { $exists: true },
-        [`tags.${tags.length + 1}`]: { $exists: false }
+        [`tags.${tags.length - 1}`]: { $exists: true },
+        [`tags.${tags.length}`]: { $exists: false }
     };
     query["tags"] = { $all: tags };
 
