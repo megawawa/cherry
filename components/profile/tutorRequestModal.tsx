@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, FormControl, InputGroup, Modal } from "react-bootstrap";
 import styles from '../../styles/Profile.module.css'
 import { uploadProfileForUser, getUserProfile, createTutorRequestForUser, TutorRequestFormType } from "../../libs/user";
-import TextareaAutosize from 'react-autosize-textarea';
 import { useSession } from 'next-auth/client';
 import { useAccountContext } from "../layout/accountContext";
 import InputButtonList from "../libs/inputButtonList";
+import StyledTextareaAutosize from "../libs/textAreaAutosize";
 
 
 
@@ -60,14 +60,14 @@ export default function TutorRequestModal({ isActive, onClose, onSave }: {
                 <Form.Group controlId="tutorRequest.message">
                     <Form.Label>Tell us what you are looking for</Form.Label>
                     <div>
-                        <TextareaAutosize
+                        <StyledTextareaAutosize
                             style={{ width: "100%" }}
                             onChange={handleChange}
                             name="message"
                             placeholder=""
                             rows={5}
                             value={state.message ?? ''}>
-                        </TextareaAutosize>
+                        </StyledTextareaAutosize>
                     </div>
                 </Form.Group>
 

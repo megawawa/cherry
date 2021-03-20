@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import styles from '../../styles/Profile.module.css'
 import { uploadProfileForUser, getUserProfile, ProfileFormType } from "../../libs/user";
-import TextareaAutosize from 'react-autosize-textarea';
 import { useSession } from 'next-auth/client';
+import StyledTextareaAutosize from "../libs/textAreaAutosize";
 
 export default function EditProfileModal({ isActive, onClose, profile, onSave }: {
     isActive: boolean,
@@ -54,14 +54,14 @@ export default function EditProfileModal({ isActive, onClose, profile, onSave }:
                 <Form.Group controlId="intro">
                     <Form.Label>Self-introduction</Form.Label>
                     <div>
-                        <TextareaAutosize
+                        <StyledTextareaAutosize
                             style={{ width: "100%" }}
                             onChange={handleChange}
                             name="intro"
                             placeholder="Introduce yourself"
                             rows={5}
                             value={state.intro ?? ''}>
-                        </TextareaAutosize>
+                        </StyledTextareaAutosize>
                     </div>
                 </Form.Group>
 

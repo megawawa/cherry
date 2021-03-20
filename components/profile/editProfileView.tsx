@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import styles from '../../styles/Profile.module.css'
 import { uploadProfileForUser, getUserProfile, ProfileFormType } from "../../libs/user";
-import TextareaAutosize from 'react-autosize-textarea';
 import { useSession } from 'next-auth/client';
+import StyledTextareaAutosize from "../libs/textAreaAutosize";
 
 export default function EditProfileView() {
     const [state, setState] = useState<ProfileFormType>({});
@@ -69,14 +69,14 @@ export default function EditProfileView() {
             <Form.Group controlId="intro">
                 <Form.Label>Self-introduction</Form.Label>
                 <div>
-                    <TextareaAutosize
+                    <StyledTextareaAutosize
                         style={{ width: "100%" }}
                         onChange={handleChange}
                         name="intro"
                         placeholder="Introduce yourself"
                         rows={5}
                         value={state.intro ?? ''}>
-                    </TextareaAutosize>
+                    </StyledTextareaAutosize>
                 </div>
             </Form.Group>
 
