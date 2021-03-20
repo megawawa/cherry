@@ -75,7 +75,7 @@ export default function MainAccountView({ activeKey }: {
     activeKey: string
 }) {
     const context = useAccountContext();
-    return <main className={styles.main + ' ' + loginStyles.background}>
+    return <main className={styles.main}>
         <div className={styles.profileContainer}>
             <Tab.Container id="left-tabs-example" defaultActiveKey={activeKey}>
                 <Row>
@@ -111,7 +111,7 @@ export default function MainAccountView({ activeKey }: {
                                </div>
                             <Nav.Item>
                                 <Link href="/quizzes" passHref>
-                                    <Nav.Link eventKey="browseQuiz">
+                                    <Nav.Link  eventKey="browseQuiz">
                                         <LockTab locked={false} text="Quiz" />
                                     </Nav.Link>
                                 </Link>
@@ -163,7 +163,7 @@ export default function MainAccountView({ activeKey }: {
                             </Nav.Item>
                         </Nav>
                     </Col>
-                    <Col sm={9}>
+                    <Col sm={9} className={styles.columnRight}>
                         <Tab.Content>
                             <Tab.Pane eventKey="sampleLocked">
                                 <LockItem locked={true}>

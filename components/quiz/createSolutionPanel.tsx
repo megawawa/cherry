@@ -31,9 +31,10 @@ export default function CreateSolutionPanel({
 
     const onSolutionTextAreaUpdate = (value) => {
         updateSolutionText(value);
-        updateSolution(parseTextToSolution(value));
+        const parsedSolution = parseTextToSolution(value);
+        updateSolution(parsedSolution);
         onSolutionTextUpdate(value);
-        updateExpandList([]);
+        updateExpandList(parsedSolution?.steps?.map((_, index) => index) ?? []);
     }
 
     const updateList = (list) => {
@@ -72,7 +73,7 @@ export default function CreateSolutionPanel({
                 } />
                 <TextareaAutosize
                     className={!isValidSolution() ? styles.Invalid : styles.Valid}
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", marginTop: "0.5rem" }}
                     value={solutionText}
                     placeholder={"Try the following example:\n\
                     \n  step 1\n   step 1.a\n   step 1.b\n  step 2"}
@@ -84,7 +85,7 @@ export default function CreateSolutionPanel({
             </div>
             {!isValidSolution() && (
                 <Form.Text style={{ color: "red" }}>
-                    Invalid solution input. Please make sure solution input
+                    Invalid solution input. Please make sure each step
                     starts with two empty spaces, for example: "  step 1".
                     (<a style={{textDecoration: "underline"}}
                         onClick={() => {

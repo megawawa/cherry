@@ -132,11 +132,14 @@
     background-color: yellow;
 }
 
-
 .Invalid {
-    outline: 1px solid red;
+    border: 0;
+    border: 1px solid red;
+    border-radius: 0.25rem;
 }
 
 .Valid {
-    outline: 1px solid green;
+    border: 0;
+    border: 1px solid green;
+    border-radius: 0.25rem;
 }

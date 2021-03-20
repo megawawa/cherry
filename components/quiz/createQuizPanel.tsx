@@ -102,6 +102,9 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
         // we are doing double parsing text to solution here:
         // once here, and once in createSolutionPanel
         // however performance is not a big concern.
+        if (state.index != 2) {
+            return true;
+        }
         return parseTextToSolution(quiz?.solution ?? ' ')?.steps?.length > 0;
     }
 
