@@ -75,6 +75,10 @@ export async function getIfFollowTagsFromUser(tags: Array<string>,
     )
 
     const result = await res.json();
+    if (res.status != 200) {
+        console.log("get followList failed, returning false");
+        return false;
+    }
     console.log("get followList", result);
     return result;
 }

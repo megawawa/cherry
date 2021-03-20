@@ -29,7 +29,7 @@ export default function BrowseQuizPanel() {
         });
     }
 
-    const [followed, setFollowed] = useState<boolean>();
+    const [followed, setFollowed] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {

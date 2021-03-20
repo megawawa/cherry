@@ -94,7 +94,7 @@ export async function getSubTopics(tags: Array<string>,
     // TODO(@megawawa, 2/28/2021) getSubTopic only works for short array
     const { db } = await connectToDatabase();
 
-    let query = eqTagsPredicate(tags);
+    let query = containsTagsPredicate(tags);
 
     const result = await db
         .collection("tags")
@@ -113,10 +113,6 @@ export async function getSubTopics(tags: Array<string>,
             }
             tagsSet.push(tag);
         });
-        if (tagsSet.length == 0) {
-            console.log("[db-getSubtopic] invalid result item from db",
-                tagsSet, tags, obj.tags);
-        }
     });
 
     console.log("[db-getSubtopic]", tagsSet);

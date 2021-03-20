@@ -10,7 +10,11 @@ import StudentJumbotron from '../components/profile/student/studentJumbotron';
 import TutorJumbotron from '../components/profile/tutor/tutorJumbotron';
 
 export default function Home() {
-  const [session] = useSession();
+  const [session, loading] = useSession();
+
+  if (loading) {
+    return <> </>;
+  }
 
   if (session?.user?.name) {
     return <MainAccountView activeKey={'sampleLocked'} />;

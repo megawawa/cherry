@@ -33,14 +33,27 @@ function InputButton({ value, onEdit, onFinishedEdit, updateParentIsEditable, na
             }} autoFocus={true}>
         </TextareaAutosize>;
     }
-    return <Button className={styles.TagInputButton}
-        key={name + "-" + value} onClick={(event) => {
-            updateIsEditable(!isEditable);
-            updateParentIsEditable(false);
-            event.stopPropagation();
-        }}>{value == ""
-            ? (<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>)
-            : value}</Button>;
+    return <>
+        <Button className={styles.TagInputButton}
+            key={name + "-" + value} onClick={(event) => {
+                updateIsEditable(!isEditable);
+                updateParentIsEditable(false);
+                event.stopPropagation();
+            }}>{value == ""
+                ? (<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>)
+                : value}</Button>
+        {!isEditable && <img className={styles.buttonImg}
+            src={"/cross-out.svg"}
+            alt="my image"
+            onClick={(event) => {
+                // removing coponent is the same as setting content to empty
+                // and sending control back to parent
+                onFinishedEdit("");
+                updateParentIsEditable(true);
+                event.stopPropagation();
+            }} />}
+    </>;
+
 }
 
 export default function InputButtonList({ tags, onUpdate, valid, name }: {

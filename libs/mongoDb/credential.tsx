@@ -52,19 +52,20 @@ export async function genUserFromCredential(credentials: CredentialType) {
                     isTutor: credentials.isTutor,
                     isStudent: credentials.isStudent,
                 }
-            }, { upsert: true, returnNewDocument: false })
+            }, { upsert: true, returnNewDocument: true })
         .then(
             result => {
                 if (result.matchedCount != 0) {
                     console.log(`user already exists: ${result.matchedCount}.`);
                     return;
                 }
-                console.log("adding new user");
+                console.log("adding new user. id:", result.upsertedId._id);
                 return {
                     name: credentials.name,
                     email: credentials.email,
                     isTutor: credentials.isTutor,
                     isStudent: credentials.isStudent,
+                    id: result.upsertedId._id,
                 }
             }
         );

@@ -49,3 +49,8 @@
 .Valid {
     outline: 1px solid green;
 }
+
+
+.buttonImg {
+    width: 1rem;
+}
