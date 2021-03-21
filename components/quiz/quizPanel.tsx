@@ -6,7 +6,7 @@ import { Card, Button, Form, FormCheck, DropdownButton, Dropdown } from "react-b
 import Link from "next/link";
 import { submitFollowTagsFromUser } from "../../libs/tags";
 
-function QuizPanel({ quiz, displayUser }:
+export function QuizPanel({ quiz, displayUser }:
     { quiz: ProblemPreviewType, displayUser: boolean }) {
     console.log("quiz", quiz);
     return <div>

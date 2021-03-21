@@ -22,12 +22,14 @@ export async function getProblemPreviewFromTags(tags: Array<string>, pageIndex: 
 }
 
 
-export async function getProblemPreviewFromUser(user: string):
+export async function getProblemPreviewFromUser(userId: string):
     Promise<Array<ProblemPreviewType>> {
+    console.log("getProblemPreviewFromUser", userId);
     const { db } = await connectToDatabase();
     const result = await db
         .collection("problems")
-        .find({ submitUserName: { $eq: user } })
+        .find({ "submitUserId": userId })
+        .sort([['submitTime', -1]])
         .limit(10)
         .toArray();
     return result.map((obj) => {

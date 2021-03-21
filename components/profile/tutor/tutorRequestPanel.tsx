@@ -6,7 +6,7 @@ import { TutorRequestFormType } from "../../../libs/user";
 
 // TODO (@megawawa, 03/09/2021) change styles
 
-function TutorRequestPanel({ tutorRequest, displayUser }:
+export function TutorRequestPanel({ tutorRequest, displayUser }:
     { tutorRequest: TutorRequestFormType, displayUser: boolean }) {
     return <div>
         <Card className={styles.card}>

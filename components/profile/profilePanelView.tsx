@@ -4,6 +4,8 @@ import { useSession } from 'next-auth/client'
 import ProfileSummaryView from "./profileSummaryView";
 import ProfileOpenRequestView from "./profileOpenRequest";
 import styles from '../../styles/Profile.module.css'
+import QuizzesHistoryPanel from "../quiz/quizzesHistoryPanel";
+import TutorRequestHistoryPanel from "./tutor/tutorRequestHistoryPanel";
 
 
 export default function ProfilePanelView({ userId }: {
@@ -33,10 +35,10 @@ export default function ProfilePanelView({ userId }: {
             </div>
         </div>
         <div className={styles.profileMainViewSection}>
-            <ProfileOpenRequestView />
+            <QuizzesHistoryPanel displayUser={false} />
         </div>
         <div className={styles.profileMainViewSection}>
-            <ProfileOpenRequestView />
+            <TutorRequestHistoryPanel displayUser={false} />
         </div>
         <div className={styles.profileMainViewSection}>
             <ProfileOpenRequestView />

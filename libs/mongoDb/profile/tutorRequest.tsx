@@ -86,3 +86,20 @@ export async function getTutorRequestFromId(id: string):
     })(result);
 }
 
+export async function getTutorRequestFromUserId(userId: string):
+    Promise<Array<TutorRequestFormType>> {
+    const { db } = await connectToDatabase();
+    const result = await db
+        .collection("tutor_request")
+        .find({ userid: userId })
+        .sort([['requestTime', -1]])
+        .limit(10)
+        .toArray();
+    return result.map((obj) => {
+        obj.id = obj._id.valueOf().toString();
+        delete obj._id;
+        return obj;
+    });
+}
+
+
