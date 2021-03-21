@@ -67,32 +67,38 @@ export default function ProfileCardView({ profile, profileUserId }: {
                 setShow(false);
             }} />
         <Card style={{ width: '18rem' }}>
-            <Card.Body>
-                <Card.Title>{state.name ?? ""}</Card.Title>
-                {state.contact &&
-                    (<Card.Text>
-                        Contact preference: {state.contact ?? ""}
-                    </Card.Text>)}
-                {state.education &&
-                    (<Card.Text>
-                        Education: {state.education ?? ""}
-                    </Card.Text>)}
-                {state.intro &&
-                    (<Card.Text>
-                        Intro: {state.intro ?? ""}
-                    </Card.Text>)}
-                {state.email &&
-                    (<Card.Text>
-                        Email: {state.email ?? ""}
-                    </Card.Text>)}
-                {state.phone &&
-                    (<Card.Text>
-                        Phone: {state.phone ?? ""}
-                    </Card.Text>)}
-                {state.otherContact &&
-                    (<Card.Text>
-                        Other contact: {state.otherContact ?? ""}
-                    </Card.Text>)}
+            <Card.Body style={{ minHeight: "300px" }}>
+                <Card.Title>Name: {state.name ?? " "}</Card.Title>
+                {/* {state.contact && ( */}
+                <Card.Text>
+                    Contact preference: {state.contact ?? ""}
+                </Card.Text>
+                {/* )} */}
+                {/* {state.education && ( */}
+                <Card.Text>
+                    Education: {state.education ?? ""}
+                </Card.Text>
+                {/* )} */}
+                {/* {state.intro && ( */}
+                <Card.Text>
+                    Intro: {state.intro ?? ""}
+                </Card.Text>
+                {/* )} */}
+                {/* {state.email && ( */}
+                <Card.Text>
+                    Email: {state.email ?? ""}
+                </Card.Text>
+                {/* )} */}
+                {/* {state.phone && ( */}
+                <Card.Text>
+                    Phone: {state.phone ?? ""}
+                </Card.Text>
+                {/* )} */}
+                {/* {state.otherContact && ( */}
+                <Card.Text>
+                    Other contact: {state.otherContact ?? ""}
+                </Card.Text>
+                {/* )} */}
 
                 <div style={{
                     justifyContent: "flex-end",

@@ -1,7 +1,7 @@
 import { Component, createContext, useContext } from 'react';
 import { ProblemPreviewType } from '../../libs/quiz';
 import { Problem } from '../../libs/problem';
-import { TutorRequestFormType } from '../../libs/user';
+import { ProfilePreviewType, TutorRequestFormType } from '../../libs/user';
 
 export type AccountContextType = {
     tags?: Array<string>,
@@ -11,6 +11,9 @@ export type AccountContextType = {
     subTopics?: Array<string>,
     tutorRequests?: Array<TutorRequestFormType>,
     tutorRequestsIndex?: number,
+    submittedTutorRequests?: Array<TutorRequestFormType>,
+    submittedQuizzes?: Array<ProblemPreviewType>,
+    profile?: ProfilePreviewType,
     update: (AccountContextType) => void
 }
 

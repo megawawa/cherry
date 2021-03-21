@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from 'next-auth/client'
 import { Card } from "react-bootstrap";
 import { QuizPanel } from "./quizPanel";
+import { useAccountContext } from "../layout/accountContext";
 
 export default function QuizzesHistoryPanel({ displayUser }:
     {
@@ -10,7 +11,7 @@ export default function QuizzesHistoryPanel({ displayUser }:
     }) {
     const [session] = useSession();
 
-    const [quizzes, setQuizzes] = useState<Array<ProblemPreviewType>>([]);
+    const state = useAccountContext();
 
     useEffect(() => {
         (async () => {
@@ -41,13 +42,15 @@ export default function QuizzesHistoryPanel({ displayUser }:
                 return quiz;
             });
 
-            setQuizzes(result);
+            state.update({
+                submittedQuizzes: result
+            });
         })();
     }, []);
 
     const quizPanels =
-        (quizzes?.length > 0) ? (
-            quizzes?.map((quiz) =>
+        (state.submittedQuizzes?.length > 0) ? (
+            state.submittedQuizzes?.map((quiz) =>
                 <QuizPanel quiz={quiz} key={quiz.id} displayUser={displayUser} />)
         ) : (<div>
             You haven't submitted any quizzes yet.

@@ -46,8 +46,9 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
         <Navbar bg="light" expand="lg" style={{
             position: "fixed", /* Set the navbar to fixed position */
             top: 0, /* Position the navbar at the top of the page */
-            width: "100%",
+            width: "calc(100vw - 20px)",
             zIndex: 999,
+            marginRight: "calc(-100vw + 100 %)",
         }}>
             <Link href="/" passHref>
                 <Navbar.Brand >Seeking Quiz</Navbar.Brand>

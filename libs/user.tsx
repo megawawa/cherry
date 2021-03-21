@@ -33,6 +33,7 @@ export type ProfileFormType = {
     phone?: string;
     otherContact?: string;
     education?: string;
+    userId?: string;
 }
 
 export type ProfilePreviewType = ProfileFormType & {

@@ -87,7 +87,7 @@ export default function CreateQuizPanel({ isTutor }: { isTutor: boolean }) {
 
         const result = await res.json();
         console.log("quiz update: ", result);
-        router.push('/profileHistory');
+        router.push('/profile');
     };
 
     const isValidProblemStatement = () => {

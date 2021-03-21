@@ -3,14 +3,14 @@ import { useSession } from 'next-auth/client'
 import { Card } from "react-bootstrap";
 import { TutorRequestFormType } from "../../../libs/user";
 import { TutorRequestPanel } from "./tutorRequestPanel";
+import { useAccountContext } from "../../layout/accountContext";
 
 export default function TutorRequestHistoryPanel({ displayUser }:
     {
         displayUser: boolean,
     }) {
     const [session] = useSession();
-
-    const [tutorRequests, setTutorRequests] = useState<Array<TutorRequestFormType>>([]);
+    const state = useAccountContext();
 
     useEffect(() => {
         (async () => {
@@ -37,16 +37,16 @@ export default function TutorRequestHistoryPanel({ displayUser }:
                 ...result, requestTime: new Date(result.requestTime)
             }));
 
-            setTutorRequests(results);
+            state.update({ submittedTutorRequests: results });
         })();
     }, []);
 
     const tutorRequestsPanel =
-        (tutorRequests?.length > 0) ? (
-            tutorRequests?.map((tutorRequest) =>
+        (state.submittedTutorRequests?.length > 0) ? (
+            state.submittedTutorRequests?.map((tutorRequest) =>
                 <TutorRequestPanel tutorRequest={tutorRequest} key={tutorRequest.id} displayUser={displayUser} />)
         ) : (<div>
-           You haven't submitted any tutor requests yet.
+            You haven't submitted any tutor requests yet.
         </div>);
 
 
