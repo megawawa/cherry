@@ -4,6 +4,7 @@ import styles from '../../styles/Home.module.css'
 import React, { useEffect, useState } from "react";
 import { useSession } from 'next-auth/client'
 import EditProfileModal from "./editProfileModal";
+import { useAccountContext } from "../layout/accountContext";
 
 /* 
  * profileUserId: if null means we don't know which profile to fetch yet
@@ -13,8 +14,23 @@ export default function ProfileCardView({ profile, profileUserId }: {
     profile?: ProfilePreviewType,
     profileUserId?: string,
 }) {
-    const [state, setState] = useState<ProfilePreviewType>(profile ?? {});
+    const context = useAccountContext();
+
+    const [state, setState] = useState<ProfilePreviewType>(
+        context?.profile?.userId == profileUserId ?
+            (context.profile ?? {})
+            : (profile ?? {})
+    );
     const [session] = useSession();
+
+    const setStateAndCache = (userProfile) => {
+        setState(userProfile);
+        if (session?.user.id == profileUserId) {
+            context.update({
+                profile: userProfile
+            });
+        }
+    }
 
     const syncState = async () => {
         // fetch interest from db
@@ -32,7 +48,7 @@ export default function ProfileCardView({ profile, profileUserId }: {
         userProfile.name =
             userProfile.name ?? "";
 
-        setState(userProfile);
+        setStateAndCache(userProfile);
     };
 
     useEffect(() => {
@@ -54,7 +70,9 @@ export default function ProfileCardView({ profile, profileUserId }: {
     }, [profileUserId]);
 
     useEffect(() => {
-        setState(profile ?? {});
+        if (profile != undefined) {
+            setStateAndCache(profile);
+        }
     }, [profile]);
 
     const [show, setShow] = useState<boolean>(false);
