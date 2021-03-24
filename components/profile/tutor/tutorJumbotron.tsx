@@ -38,7 +38,7 @@ export default function TutorJumbotron({ isIntro }: {
 
                     {isIntro &&
                         <Link href="/signup?tutor=1" passHref>
-                            <Button variant="outline-dark" className={styles.button}>
+                            <Button variant="outline-light" className={styles.buttonRight}>
                                 Sign up Now</Button>
                         </Link>}
                 </div>

@@ -39,6 +39,14 @@
   min-width: 120px;
 }
 
+.buttonRight {
+  font: bold;
+  margin: 0 3rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  min-width: 120px;
+}
+
 .mainLeft {
   flex: 1;
   display: flex;
@@ -97,10 +105,9 @@
   display: flex;
   flex-direction: row;
   min-height: 100vh;
-  mix-blend-mode: difference;
   font-size: 1.5rem;
-  background-color: rgb(170, 228, 55);
-  color: black;
+  background-color: rgb(86, 28, 201);
+  color: rgba(255, 255, 255, 0.849);
   border-radius: 0;
 }
 
@@ -130,7 +137,7 @@
 
 .containerLeft {
   flex: 1;
-  padding-top: clamp(200px, 20vh, 20vh);
+  padding-top: max(200px, min(20vh, 20vh));
 }
 
 .containerLeftWrap {
@@ -157,7 +164,7 @@
   .containerLeft {
     width: 90vw;
     text-align: center;
-    padding-top: clamp(200px, 20vh, 20vh);
+    padding-top: max(200px, min(20vh, 20vh));
   }
   .containerRightPaddingLeft {
     display: none
@@ -169,7 +176,7 @@
     flex: auto;
     width: 90vw;
     text-align: center;
-    padding-top: clamp(200px, 20vh, 20vh);
+    padding-top: max(200px, min(20vh, 20vh));
     max-width: 400px;
   }
   .mainImageContainer {
@@ -190,7 +197,7 @@
 
 .containerRight {
   flex: 1;
-  padding-top: clamp(200px, 20vh, 20vh);
+  padding-top: max(200px, min(20vh, 20vh));
   max-width: 400px;
 }
 
@@ -417,7 +424,7 @@
 }
 
 .highlightCardTextRight {
-  color: black;
+  color: white;
   font-size: 4rem;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
@@ -452,7 +459,6 @@
     width: 100%;
     flex-direction: column;
   }
-
   .navbar {
     position: fixed;
     /* Set the navbar to fixed position */
@@ -461,5 +467,5 @@
     width: 100vw;
     z-index: 999;
     margin-right: calc(-100vw + 100%);
-  }  
+  }
 }
