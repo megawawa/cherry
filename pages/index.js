@@ -46,20 +46,22 @@ export default function Home() {
           <TutorJumbotron isIntro={true} />
         </div>
         <Jumbotron className={styles.mainFloating}>
-          <h1>Just browsing?</h1>
-          <p>
-            <span><br /> You can always sign up later</span>
-          </p>
-          <p>
-            <span className={styles.highlightCardText}>Explore</span>
-            <span>{"  quizzes, tests and tutors "}</span>
-          </p>
-          <p>
-            <Link href="/quizzes" passHref>
-              <Button variant="outline-light" className={styles.buttonDark}>
-                Explore Now</Button>
-            </Link>
-          </p>
+          <div className={styles.mainFloatingText}>
+            <h1>Just browsing?</h1>
+            <p>
+              <span><br /> You can always sign up later</span>
+            </p>
+            <p>
+              <span className={styles.highlightCardText}>Explore</span>
+              <span>{"  quizzes, tests and tutors "}</span>
+            </p>
+            <p>
+              <Link href="/quizzes" passHref>
+                <Button variant="outline-light" className={styles.buttonDark}>
+                  Explore Now</Button>
+              </Link>
+            </p>
+          </div>
         </Jumbotron>
       </main>
     </>

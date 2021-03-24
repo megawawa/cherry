@@ -332,6 +332,12 @@
   font-size: 2rem;
 }
 
+.containerRight {
+  flex: 1;
+  padding-top: max(200px, min(20vh, 20vh));
+  max-width: 400px;
+}
+
 @media only screen and (max-width: 1000px) {
   .containerTextWrap {
     width: 90vw;
@@ -347,6 +353,7 @@
     width: 90vw;
     text-align: center;
     padding-top: 200px;
+    font-size: 1rem;
   }
   .containerRightPaddingLeft {
     display: none
@@ -424,12 +431,13 @@
     width: 100px;
     height: 100px;
   }
-}
-
-.containerRight {
-  flex: 1;
-  padding-top: max(200px, min(20vh, 20vh));
-  max-width: 400px;
+  .textBox {
+    max-width: 450px;
+    font-size: 1rem;
+  }
+  .mainFloatingText {
+    font-size: 1rem;
+  }
 }
 
 .containerRightWrap {
