@@ -58,19 +58,18 @@
   border-radius: 0;
 }
 
-.mainImageContainer {
+.mainImageLeftFilterContainer {
+  filter: invert(17%) sepia(83%) saturate(4453%) hue-rotate(258deg) brightness(77%) contrast(108%);
+  overflow: hidden;
   position: absolute;
   z-index: 10;
   flex-direction: row;
   display: flex;
-  width: 400px;
-  height: 400px;
-}
-
-.mainImageLeftFilterContainer {
-  filter: invert(17%) sepia(83%) saturate(4453%) hue-rotate(258deg) brightness(77%) contrast(108%);
-  overflow: hidden;
   width: 200px;
+  height: 400px;
+  margin-left: -200px;
+  left: 50%;
+  right: 50%;
 }
 
 .jumbotronLeftImageContainer {
@@ -93,11 +92,17 @@
   display: flex;
 }
 
-
 .mainImageRightFilterContainer {
   filter: invert(1);
   overflow: hidden;
   width: 200px;
+  position: absolute;
+  z-index: 10;
+  flex-direction: row;
+  display: flex;
+  height: 400px;
+  left: 50%;
+  right: 50%;
 }
 
 .mainImageLeft {
@@ -163,143 +168,6 @@
 .containerLeftPaddingRight {
   flex: 1;
   min-width: clamp(200px, 10vw, 10vw);
-}
-
-@media only screen and (max-width: 768px) {
-  .containerLeftPaddingLeft {
-    display: none
-  }
-  .containerLeftPaddingRight {
-    display: none
-  }
-  .containerLeft {
-    width: 90vw;
-    text-align: center;
-    padding-top: max(200px, min(20vh, 20vh));
-  }
-  .containerRightPaddingLeft {
-    display: none
-  }
-  .containerRightPaddingRight {
-    display: none
-  }
-  .containerRight {
-    flex: auto;
-    width: 90vw;
-    text-align: center;
-    padding-top: max(200px, min(20vh, 20vh));
-    max-width: 400px;
-  }
-  .mainImageContainer {
-    display: none;
-  }
-  .button {
-    min-width: 200px;
-  }
-  .buttonDark {
-    font: bold;
-    margin: 0 3rem;
-    font-size: 1rem;
-    border-radius: 0.25rem;
-    color: white;
-    min-width: 200px;
-  }
-}
-
-.containerRight {
-  flex: 1;
-  padding-top: max(200px, min(20vh, 20vh));
-  max-width: 400px;
-}
-
-.containerRightWrap {
-  flex: 1;
-}
-
-.containerTextWrap {
-  flex: 1;
-  flex-direction: row;
-  display: flex;
-}
-
-.containerTextWrap {
-  flex: 1;
-  flex-direction: row;
-  display: flex;
-}
-
-.containerRightPaddingLeft {
-  flex: 1;
-  min-width: 200px;
-}
-
-.containerRightPaddingRight {
-  flex: 1;
-  max-width: clamp(50px, 3vw, 3vw);
-}
-
-.jumbotronInfoContainer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  -webkit-appearance: none;
-}
-
-.jumbotronInfoCardImage {
-  width: 20px;
-}
-
-.jumbotronInfoCard {
-  padding-top: 1rem;
-  background-color: transparent;
-  border: none;
-  font-size: 1rem;
-  min-width: 300px;
-  max-width: 30%;
-  border-right: 0.5rem solid #eaeaea;
-}
-
-.jumbotronInfoCardDark {
-  padding-top: 1rem;
-  background-color: transparent;
-  border: none;
-  font-size: 1rem;
-  min-width: 300px;
-  max-width: 30%;
-  border-right: 0.25rem solid rgb(141, 141, 141);
-}
-
-.textBoxMiddle {
-  max-width: 750px;
-}
-
-.textContainer {
-  flex: 1;
-}
-
-.mainFloating {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: black;
-  color: white;
-  font-size: 1.5rem;
-}
-
-.footer {
-  width: 100%;
-  height: 100px;
-  border-top: 1px solid #eaeaea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer img {
-  margin-left: 0.5rem;
 }
 
 .footer a {
@@ -464,7 +332,49 @@
   font-size: 2rem;
 }
 
-@media (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
+  .containerTextWrap {
+    width: 90vw;
+    justify-content: center;
+  }
+  .containerLeftPaddingLeft {
+    display: none
+  }
+  .containerLeftPaddingRight {
+    display: none
+  }
+  .containerLeft {
+    width: 90vw;
+    text-align: center;
+    padding-top: 200px;
+  }
+  .containerRightPaddingLeft {
+    display: none
+  }
+  .containerRightPaddingRight {
+    display: none
+  }
+  .containerRight {
+    width: 90vw;
+    max-width: none;
+    align-items: center;
+    text-align: center;
+    padding-top: 200px;
+  }
+  .mainImageContainer {
+    display: none;
+  }
+  .button {
+    min-width: 200px;
+  }
+  .buttonDark {
+    font: bold;
+    margin: 0 3rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    color: white;
+    min-width: 200px;
+  }
   .grid {
     width: 100%;
     flex-direction: column;
@@ -478,4 +388,131 @@
     z-index: 999;
     margin-right: calc(-100vw + 100%);
   }
+  .mainImageLeftFilterContainer {
+    filter: invert(17%) sepia(83%) saturate(4453%) hue-rotate(258deg) brightness(77%) contrast(108%);
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    flex-direction: row;
+    display: flex;
+    width: 50px;
+    height: 100px;
+    margin-left: -50px;
+    left: 50%;
+    right: 50%;
+    top: 15%;
+  }
+  .mainImageRightFilterContainer {
+    top: 15%;
+    filter: invert(1);
+    overflow: hidden;
+    width: 50px;
+    position: absolute;
+    z-index: 10;
+    flex-direction: row;
+    display: flex;
+    height: 100px;
+    left: 50%;
+    right: 50%;
+  }
+  .mainImageRight {
+    width: 100px;
+    height: 100px;
+    margin-left: -50px;
+  }
+  .mainImageLeft {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.containerRight {
+  flex: 1;
+  padding-top: max(200px, min(20vh, 20vh));
+  max-width: 400px;
+}
+
+.containerRightWrap {
+  flex: 1;
+}
+
+.containerTextWrap {
+  flex: 1;
+  flex-direction: row;
+  display: flex;
+}
+
+.containerRightPaddingLeft {
+  flex: 1;
+  min-width: 200px;
+}
+
+.containerRightPaddingRight {
+  flex: 1;
+  max-width: clamp(50px, 3vw, 3vw);
+}
+
+.jumbotronInfoContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  -webkit-appearance: none;
+}
+
+.jumbotronInfoCardImage {
+  width: 20px;
+}
+
+.jumbotronInfoCard {
+  padding-top: 1rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  min-width: 300px;
+  max-width: 30%;
+  border-right: 0.5rem solid #eaeaea;
+}
+
+.jumbotronInfoCardDark {
+  padding-top: 1rem;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  min-width: 300px;
+  max-width: 30%;
+  border-right: 0.25rem solid rgb(141, 141, 141);
+}
+
+.textBoxMiddle {
+  max-width: 750px;
+}
+
+.textContainer {
+  flex: 1;
+}
+
+.mainFloating {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  background-color: black;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.footer {
+  width: 100%;
+  height: 100px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer img {
+  margin-left: 0.5rem;
 }

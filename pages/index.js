@@ -29,20 +29,19 @@ export default function Home() {
 
       <main>
         <div className={styles.mainNew}>
-          <div className={styles.mainImageContainer}>
-            <div className={styles.mainImageLeftFilterContainer}>
-              <img className={styles.mainImageLeft}
-                src="/front.png"
-                alt="Picture of the author" />
-              <div className={styles.right} />
-            </div>
-            <div className={styles.mainImageRightFilterContainer}>
-              <img className={styles.mainImageRight}
-                src="/front.png"
-                alt="Picture of the author" />
-              <div className={styles.right} />
-            </div>
+          <div className={styles.mainImageLeftFilterContainer}>
+            <img className={styles.mainImageLeft}
+              src="/front.png"
+              alt="Picture of the author" />
+            <div className={styles.right} />
           </div>
+          <div className={styles.mainImageRightFilterContainer}>
+            <img className={styles.mainImageRight}
+              src="/front.png"
+              alt="Picture of the author" />
+            <div className={styles.right} />
+          </div>
+
           <StudentJumbotron isIntro={true} />
           <TutorJumbotron isIntro={true} />
         </div>
