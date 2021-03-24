@@ -48,8 +48,11 @@ export default function TutorJumbotron({ isIntro }: {
                 <div className={styles.jumbotronInfoContainer}>
                     <div className={styles.jumbotronInfoContainer}>
                         <Card className={styles.jumbotronInfoCardDark}>
-                            <Image src="/create-tutor-profile.svg"
-                                width={50} height={50} />                            <Card.Body>
+                            <div className={styles.jumbotronRightImageContainer}>
+                                <Image src="/create-tutor-profile.svg"
+                                    width={50} height={50} />
+                            </div>
+                            <Card.Body>
                                 <Card.Title>1. Create your profile </Card.Title>
                                 <Card.Text>
                                     Your profile is the first thing students see. Show everyone
@@ -58,8 +61,10 @@ export default function TutorJumbotron({ isIntro }: {
                             </Card.Body>
                         </Card>
                         <Card className={styles.jumbotronInfoCardDark}>
-                            <Image src="/build-profile.svg"
-                                width={50} height={50} />
+                            <div className={styles.jumbotronRightImageContainer}>
+                                <Image src="/build-profile.svg"
+                                    width={50} height={50} />
+                            </div>
                             <Card.Body>
                                 <Card.Title>2. Build up your profile</Card.Title>
                                 <Card.Text>
@@ -70,8 +75,10 @@ export default function TutorJumbotron({ isIntro }: {
                             </Card.Body>
                         </Card>
                         <Card className={styles.jumbotronInfoCardDark}>
-                            <Image src="/talk.svg"
-                                width={50} height={50} />
+                            <div className={styles.jumbotronRightImageContainer}>
+                                <Image src="/talk.svg"
+                                    width={50} height={50} />
+                            </div>
                             <Card.Body>
                                 <Card.Title>3. Match With Students</Card.Title>
                                 <Card.Text>
