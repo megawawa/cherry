@@ -8,6 +8,7 @@ import { useSession, signIn, signOut, getSession } from 'next-auth/client'
 import Link from 'next/link'
 import { Dropdown, NavItem, NavLink, DropdownButton } from 'react-bootstrap'
 import { useAccountContext } from './accountContext'
+import styles from '../../styles/Home.module.css'
 
 export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
     function NavbarLink({ href, text, registeredHref }: {
@@ -43,13 +44,7 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
             </Button>;
 
     return (
-        <Navbar bg="light" expand="lg" style={{
-            position: "fixed", /* Set the navbar to fixed position */
-            top: 0, /* Position the navbar at the top of the page */
-            width: "calc(100vw - 20px)",
-            zIndex: 999,
-            marginRight: "calc(-100vw + 100 %)",
-        }}>
+        <Navbar bg="light" expand="lg" className={styles.navbar}>
             <Link href="/" passHref>
                 <Navbar.Brand >Seeking Quiz</Navbar.Brand>
             </Link>

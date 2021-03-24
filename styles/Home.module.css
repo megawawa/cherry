@@ -26,6 +26,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  flex-wrap: wrap;
 }
 
 .button {
@@ -35,6 +36,7 @@
   border-radius: 0.25rem;
   color: rgb(20, 17, 179);
   border-color: rgb(20, 17, 179);
+  min-width: 120px;
 }
 
 .mainLeft {
@@ -145,6 +147,47 @@
   min-width: clamp(200px, 10vw, 10vw);
 }
 
+@media only screen and (max-width: 768px) {
+  .containerLeftPaddingLeft {
+    display: none
+  }
+  .containerLeftPaddingRight {
+    display: none
+  }
+  .containerLeft {
+    width: 90vw;
+    text-align: center;
+    padding-top: clamp(200px, 20vh, 20vh);
+  }
+  .containerRightPaddingLeft {
+    display: none
+  }
+  .containerRightPaddingRight {
+    display: none
+  }
+  .containerRight {
+    flex: auto;
+    width: 90vw;
+    text-align: center;
+    padding-top: clamp(200px, 20vh, 20vh);
+    max-width: 400px;
+  }
+  .mainImageContainer {
+    display: none;
+  }
+  .button {
+    min-width: 200px;
+  }
+  .buttonDark {
+    font: bold;
+    margin: 0 3rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    color: white;
+    min-width: 200px;
+  }
+}
+
 .containerRight {
   flex: 1;
   padding-top: clamp(200px, 20vh, 20vh);
@@ -182,6 +225,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   filter: drop-shadow(2px 2px 2px rgb(187, 187, 187));
+  -webkit-appearance: none;
 }
 
 .jumbotronInfoCardImage {
@@ -273,6 +317,16 @@
 .description {
   line-height: 1.5;
   font-size: 1.5rem;
+}
+
+.navbar {
+  position: fixed;
+  /* Set the navbar to fixed position */
+  top: 0;
+  /* Position the navbar at the top of the page */
+  width: calc(100vw - 10px);
+  z-index: 999;
+  margin-right: calc(-100vw + 100%);
 }
 
 .code {
@@ -398,4 +452,14 @@
     width: 100%;
     flex-direction: column;
   }
+
+  .navbar {
+    position: fixed;
+    /* Set the navbar to fixed position */
+    top: 0;
+    /* Position the navbar at the top of the page */
+    width: 100vw;
+    z-index: 999;
+    margin-right: calc(-100vw + 100%);
+  }  
 }

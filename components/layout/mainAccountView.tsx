@@ -141,22 +141,19 @@ export default function MainAccountView({ activeKey }: {
                                         <LockTab locked={false} text="Create Quiz" />
                                     </Nav.Link>
                                 </Link>
-                                <Nav.Link eventKey="createProblemSet">
-                                    <LockTab locked={false} text="Create Problem Set" />
-                                </Nav.Link>
                             </Nav.Item>
                             <div className={styles.profileLeftSectionHeader}>
                                 Student
                             </div>
                             <Nav.Item>
-                                <Nav.Link eventKey="takenQuizHistory">
-                                    <LockTab locked={false} text="History" />
-                                </Nav.Link>
                                 <Link href="/createQuiz" passHref>
                                     <Nav.Link eventKey="askQuiz">
                                         <LockTab locked={false} text="Help me on Quiz!!!" />
                                     </Nav.Link>
                                 </Link>
+                                <Nav.Link eventKey="createProblemSet">
+                                    <LockTab locked={false} text="Find a tutor" />
+                                </Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>
