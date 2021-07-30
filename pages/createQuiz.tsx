@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { useAccountContext } from "../components/layout/accountContext";
 import MainAccountView from "../components/layout/mainAccountView";
 import { Problem } from "../libs/problem";
-import { csrfToken } from 'next-auth/client'
 import { useRouter } from "next/router";
 
-export default function CreateQuizPage({ problemData, csrfToken }: {
-    problemData: Problem, csrfToken: string
+export default function CreateQuizPage({ problemData }: {
+    problemData: Problem
 }) {
     const context = useAccountContext();
     useEffect(() => {
@@ -23,14 +22,13 @@ export default function CreateQuizPage({ problemData, csrfToken }: {
     return <MainAccountView activeKey={'askQuiz'} />;
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
     return {
         props: {
             problemData: {
                 summary: "",
                 id: "",
             },
-            csrfToken: await csrfToken(context)
         }
     }
 }
