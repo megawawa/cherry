@@ -27,7 +27,7 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
         session ? (
             <DropdownButton variant="success"
                 title={`Welcome, ${session.user.name}`} menuAlign="right">
-                <Dropdown.Item onClick={signOut}>Log Out</Dropdown.Item>
+                <Dropdown.Item onClick={(e) => { signOut(); }}>Log Out</Dropdown.Item>
                 {
                     session.user.isStudent &&
                     (<Dropdown.Item href="/login?profile=student">View as Student
@@ -39,7 +39,7 @@ export default function MainNavbar({ currentUrl }: { currentUrl: string }) {
                     </Dropdown.Item>)
                 }
             </DropdownButton >) :
-            <Button variant="outline-success" onClick={signIn}>
+            <Button variant="outline-success" onClick={(e) => { signIn(); }}>
                 Log in
             </Button>;
 
