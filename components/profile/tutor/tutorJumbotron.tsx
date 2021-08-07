@@ -3,7 +3,7 @@ import styles from '../../../styles/Home.module.css'
 import { Card, Button, Jumbotron } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import * as ga from '../../../libs/gtag'
 
 export default function TutorJumbotron({ isIntro }: {
     isIntro: boolean;
@@ -38,7 +38,16 @@ export default function TutorJumbotron({ isIntro }: {
 
                     {isIntro &&
                         <Link href="/signup?tutor=1" passHref>
-                            <Button variant="outline-light" className={styles.buttonRight}>
+                            <Button variant="outline-light" className={styles.buttonRight} onClick={
+                                () => {
+                                    ga.event({
+                                        action: "sign-up-now-tutor",
+                                        category: "",
+                                        label: "",
+                                        value: "",
+                                    });
+                                }
+                            }>
                                 Sign up Now</Button>
                         </Link>}
                 </div>
@@ -57,7 +66,7 @@ export default function TutorJumbotron({ isIntro }: {
                                 <Card.Text>
                                     Your profile is the first thing students see. Show everyone
                                     a bit about yourself. What is your interest? What is your contact preference?
-                         </Card.Text>
+                                </Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className={styles.jumbotronInfoCardDark}>
@@ -71,7 +80,7 @@ export default function TutorJumbotron({ isIntro }: {
                                     Contribute to the community by submitting quizzes, answering students' questions
                                     and addressing their comments.
                                     Build up your profile in this process!
-                         </Card.Text>
+                                </Card.Text>
                             </Card.Body>
                         </Card>
                         <Card className={styles.jumbotronInfoCardDark}>
@@ -84,7 +93,7 @@ export default function TutorJumbotron({ isIntro }: {
                                 <Card.Text>
                                     Tell us your rate and preference and we will match students with you.
                                     Well estalished profile would increase your match success rate.
-                         </Card.Text>
+                                </Card.Text>
                             </Card.Body>
                         </Card>
                     </div>

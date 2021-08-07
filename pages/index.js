@@ -8,6 +8,7 @@ import Link from "next/link";
 import MainAccountView from "../components/layout/mainAccountView";
 import StudentJumbotron from '../components/profile/student/studentJumbotron';
 import TutorJumbotron from '../components/profile/tutor/tutorJumbotron';
+import * as ga from '../libs/gtag'
 
 export default function Home() {
   const [session, loading] = useSession();
@@ -57,7 +58,15 @@ export default function Home() {
             </p>
             <p>
               <Link href="/quizzes" passHref>
-                <Button variant="outline-light" className={styles.buttonDark}>
+                <Button variant="outline-light" className={styles.buttonDark} onClick={
+                  () => {
+                    ga.event({
+                      action: "explore",
+                      category: "",
+                      label: "",
+                      value: "",
+                    });
+                  }}>
                   Explore Now</Button>
               </Link>
             </p>

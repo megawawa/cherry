@@ -2,6 +2,7 @@ import styles from '../../../styles/Home.module.css'
 import { Card, Button, Jumbotron } from 'react-bootstrap';
 import Image from 'next/image';
 import Link from 'next/link';
+import * as ga from '../../../libs/gtag'
 
 export default function StudentJumbotron({ isIntro }: {
     isIntro: boolean;
@@ -31,8 +32,16 @@ export default function StudentJumbotron({ isIntro }: {
                     </p>
                     {isIntro &&
                         <Link href="/signup?student=1" passHref>
-                            <Button variant="outline-dark" className={styles.button}
-                            >Sign up Now</Button>
+                            <Button variant="outline-dark" className={styles.button} onClick={
+                                () => {
+                                    ga.event({
+                                        action: "sign-up-now-student",
+                                        category: "",
+                                        label: "",
+                                        value: "",
+                                    });
+                                }
+                            }>Sign up Now</Button>
                         </Link>}
                 </div>
                 <div className={styles.containerLeftPaddingRight} />
@@ -48,10 +57,10 @@ export default function StudentJumbotron({ isIntro }: {
                             <Card.Title>1. Take quiz & self-test</Card.Title>
                             <Card.Text>
                                 <p>Select topics you are interested in, and take quizzes
-                                & tests!
+                                    & tests!
                                 </p>
                                 <p>We will tailor quiz selection based on your past
-                                performance.
+                                    performance.
                                 </p>
                             </Card.Text>
                         </Card.Body>
@@ -85,7 +94,7 @@ export default function StudentJumbotron({ isIntro }: {
                             <Card.Title>3. Find tutor</Card.Title>
                             <Card.Text>
                                 <p>Still have questions? Want to book a tutor session?
-                                Find tutor based on your preferred rate and schedule.
+                                    Find tutor based on your preferred rate and schedule.
                                 </p>
                             </Card.Text>
                         </Card.Body>
